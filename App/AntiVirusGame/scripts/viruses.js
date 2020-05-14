@@ -1,5 +1,3 @@
-const Scene = require('Scene')
-
 import { log } from './logger'
 import initVirus from './virus'
 
@@ -35,13 +33,20 @@ const init = () => {
 
 const rand = () => +(Math.random() * 4).toFixed(0) % 4
 
+// return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 const tick = () => {
     log(`viruses tick ${rand()}`)
+    return 1
+}
+
+const hideDropped = () => {
+
 }
 
 const viruses = {
     init,
-    tick
+    tick,
+    hideDropped
 }
 
 export default viruses

@@ -1,5 +1,3 @@
-const Scene = require('Scene')
-
 import { log } from './logger'
 import initFace from './face'
 
@@ -17,9 +15,13 @@ const init = () => {
 
 const say = () => face.hello()
 
+// return -1 if on the left, 1 if on the right, 0 if undefined state
+const getSide = () => 1
+
 const faces = {
     init,
-    say
+    say,
+    getSide,
 }
 
 export default faces

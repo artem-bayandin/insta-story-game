@@ -1,5 +1,3 @@
-const Scene = require('Scene')
-
 import { log } from './logger'
 import initMask from './mask'
 
@@ -64,14 +62,13 @@ const removeMask = () => {
     if (!rightMask.isVisible()) {
         log('you died...(')
     }
+    // return this to understand if you died or not
+    return rightMask.isVisible()
 }
-
-const isAlive = () => rightMask.isVisible()
 
 const masks = {
     addMask,
     removeMask,
-    isAlive,
     init
 }
 
