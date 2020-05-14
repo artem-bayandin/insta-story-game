@@ -10,7 +10,7 @@ import { log } from './logger'
 // - [-1, 0, 1] tick()      // should return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 
 // faces:
-// - [-1, 0, 1] getSide()   // should return -1 if on the left, 1 if on the right, 0 if undefined state
+// - [-1, 0, 1] getSide()   // -1 if on the left, 1 if on the right, 0 if undefined state
 
 const Game = (faces, masks, viruses, exitCallback) => {
     let counter = 0
