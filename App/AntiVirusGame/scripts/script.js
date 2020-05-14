@@ -19,7 +19,8 @@ const Time = require('Time')
 
 import { log } from './logger'
 
-import masks from './masks.js'
+import masks from './masks'
+import viruses from './viruses'
 
 // To access scene objects
 // const directionalLight = Scene.root.find('directionalLight0');
@@ -27,46 +28,67 @@ import masks from './masks.js'
 // To access class properties
 // const directionalLightIntensity = directionalLight.intensity;
 
+const timeout = 250
+
 const simulate = () => {
-    log('### ### ### simulation started ### ### ###')
+    log('- -- --- ---- ----- ------ ------- simulation started ------- ------ ----- ---- --- -- -')
 
-    Time.setTimeout(() => {
-        log(`2 sec, should say '100% health'`)
-        masks.addMask()
-    }, 2000)
+    const func = {
+        f1: () => {
+            log(`--- should say '100% health'`)
+            masks.addMask()
+        },
+        f2: () => {
+            log(`--- should say '1 removed'`)
+            masks.removeMask()
+        },
+        f3: () => {
+            log(`--- should say '2 removed'`)
+            masks.removeMask()
+        },
+        f4: () => {
+            log(`--- should say '3 removed, you died'`)
+            masks.removeMask()
+        },
+        f5: () => {
+            log(`--- should say '1 added'`)
+            masks.addMask()
+        },
+        f6: () => {
+            log(`--- should say '2 added'`)
+            masks.addMask()
+        },
+        f7: () => {
+            log(`--- should say '3 added, 100% health'`)
+            masks.addMask()
+        },
+        f8: () => {
+            log('ticking viruses...')
+            viruses.tick()
+        },
+        f9: () => {
+            log('ticking viruses...')
+            viruses.tick()
+        },
+        f10: () => {
+            log('ticking viruses...')
+            viruses.tick()
+        },
+        f11: () => {
+            log('ticking viruses...')
+            viruses.tick()
+        }
+    }
 
-    Time.setTimeout(() => {
-        log(`4 sec, should say '1 removed'`)
-        masks.removeMask()
-    }, 4000)
-
-    Time.setTimeout(() => {
-        log(`6 sec, should say '2 removed'`)
-        masks.removeMask()
-    }, 6000)
-
-    Time.setTimeout(() => {
-        log(`8 sec, should say '3 removed, you died'`)
-        masks.removeMask()
-    }, 8000)
-
-    Time.setTimeout(() => {
-        log(`10 sec, should say '1 added'`)
-        masks.addMask()
-    }, 10000)
-
-    Time.setTimeout(() => {
-        log(`12 sec, should say '2 added'`)
-        masks.addMask()
-    }, 12000)
-
-    Time.setTimeout(() => {
-        log(`14 sec, should say '3 added, 100% health'`)
-        masks.addMask()
-    }, 14000)
+    Object.keys(func).map((key, index) => {
+        Time.setTimeout(() => {
+            func[key]()
+        }, timeout * (index + 1));
+    })
 }
 
 Promise.all([
-    masks.init()
+    masks.init(),
+    viruses.init()
 ])
 .then(simulate)
