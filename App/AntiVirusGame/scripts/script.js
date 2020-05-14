@@ -13,17 +13,13 @@
 // For projects created with v87 onwards, JavaScript is always executed in strict mode.
 //==============================================================================
 
-// How to load in modules
-const Scene = require('Scene');
+const Scene = require('Scene')
+const Diagnostics = require('Diagnostics')
+const Time = require('Time')
 
-// Use export keyword to make a symbol available in scripting debug console
-export const Diagnostics = require('Diagnostics');
+import { log } from './logger'
 
-// To use variables and functions across files, use export/import keyword
-// export const animationDuration = 10;
-
-// Use import keyword to import a symbol from another file
-// import { animationDuration } from './script.js'
+import masks from './masks.js'
 
 // To access scene objects
 // const directionalLight = Scene.root.find('directionalLight0');
@@ -31,7 +27,46 @@ export const Diagnostics = require('Diagnostics');
 // To access class properties
 // const directionalLightIntensity = directionalLight.intensity;
 
-// To log messages to the console
-Diagnostics.log('Console message logged from the script.');
+const simulate = () => {
+    log('### ### ### simulation started ### ### ###')
 
-const mask1 = Scene.root.findFirst('mask1').then(x => { for (var p in x) { Diagnostics.log(p);  } }); 
+    Time.setTimeout(() => {
+        log(`2 sec, should say '100% health'`)
+        masks.addMask()
+    }, 2000)
+
+    Time.setTimeout(() => {
+        log(`4 sec, should say '1 removed'`)
+        masks.removeMask()
+    }, 4000)
+
+    Time.setTimeout(() => {
+        log(`6 sec, should say '2 removed'`)
+        masks.removeMask()
+    }, 6000)
+
+    Time.setTimeout(() => {
+        log(`8 sec, should say '3 removed, you died'`)
+        masks.removeMask()
+    }, 8000)
+
+    Time.setTimeout(() => {
+        log(`10 sec, should say '1 added'`)
+        masks.addMask()
+    }, 10000)
+
+    Time.setTimeout(() => {
+        log(`12 sec, should say '2 added'`)
+        masks.addMask()
+    }, 12000)
+
+    Time.setTimeout(() => {
+        log(`14 sec, should say '3 added, 100% health'`)
+        masks.addMask()
+    }, 14000)
+}
+
+Promise.all([
+    masks.init()
+])
+.then(simulate)
