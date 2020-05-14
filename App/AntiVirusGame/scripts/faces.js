@@ -16,7 +16,12 @@ const init = () => {
 const say = () => face.hello()
 
 // return -1 if on the left, 1 if on the right, 0 if undefined state
-const getSide = () => 1
+const getSide = () => {
+    const [ faceX, faceY ] = face.getCoordinates()
+    log(`face coords: ${faceX}:${faceY}`)
+
+    return 1
+}
 
 const faces = {
     init,
