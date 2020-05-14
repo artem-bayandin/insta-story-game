@@ -21,6 +21,7 @@ import { log } from './logger'
 
 import masks from './masks'
 import viruses from './viruses'
+import faces from './faces'
 
 // To access scene objects
 // const directionalLight = Scene.root.find('directionalLight0');
@@ -31,7 +32,7 @@ import viruses from './viruses'
 const timeout = 250
 
 const simulate = () => {
-    log('- -- --- ---- ----- ------ ------- simulation started ------- ------ ----- ---- --- -- -')
+    log(`- -- --- ---- ----- ------ ------- simulation started on ${new Date()} ------- ------ ----- ---- --- -- -`)
 
     const func = {
         f1: () => {
@@ -77,6 +78,10 @@ const simulate = () => {
         f11: () => {
             log('ticking viruses...')
             viruses.tick()
+        },
+        f12: () => {
+            log('checking face')
+            faces.say()
         }
     }
 
@@ -89,6 +94,7 @@ const simulate = () => {
 
 Promise.all([
     masks.init(),
-    viruses.init()
+    viruses.init(),
+    faces.init()
 ])
 .then(simulate)
