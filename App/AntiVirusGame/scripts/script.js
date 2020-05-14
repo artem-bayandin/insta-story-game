@@ -13,6 +13,8 @@
 // For projects created with v87 onwards, JavaScript is always executed in strict mode.
 //==============================================================================
 
+const Time = require('Time')
+
 import { log } from './logger'
 
 import masks from './masks'
