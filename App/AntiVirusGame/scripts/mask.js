@@ -5,62 +5,55 @@ import { log } from './logger'
 
 const maskScale = 500
 
-const Mask = (id, mask) => {
+const samplerShow = Animation.samplers.linear(0, maskScale)
+const samplerHide = Animation.samplers.linear(maskScale, 0)
 
-    //set up the length of the animations, 1000 = 1 second
-    var driver = Animation.timeDriver({durationMilliseconds: 200});
-    //define the starting and ending values (start at 0, go to 100)
-    var samplerShow = Animation.samplers.linear(0, maskScale);
-    var samplerHide = Animation.samplers.linear(maskScale, 0); 
+const animateVisibility = (mask, driver, sampler) => {
+    //create an animation signal to control the object x position
+    mask.transform.scaleX = Animation.animate(driver, sampler)
+    mask.transform.scaleY = Animation.animate(driver, sampler)
 
-    let _isVisible = true
+    //start the animation
+    driver.start()
+}
 
-    const show = () => {
-        if (_isVisible) {
-            return
-        }
+const visibilityDriver = Animation.timeDriver({durationMilliseconds: 10})
 
-        //create an animation signal to control the object x position
-        mask.transform.scaleX = Animation.animate(driver, samplerShow);
-        mask.transform.scaleY = Animation.animate(driver, samplerShow);
-        //start the animation
-        driver.start();
-
-        _isVisible = true
-        log(`${id} is shown, visilibity: ${_isVisible}`)
-    }
-    
-    const hide = () => {
-        if (!_isVisible) {
-            return
-        }
-
-        //create an animation signal to control the object x position
-        mask.transform.scaleX = Animation.animate(driver, samplerHide);
-        mask.transform.scaleY = Animation.animate(driver, samplerHide);
-        //start the animation
-        driver.start(); 
-
-        _isVisible = false
-        log(`${id} is hidden, visibility: ${_isVisible}`)
+class Mask {
+    constructor(id, mask) {
+        this.id = id
+        this.mask = mask
+        this._isVisible = true // mask.transform.scaleX > 10
     }
 
-    const isVisible = () => _isVisible
-
-    return {
-        id,
-        show,
-        hide,
-        isVisible
+    show() {
+        if (this._isVisible) return
+        log(`show '${this.id}'`)
+        animateVisibility(this.mask, visibilityDriver, samplerShow)
+        this._isVisible = true
     }
+
+    hide() {
+        if (!this._isVisible) return
+        log(`hide '${this.id}'`)
+        animateVisibility(this.mask, visibilityDriver, samplerHide)
+        this._isVisible = false
+    }
+
+    setVisibility(value) { this._isVisible = value }
+
+    isVisible() { return this._isVisible }
+
+    getId() { return this.id }
 }
 
 const initMask = (identifier) => {
     return new Promise((res, rej) => {
         Scene.root.findFirst(identifier)
             .then(item => {
-                log(`${identifier}: ${!!item}`)
+                log(`'${identifier}' mask found: ${!!item}`)
                 const mask = new Mask(identifier, item)
+                log(`'${identifier}' mask created: ${!!mask}`)
                 res(mask)
             })
     })

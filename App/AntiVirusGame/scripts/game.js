@@ -15,7 +15,7 @@ import { log } from './logger'
 const Game = (faces, masks, viruses, exitCallback) => {
     let counter = 0
     let stageCapacity = 8
-    let gameSpeed = 1111
+    let gameSpeed = 2100
     let go = true
 
     const increaseTickCounter = () => {
@@ -23,7 +23,7 @@ const Game = (faces, masks, viruses, exitCallback) => {
         if (counter % stageCapacity === 0 && gameSpeed > 222) {
             gameSpeed -= 111
         }
-        log(`you've survided against ${counter} viruses`)
+        log(`you've survided against ${counter} viruses!`)
     }
 
     const tick = () => {
@@ -37,14 +37,16 @@ const Game = (faces, masks, viruses, exitCallback) => {
                     // terminate
                     go = false
                 } else {
-                    viruses.hideDropped()
+                    // viruses.hideDropped()
+                    increaseTickCounter()
                 }
             } else {
-                viruses.hideDropped()
+                // viruses.hideDropped()
+                increaseTickCounter()
             }
         }
         if (go) {
-            increaseTickCounter()
+            // increaseTickCounter()
             Time.setTimeout(() => {
                 tick()
             }, gameSpeed)

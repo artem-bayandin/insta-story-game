@@ -27,7 +27,7 @@ const exitCallback = (virusesCount) => {
 }
 
 const startTheGame = () => {
-    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
+    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -1`)
 
     const game = new Game(faces, masks, viruses, exitCallback)
     game.play()
@@ -38,4 +38,4 @@ Promise.all([
     viruses.init(),
     faces.init()
 ])
-.then(startTheGame)
+.then(Time.setTimeout(() => { startTheGame() }, 5000))

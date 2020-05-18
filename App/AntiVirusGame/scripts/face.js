@@ -2,22 +2,21 @@ const Scene = require('Scene')
 
 import { log } from './logger'
 
-const Face = (id, face) => {
-
-    const hello = () => {
-        log(`'Hello World' from ${id}`)
+class Face {
+    constructor(id, face) {
+        this.id = id
+        this.face = face
     }
 
-    const getCoordinates = () => {
+    getCoordinates() {
         return [
-            face.transform.x.pinLastValue(),
-            face.transform.y.pinLastValue()
+            this.face.transform.x.pinLastValue(),
+            this.face.transform.y.pinLastValue()
         ]
     }
 
-    return {
-        hello,
-        getCoordinates
+    getId() {
+        return this.id
     }
 }
 
@@ -25,8 +24,9 @@ const initFace = (identifier) => {
     return new Promise((res, rej) => {
         Scene.root.findFirst(identifier)
             .then(item => {
-                log(`${identifier}: ${!!item}`)
+                log(`'${identifier}' face found: ${!!item}`)
                 const face = new Face(identifier, item)
+                log(`'${identifier}' face created: ${!!face}`)
                 res(face)
             })
     })
