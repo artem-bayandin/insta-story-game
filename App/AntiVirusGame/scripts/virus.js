@@ -6,7 +6,7 @@ import { log } from './logger'
 
 const virusScale = 666
 const fastAnimationSpeed = 10
-const slowAnimationSpeed = 500
+const slowAnimationSpeed = 333
 
 const samplerShow = Animation.samplers.linear(0, virusScale)
 const samplerHide = Animation.samplers.linear(virusScale, 0) 
@@ -48,21 +48,33 @@ class Virus {
         this.routes = null
         this.currentPosition = -1
 
-        this.fastDriver = Animation.timeDriver({durationMilliseconds: fastAnimationSpeed})
-        this.slowDriver = Animation.timeDriver({durationMilliseconds: slowAnimationSpeed})
+        // this.fastDriver = Animation.timeDriver({durationMilliseconds: fastAnimationSpeed})
+        // this.slowDriver = Animation.timeDriver({durationMilliseconds: slowAnimationSpeed})
+    }
+
+    fastDriver() {
+        return this.driver(fastAnimationSpeed)
+    }
+
+    slowDriver() {
+        return this.driver(slowAnimationSpeed)
+    }
+
+    driver(speed) {
+        return Animation.timeDriver({durationMilliseconds: speed})
     }
 
     show() {
         if (this._isVisible) return
         // log(`SHOW_virus '${this.id}': ${!!this.virus}`)
-        animateVisibility(this.virus, this.fastDriver, samplerShow)
+        animateVisibility(this.virus, this.fastDriver(), samplerShow)
         this._isVisible = true
     }
 
     hide() {
         if (!this._isVisible) return
         // log(`HIDE_virus '${this.id}': ${!!this.virus}`)
-        animateVisibility(this.virus, this.fastDriver, samplerHide)
+        animateVisibility(this.virus, this.fastDriver(), samplerHide)
         this._isVisible = false
     }
 
@@ -72,40 +84,43 @@ class Virus {
 
     getId() { return this.id }
 
-    step() {
+    step(speed) {
+        const innerSpeed = speed - 100
+        const dropSpeed = innerSpeed / 2
+
         if (!this._isVisible) return [ 0 ]
 
         if (this.currentPosition >= 0 && this.currentPosition < 2) {
             this.currentPosition++
-            this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y)
+            this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed)
             return [ 0 ]
         } else if (this.currentPosition == 2) {
             // move to the end and drop
             this.currentPosition++
-            this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y)
+            this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed)
             // drop
             var that = this
             Time.setTimeout(function() {
                 that.currentPosition++
-                that.moveTo(that.routes[that.routes.length - 1].x, that.routes[that.routes.length - 1].y)
+                that.moveTo(that.routes[that.routes.length - 1].x, that.routes[that.routes.length - 1].y, dropSpeed)
                 Time.setTimeout(function() {
                     that.hide()
                     that.currentPosition = -1 
-                }, slowAnimationSpeed)
-            }, slowAnimationSpeed)
+                }, dropSpeed)
+            }, innerSpeed)
             
-            return [ this.routes[this.currentPosition].x < 0 ? -1 : 1, slowAnimationSpeed + slowAnimationSpeed ]
+            return [ this.routes[this.currentPosition].x < 0 ? -1 : 1, innerSpeed + dropSpeed ]
         }
     }
 
-    moveTo(x, y, doFast = false) {
-        animateMove(this.virus, doFast ? this.fastDriver : this.slowDriver, { x, y })
+    moveTo(x, y, speed) {
+        animateMove(this.virus, this.driver(speed), { x, y })
     }
 
     start(num) {
         this.routes = routes[num]
         this.currentPosition = 0
-        this.moveTo(this.routes[0].x, this.routes[0].y, true)
+        this.moveTo(this.routes[0].x, this.routes[0].y, fastAnimationSpeed)
         this.show()
     }
 }

@@ -46,11 +46,13 @@ const rand = () => +(Math.random() * 4).toFixed(0) % 4
 const tick = () => {
     const rndValue = rand()
 
+    const speed = 400
+
     var stepResults = [
-        topLeft.step()
-      , bottomLeft.step()
-      , topRight.step()
-      , bottomRight.step()
+        topLeft.step(speed)
+      , bottomLeft.step(speed)
+      , topRight.step(speed)
+      , bottomRight.step(speed)
     ]
 
     if (!topLeft.isVisible()) {
