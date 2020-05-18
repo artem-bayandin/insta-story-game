@@ -1,59 +1,32 @@
-const Scene = require('Scene')
-const Animation = require('Animation')
-
 import { log } from './logger'
+
+import { BaseShowHide, findMe, linearSamplerUp, linearSamplerDown } from './base'
 
 const maskScale = 500
 
-const samplerShow = Animation.samplers.linear(0, maskScale)
-const samplerHide = Animation.samplers.linear(maskScale, 0)
+const showHideSpeed = 10
 
-const animateVisibility = (mask, driver, sampler) => {
-    //create an animation signal to control the object x position
-    mask.transform.scaleX = Animation.animate(driver, sampler)
-    mask.transform.scaleY = Animation.animate(driver, sampler)
-
-    //start the animation
-    driver.start()
-}
-
-const visibilityDriver = Animation.timeDriver({durationMilliseconds: 10})
-
-class Mask {
+class Mask extends BaseShowHide {
     constructor(id, mask) {
-        this.id = id
-        this.mask = mask
-        this._isVisible = true // mask.transform.scaleX > 10
+        super(id, mask, true) // mask.transform.scaleX > 10
     }
 
     show() {
-        if (this._isVisible) return
-        log(`show '${this.id}'`)
-        animateVisibility(this.mask, visibilityDriver, samplerShow)
-        this._isVisible = true
+        this.__show(showHideSpeed, linearSamplerUp(maskScale))
     }
 
     hide() {
-        if (!this._isVisible) return
-        log(`hide '${this.id}'`)
-        animateVisibility(this.mask, visibilityDriver, samplerHide)
-        this._isVisible = false
+        this.__hide(showHideSpeed, linearSamplerDown(maskScale))
     }
-
-    setVisibility(value) { this._isVisible = value }
-
-    isVisible() { return this._isVisible }
-
-    getId() { return this.id }
 }
 
 const initMask = (identifier) => {
     return new Promise((res, rej) => {
-        Scene.root.findFirst(identifier)
+        findMe(identifier)
             .then(item => {
                 log(`'${identifier}' mask found: ${!!item}`)
                 const mask = new Mask(identifier, item)
-                log(`'${identifier}' mask created: ${!!mask}`)
+                log(`'${identifier}' mask created: ${!!mask}`)  
                 res(mask)
             })
     })

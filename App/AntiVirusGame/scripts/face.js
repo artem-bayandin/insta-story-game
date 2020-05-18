@@ -1,28 +1,16 @@
-const Scene = require('Scene')
-
 import { log } from './logger'
 
-class Face {
+import { Base, findMe } from './base'
+
+class Face extends Base {
     constructor(id, face) {
-        this.id = id
-        this.face = face
-    }
-
-    getCoordinates() {
-        return [
-            this.face.transform.x.pinLastValue(),
-            this.face.transform.y.pinLastValue()
-        ]
-    }
-
-    getId() {
-        return this.id
+        super(id, face)
     }
 }
 
 const initFace = (identifier) => {
     return new Promise((res, rej) => {
-        Scene.root.findFirst(identifier)
+        findMe(identifier)
             .then(item => {
                 log(`'${identifier}' face found: ${!!item}`)
                 const face = new Face(identifier, item)
