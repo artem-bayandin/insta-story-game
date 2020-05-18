@@ -1,9 +1,7 @@
 import { log } from './logger'
-
 import { BaseShowHide, findMe, linearSamplerUp, linearSamplerDown } from './base'
 
 const maskScale = 500
-
 const showHideSpeed = 10
 
 class Mask extends BaseShowHide {

@@ -1,5 +1,4 @@
 import { log } from './logger'
-
 import { Base, findMe } from './base'
 
 class Face extends Base {

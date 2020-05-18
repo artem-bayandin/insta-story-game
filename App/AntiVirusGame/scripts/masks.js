@@ -4,6 +4,7 @@ import initMask from './mask'
 let rightMask = null
 let centerMask = null
 let leftMask = null
+let numberOfMasks = 25
 
 const init = () => {
     var m1promise = initMask('mask1')
@@ -43,8 +44,6 @@ const addMask = () => {
         log('100% health')
     }
 }
-
-let numberOfMasks = 25
 
 const removeMask = () => {
     // if (leftMask.isVisible()) {

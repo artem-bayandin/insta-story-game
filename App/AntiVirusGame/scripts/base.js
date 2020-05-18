@@ -3,6 +3,8 @@ const Animation = require('Animation')
 
 import { log } from './logger'
 
+// REGION UTILS start
+
 export const animateVisibility = (obj, driver, samplerX, samplerY) => {
     obj.transform.scaleX = Animation.animate(driver, samplerX)
     obj.transform.scaleY = Animation.animate(driver, samplerY)
@@ -12,14 +14,16 @@ export const animateVisibility = (obj, driver, samplerX, samplerY) => {
 export const animateLinearMove = (obj, driver, to) => {
     const currentX = obj.transform.x.pinLastValue()
     const currentY = obj.transform.y.pinLastValue()
-    obj.transform.x = Animation.animate(driver, Animation.samplers.linear(currentX, to.x))
-    obj.transform.y = Animation.animate(driver, Animation.samplers.linear(currentY, to.y))
+    obj.transform.x = Animation.animate(driver, linearSamplerFromTo(currentX, to.x))
+    obj.transform.y = Animation.animate(driver, linearSamplerFromTo(currentY, to.y))
     driver.start()
 }
 
-export const linearSamplerUp = scale => Animation.samplers.linear(0, scale)
+export const linearSamplerUp = scale => linearSamplerFromTo(0, scale)
 
-export const linearSamplerDown = scale => Animation.samplers.linear(scale, 0)
+export const linearSamplerDown = scale => linearSamplerFromTo(scale, 0)
+
+export const linearSamplerFromTo = (from, to) => Animation.samplers.linear(from, to)
 
 export const findMe = identifier => {
     return new Promise((res, rej) => {
@@ -29,6 +33,10 @@ export const findMe = identifier => {
             })
     })
 }
+
+// REGION UTILS end
+
+// REGION CLASSES start
 
 export class Base {
     constructor(id, obj) {
@@ -82,3 +90,5 @@ export class BaseShowHide extends Base {
 
     isVisible() { return this.__isVisible }
 }
+
+// REGION CLASSES end

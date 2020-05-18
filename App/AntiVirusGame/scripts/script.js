@@ -27,7 +27,7 @@ const exitCallback = (virusesCount) => {
 }
 
 const startTheGame = () => {
-    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -1`)
+    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
 
     const game = new Game(faces, masks, viruses, exitCallback)
     game.play()
