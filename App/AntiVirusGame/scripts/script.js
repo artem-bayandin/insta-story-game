@@ -40,4 +40,4 @@ Promise.all([
     faces.init(),
     others.init()
 ])
-.then(Time.setTimeout(() => { startTheGame() }, 5000))
+.then(Time.setTimeout(() => { startTheGame() }, 1000))

@@ -43,10 +43,10 @@ const init = () => {
 const rand = () => +(Math.random() * 4).toFixed(0) % 4
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
-const tick = (virusDroppedCallback) => {
+const tick = (gameSpeed, virusDroppedCallback) => {
     const rndValue = rand()
 
-    const speed = 400
+    const speed = Math.max(gameSpeed / 2, 350)
 
     // todo: remove the next lines
     var stepResults = [

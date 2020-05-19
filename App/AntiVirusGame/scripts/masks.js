@@ -4,7 +4,7 @@ import initMask from './mask'
 let rightMask = null
 let centerMask = null
 let leftMask = null
-let numberOfMasks = 5
+let numberOfMasks = 40
 
 const init = () => {
     var m1promise = initMask('mask1')
@@ -71,10 +71,13 @@ const removeMask = () => {
     return numberOfMasks > 0
 }
 
+const livesLeft = () => numberOfMasks
+
 const masks = {
     addMask,
     removeMask,
-    init
+    init,
+    livesLeft
 }
 
 export default masks

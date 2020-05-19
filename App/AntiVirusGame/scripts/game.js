@@ -13,23 +13,28 @@ import { log } from './logger'
 // faces:
 // - [-1, 0, 1] getSide()   // -1 if on the left, 1 if on the right, 0 if undefined state
 
-const setNumberOfVirusesDropped = (others, number) => {
-    log(`numberOfVirusesDropped: ${number}`)
-    let str = number ? number.toString() : '0'
-    Patches.inputs.setString('numberOfVirusesDropped', str)
-    others.setText(str)
+const setNumberOfVirusesDropped = (others, droppedCounter, level, livesLeft) => {
+    log(`numberOfVirusesDropped: ${droppedCounter}`)
+    others.setText(droppedCounter, level, livesLeft)
 }
 
 const Game = (faces, masks, viruses, others, exitCallback) => {
-    let counter = 0
-    let stageCapacity = 8
-    let gameSpeed = 2100
+    let ticksCounter = 0
+    let droppedCounter = 0
+    let level = 0
+
+    let stageCapacity = 6
+    let gameSpeed = 1750
     let go = true
 
     const increaseTickCounter = () => {
-        counter++
-        if (counter % stageCapacity === 0 && gameSpeed > 222) {
-            gameSpeed -= 111
+        ticksCounter++
+        if (ticksCounter % stageCapacity === 0) {
+            if (gameSpeed > 400) {
+                gameSpeed -= 150
+            }
+            level++
+            log(`Game Speed Up. Level: ${level}, speed: ${gameSpeed}, ticks: ${ticksCounter}, dropped: ${droppedCounter}, lives left: ${masks.livesLeft()}`)
         }
     }
 
@@ -37,8 +42,7 @@ const Game = (faces, masks, viruses, others, exitCallback) => {
         log(`VIRUS DROPPED ON ${side} SIDE`)
         if (!side) return
 
-        increaseTickCounter()
-        setNumberOfVirusesDropped(others, counter.toString())
+        droppedCounter++
 
         const faceSide = faces.getSide()
 
@@ -50,27 +54,30 @@ const Game = (faces, masks, viruses, others, exitCallback) => {
                 go = false
             }
         }
+
+        setNumberOfVirusesDropped(others, droppedCounter, level, masks.livesLeft())
     }
 
     const tick = () => {
-        viruses.tick(virusDroppedCallback)
+        viruses.tick(gameSpeed, virusDroppedCallback)
+        increaseTickCounter()
         if (go) {
             Time.setTimeout(() => {
                 if (go) {
                     tick()
                 } else {
-                    exitCallback(counter)
+                    exitCallback(droppedCounter)
                 }
             }, gameSpeed)
         } else {
-            exitCallback(counter)
+            exitCallback(droppedCounter)
         }
     }
 
     const play = () => {
         log(`Game started. Face: ${!!faces}, masks: ${!!masks}, viruses: ${!!viruses}, others: ${!!others}`)
 
-        setNumberOfVirusesDropped(others, 0)
+        setNumberOfVirusesDropped(others, droppedCounter, level, masks.livesLeft())
 
         Time.setTimeout(() => {
             tick()

@@ -6,8 +6,8 @@ class TxtScore extends Base {
         super(id, obj)
     }
 
-    setText(text) {
-        this.obj.text = text
+    setText(droppedCounter, level, livesLeft) {
+        this.obj.text = `${level} : ${droppedCounter} : ${livesLeft}`
     }
 }
 
@@ -28,11 +28,7 @@ const init = () => {
     return Promise.all([txtScorePromise])
 }
 
-const setText = (text) => {
-    if (txtScore) {
-        txtScore.setText(text)
-    }
-}
+const setText = (droppedCounter, level, livesLeft) => txtScore.setText(droppedCounter, level, livesLeft)
 
 const others = {
     init,

@@ -6,7 +6,7 @@ import { log } from './logger'
 
 const virusScale = 666
 const fastAnimationSpeed = 10
-const slowAnimationSpeed = 333
+// const slowAnimationSpeed = 333
 
 const samplerShow = Animation.samplers.linear(0, virusScale)
 const samplerHide = Animation.samplers.linear(virusScale, 0) 
@@ -53,9 +53,9 @@ class Virus {
         return this.driver(fastAnimationSpeed)
     }
 
-    slowDriver() {
-        return this.driver(slowAnimationSpeed)
-    }
+    // slowDriver() {
+    //     return this.driver(slowAnimationSpeed)
+    // }
 
     driver(speed) {
         return Animation.timeDriver({durationMilliseconds: speed})
@@ -82,7 +82,7 @@ class Virus {
     getId() { return this.id }
 
     step(speed, virusDroppedCallback) {
-        const innerSpeed = speed - 100
+        const innerSpeed = speed / 2
         const dropSpeed = innerSpeed / 2
 
         if (!this._isVisible) {
