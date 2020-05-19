@@ -1,6 +1,5 @@
 const Scene = require('Scene')
 const Animation = require('Animation')
-const Time = require('Time')
 
 import { log } from './logger'
 
@@ -47,9 +46,6 @@ class Virus {
         
         this.routes = null
         this.currentPosition = -1
-
-        // this.fastDriver = Animation.timeDriver({durationMilliseconds: fastAnimationSpeed})
-        // this.slowDriver = Animation.timeDriver({durationMilliseconds: slowAnimationSpeed})
     }
 
     fastDriver() {
@@ -97,24 +93,29 @@ class Virus {
         } else if (this.currentPosition == 2) {
             // move to the end and drop
             this.currentPosition++
-            this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed)
-            // drop
             var that = this
-            Time.setTimeout(function() {
+            let onMoveCompleted = () => {
+                log(`virus '${that.id}' is on the edge!`)
                 that.currentPosition++
-                that.moveTo(that.routes[that.routes.length - 1].x, that.routes[that.routes.length - 1].y, dropSpeed)
-                Time.setTimeout(function() {
+                let onDroppedCompleted = () => {
+                    log(`virus '${that.id}' dopped!`)
                     that.hide()
-                    that.currentPosition = -1 
-                }, dropSpeed)
-            }, innerSpeed)
+                    that.currentPosition = -1
+                }
+                that.moveTo(that.routes[that.routes.length - 1].x, that.routes[that.routes.length - 1].y, dropSpeed, onDroppedCompleted)
+            }
+            this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed, onMoveCompleted)
             
             return [ this.routes[this.currentPosition].x < 0 ? -1 : 1, innerSpeed + dropSpeed ]
         }
     }
 
-    moveTo(x, y, speed) {
-        animateMove(this.virus, this.driver(speed), { x, y })
+    moveTo(x, y, speed, onCompleted) {
+        let driver = this.driver(speed)
+        if (onCompleted) {
+            driver.onCompleted().subscribe(onCompleted)
+        }
+        animateMove(this.virus, driver, { x, y })
     }
 
     start(num) {
