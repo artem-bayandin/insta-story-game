@@ -26,8 +26,29 @@ const Game = (faces, masks, viruses, exitCallback) => {
         log(`you've survided against ${counter} viruses!`)
     }
 
+    // const virusDroppedCallback = (side) => {
+    //     if (!side) return
+
+    //     const faceSide = faces.getSide()
+
+    //     if (side === faceSide) {
+    //         const isAlive = masks.removeMask()
+    //         if (!isAlive) {
+    //             log('YOU DIED!')
+    //             // terminate
+    //             go = false          // move to class prop
+    //         } else {
+    //             // viruses.hideDropped()
+    //             increaseTickCounter()
+    //         }
+    //     } else {
+    //         // viruses.hideDropped()
+    //         increaseTickCounter()
+    //     }
+    // }
+
     const tick = () => {
-        const virusesTick = viruses.tick()
+        const virusesTick = viruses.tick((side) => log(`VIRUS DROPPED ON ${side} SIDE`))
         const faceSide = faces.getSide()
         if (virusesTick) {
             if (virusesTick === faceSide) {

@@ -1,5 +1,6 @@
 const Scene = require('Scene')
 const Animation = require('Animation')
+const Time = require('Time')
 
 import { log } from './logger'
 
@@ -80,15 +81,19 @@ class Virus {
 
     getId() { return this.id }
 
-    step(speed) {
+    step(speed, virusDroppedCallback) {
         const innerSpeed = speed - 100
         const dropSpeed = innerSpeed / 2
 
-        if (!this._isVisible) return [ 0 ]
+        if (!this._isVisible) {
+            // virusDroppedCallback(0)
+            return [ 0 ]
+        }
 
         if (this.currentPosition >= 0 && this.currentPosition < 2) {
             this.currentPosition++
             this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed)
+            // virusDroppedCallback(0)
             return [ 0 ]
         } else if (this.currentPosition == 2) {
             // move to the end and drop
@@ -103,9 +108,14 @@ class Virus {
                     that.currentPosition = -1
                 }
                 that.moveTo(that.routes[that.routes.length - 1].x, that.routes[that.routes.length - 1].y, dropSpeed, onDroppedCompleted)
+                
+                let side = this.routes[this.currentPosition].x < 0 ? -1 : 1
+                Time.setTimeout(() => {
+                    virusDroppedCallback(side)
+                }, dropSpeed / 2)
             }
             this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed, onMoveCompleted)
-            
+
             return [ this.routes[this.currentPosition].x < 0 ? -1 : 1, innerSpeed + dropSpeed ]
         }
     }

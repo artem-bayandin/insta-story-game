@@ -43,31 +43,35 @@ const init = () => {
 const rand = () => +(Math.random() * 4).toFixed(0) % 4
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
-const tick = () => {
+const tick = (virusDroppedCallback) => {
     const rndValue = rand()
 
     const speed = 400
 
+    // todo: remove the next lines
     var stepResults = [
-        topLeft.step(speed)
-      , bottomLeft.step(speed)
-      , topRight.step(speed)
-      , bottomRight.step(speed)
+        topLeft.step(speed, virusDroppedCallback)
+      , bottomLeft.step(speed, virusDroppedCallback)
+      , topRight.step(speed, virusDroppedCallback)
+      , bottomRight.step(speed, virusDroppedCallback)
     ]
 
+    // topLeft.step(speed, virusDroppedCallback)
+    // bottomLeft.step(speed, virusDroppedCallback)
+    // topRight.step(speed, virusDroppedCallback)
+    // bottomRight.step(speed, virusDroppedCallback)
+
     if (!topLeft.isVisible()) {
-        // log(`start 1 at ${rndValue}`)
         topLeft.start(rndValue)
     } else if (!bottomLeft.isVisible()) {
-        // log(`start 2 at ${rndValue}`)
         bottomLeft.start(rndValue)
     } else if (!topRight.isVisible()) {
-        // log(`start 3 at ${rndValue}`)
         topRight.start(rndValue)
     } else if (!bottomRight.isVisible()) {
-        // log(`start 4 at ${rndValue}`)
         bottomRight.start(rndValue)
     }
+
+    // todo: remove the next lines
 
     log(`viruses tick ${rndValue}, step results: ${JSON.stringify(stepResults)}`)
 
