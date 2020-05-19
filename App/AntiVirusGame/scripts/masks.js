@@ -4,7 +4,7 @@ import initMask from './mask'
 let rightMask = null
 let centerMask = null
 let leftMask = null
-let numberOfMasks = 25
+let numberOfMasks = 5
 
 const init = () => {
     var m1promise = initMask('mask1')

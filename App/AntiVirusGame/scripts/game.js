@@ -1,4 +1,5 @@
 const Time = require('Time')
+const Patches = require('Patches')
 
 import { log } from './logger'
 
@@ -12,7 +13,14 @@ import { log } from './logger'
 // faces:
 // - [-1, 0, 1] getSide()   // -1 if on the left, 1 if on the right, 0 if undefined state
 
-const Game = (faces, masks, viruses, exitCallback) => {
+const setNumberOfVirusesDropped = (others, number) => {
+    log(`numberOfVirusesDropped: ${number}`)
+    let str = number ? number.toString() : '0'
+    Patches.inputs.setString('numberOfVirusesDropped', str)
+    others.setText(str)
+}
+
+const Game = (faces, masks, viruses, others, exitCallback) => {
     let counter = 0
     let stageCapacity = 8
     let gameSpeed = 2100
@@ -23,53 +31,36 @@ const Game = (faces, masks, viruses, exitCallback) => {
         if (counter % stageCapacity === 0 && gameSpeed > 222) {
             gameSpeed -= 111
         }
-        log(`you've survided against ${counter} viruses!`)
     }
 
-    // const virusDroppedCallback = (side) => {
-    //     if (!side) return
+    const virusDroppedCallback = (side) => {
+        log(`VIRUS DROPPED ON ${side} SIDE`)
+        if (!side) return
 
-    //     const faceSide = faces.getSide()
+        increaseTickCounter()
+        setNumberOfVirusesDropped(others, counter.toString())
 
-    //     if (side === faceSide) {
-    //         const isAlive = masks.removeMask()
-    //         if (!isAlive) {
-    //             log('YOU DIED!')
-    //             // terminate
-    //             go = false          // move to class prop
-    //         } else {
-    //             // viruses.hideDropped()
-    //             increaseTickCounter()
-    //         }
-    //     } else {
-    //         // viruses.hideDropped()
-    //         increaseTickCounter()
-    //     }
-    // }
-
-    const tick = () => {
-        const virusesTick = viruses.tick((side) => log(`VIRUS DROPPED ON ${side} SIDE`))
         const faceSide = faces.getSide()
-        if (virusesTick) {
-            if (virusesTick === faceSide) {
-                const isAlive = masks.removeMask()
-                if (!isAlive) {
-                    log('YOU DIED!')
-                    // terminate
-                    go = false
-                } else {
-                    // viruses.hideDropped()
-                    increaseTickCounter()
-                }
-            } else {
-                // viruses.hideDropped()
-                increaseTickCounter()
+
+        if (side === faceSide) {
+            const isAlive = masks.removeMask()
+            if (!isAlive) {
+                log('YOU DIED!')
+                // terminate
+                go = false
             }
         }
+    }
+
+    const tick = () => {
+        viruses.tick(virusDroppedCallback)
         if (go) {
-            // increaseTickCounter()
             Time.setTimeout(() => {
-                tick()
+                if (go) {
+                    tick()
+                } else {
+                    exitCallback(counter)
+                }
             }, gameSpeed)
         } else {
             exitCallback(counter)
@@ -77,7 +68,9 @@ const Game = (faces, masks, viruses, exitCallback) => {
     }
 
     const play = () => {
-        log(`Game started. Face: ${!!faces}, masks: ${!!masks}, viruses: ${!!viruses}`)
+        log(`Game started. Face: ${!!faces}, masks: ${!!masks}, viruses: ${!!viruses}, others: ${!!others}`)
+
+        setNumberOfVirusesDropped(others, 0)
 
         Time.setTimeout(() => {
             tick()

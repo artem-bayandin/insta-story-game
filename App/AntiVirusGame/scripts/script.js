@@ -20,6 +20,7 @@ import { log } from './logger'
 import masks from './masks'
 import viruses from './viruses'
 import faces from './faces'
+import others from './others'
 import Game from './game'
 
 const exitCallback = (virusesCount) => {
@@ -29,13 +30,14 @@ const exitCallback = (virusesCount) => {
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
 
-    const game = new Game(faces, masks, viruses, exitCallback)
+    const game = new Game(faces, masks, viruses, others, exitCallback)
     game.play()
 }
 
 Promise.all([
     masks.init(),
     viruses.init(),
-    faces.init()
+    faces.init(),
+    others.init()
 ])
 .then(Time.setTimeout(() => { startTheGame() }, 5000))
