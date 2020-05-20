@@ -4,17 +4,21 @@ const Time = require('Time')
 
 import { log } from './logger'
 
-const virusScale = 666
+const virusScaleX = 666
+const virusScaleY = 623
 const fastAnimationSpeed = 10
 // const slowAnimationSpeed = 333
 
-const samplerShow = Animation.samplers.linear(0, virusScale)
-const samplerHide = Animation.samplers.linear(virusScale, 0) 
+const samplerShow = (scale) => Animation.samplers.linear(0, scale)
+const samplerHide = (scale) => Animation.samplers.linear(scale, 0) 
 
-const animateVisibility = (virus, driver, sampler) => {
+const animateVisibility = (virus, driver, samplerX, samplerY) => {
+    if (!samplerY) {
+        samplerY = samplerX
+    }
     //create an animation signal to control the object x position
-    virus.transform.scaleX = Animation.animate(driver, sampler)
-    virus.transform.scaleY = Animation.animate(driver, sampler)
+    virus.transform.scaleX = Animation.animate(driver, samplerX)
+    virus.transform.scaleY = Animation.animate(driver, samplerY)
 
     //start the animation
     driver.start()
@@ -64,14 +68,14 @@ class Virus {
     show() {
         if (this._isVisible) return
         // log(`SHOW_virus '${this.id}': ${!!this.virus}`)
-        animateVisibility(this.virus, this.fastDriver(), samplerShow)
+        animateVisibility(this.virus, this.fastDriver(), samplerShow(virusScaleX), samplerShow(virusScaleY))
         this._isVisible = true
     }
 
     hide() {
         if (!this._isVisible) return
         // log(`HIDE_virus '${this.id}': ${!!this.virus}`)
-        animateVisibility(this.virus, this.fastDriver(), samplerHide)
+        animateVisibility(this.virus, this.fastDriver(), samplerHide(virusScaleX), samplerHide(virusScaleY))
         this._isVisible = false
     }
 

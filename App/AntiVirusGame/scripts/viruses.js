@@ -87,6 +87,6 @@ const tick = (gameSpeed, virusDroppedCallback) => {
 const viruses = {
     init,
     tick
-}
+} 
 
 export default viruses
