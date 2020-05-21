@@ -22,7 +22,7 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
     let level = 0
 
     let stageCapacity = 6
-    let gameSpeed = 1750
+    let gameSpeed = 1600
     let go = true
 
     let timeCounter = 0
@@ -83,10 +83,6 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
         setNumberOfVirusesDropped(texts, level, droppedCounter, masks.livesLeft())
 
         tick()
-
-        // Time.setTimeout(() => {
-        //     tick()
-        // }, gameSpeed)
     }
 
     return {

@@ -1,5 +1,3 @@
-const Time = require('Time')
-
 import { log } from './logger'
 import initVirus from './virus'
 
@@ -49,17 +47,17 @@ const tick = (gameSpeed, virusDroppedCallback) => {
     const speed = Math.max(gameSpeed / 2, 350)
 
     // todo: remove the next lines
-    var stepResults = [
-        topLeft.step(speed, virusDroppedCallback)
-      , bottomLeft.step(speed, virusDroppedCallback)
-      , topRight.step(speed, virusDroppedCallback)
-      , bottomRight.step(speed, virusDroppedCallback)
-    ]
+    // var stepResults = [
+    //     topLeft.step(speed, virusDroppedCallback)
+    //   , bottomLeft.step(speed, virusDroppedCallback)
+    //   , topRight.step(speed, virusDroppedCallback)
+    //   , bottomRight.step(speed, virusDroppedCallback)
+    // ]
 
-    // topLeft.step(speed, virusDroppedCallback)
-    // bottomLeft.step(speed, virusDroppedCallback)
-    // topRight.step(speed, virusDroppedCallback)
-    // bottomRight.step(speed, virusDroppedCallback)
+    topLeft.step(speed, virusDroppedCallback)
+    bottomLeft.step(speed, virusDroppedCallback)
+    topRight.step(speed, virusDroppedCallback)
+    bottomRight.step(speed, virusDroppedCallback)
 
     if (!topLeft.isVisible()) {
         topLeft.start(rndValue)
@@ -73,15 +71,15 @@ const tick = (gameSpeed, virusDroppedCallback) => {
 
     // todo: remove the next lines
 
-    log(`viruses tick ${rndValue}, step results: ${JSON.stringify(stepResults)}`)
+    // log(`viruses tick ${rndValue}, step results: ${JSON.stringify(stepResults)}`)
 
-    const filteredResult = stepResults.filter(res => res[0] !== 0)
-    if (filteredResult && filteredResult.length) {
-        const [ value, timeout ] = filteredResult[0]
-        return value
-    }
+    // const filteredResult = stepResults.filter(res => res[0] !== 0)
+    // if (filteredResult && filteredResult.length) {
+    //     const [ value, timeout ] = filteredResult[0]
+    //     return value
+    // }
 
-    return 0
+    // return 0
 }
 
 const viruses = {

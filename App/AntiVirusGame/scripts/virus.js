@@ -91,14 +91,16 @@ class Virus {
 
         if (!this._isVisible) {
             // virusDroppedCallback(0)
-            return [ 0 ]
+            // return [ 0 ]
+            return
         }
 
         if (this.currentPosition >= 0 && this.currentPosition < 2) {
             this.currentPosition++
             this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed)
             // virusDroppedCallback(0)
-            return [ 0 ]
+            // return [ 0 ]
+            return
         } else if (this.currentPosition == 2) {
             // move to the end and drop
             this.currentPosition++
@@ -120,7 +122,8 @@ class Virus {
             }
             this.moveTo(this.routes[this.currentPosition].x, this.routes[this.currentPosition].y, innerSpeed, onMoveCompleted)
 
-            return [ this.routes[this.currentPosition].x < 0 ? -1 : 1, innerSpeed + dropSpeed ]
+            // return [ this.routes[this.currentPosition].x < 0 ? -1 : 1, innerSpeed + dropSpeed ]
+            return
         }
     }
 
