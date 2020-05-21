@@ -22,7 +22,7 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
     let level = 0
 
     let stageCapacity = 6
-    let gameSpeed = 1600
+    let gameSpeed = 1500
     let go = true
 
     let timeCounter = 0
@@ -31,7 +31,7 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
     const increaseTickCounter = () => {
         ticksCounter++
         if (ticksCounter % stageCapacity === 0) {
-            if (gameSpeed > 400) {
+            if (gameSpeed > 450) {
                 gameSpeed -= 150
             }
             level++
