@@ -3,8 +3,8 @@ import initFace from './face'
 
 let face = null
 
-const init = () => {
-    var promise1 = initFace('face')
+const init = (materialType) => {
+    var promise1 = initFace('face', materialType)
             .then(obj => {
                 face = obj
                 // log(`face loaded: '${face.getId()}'`)
