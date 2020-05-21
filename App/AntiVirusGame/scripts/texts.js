@@ -7,7 +7,7 @@ class TxtScore extends Base {
     }
 
     setText(text) {
-        log(`${this.id} set text ${text}`)
+        // log(`${this.id} set text ${text}`)
         this.obj.text = text.toString()
     }
 
@@ -77,10 +77,10 @@ const init = () => {
         const prefix = 'level'
         findMe(id)
             .then(item => {
-                log(`'${id}' found: ${!!item}`)
+                // log(`'${id}' found: ${!!item}`)
                 txtLevel = new TxtScore(id, item)
                 txtLevel.clearText()
-                log(`'${id}' created: ${!!txtLevel}`)  
+                // log(`'${id}' created: ${!!txtLevel}`)  
                 res(txtLevel)
             })
     })
@@ -89,10 +89,10 @@ const init = () => {
         const prefix = 'viruses'
         findMe(id)
             .then(item => {
-                log(`'${id}' found: ${!!item}`)
+                // log(`'${id}' found: ${!!item}`)
                 txtViruses = new TxtScore(id, item)
                 txtViruses.clearText()
-                log(`'${id}' created: ${!!txtViruses}`)  
+                // log(`'${id}' created: ${!!txtViruses}`)  
                 res(txtViruses)
             })
     })
@@ -101,10 +101,10 @@ const init = () => {
         const prefix = 'lifes'
         findMe(id)
             .then(item => {
-                log(`'${id}' found: ${!!item}`)
+                // log(`'${id}' found: ${!!item}`)
                 txtLives = new TxtScore(id, item)
                 txtLives.clearText()
-                log(`'${id}' created: ${!!txtLives}`)  
+                // log(`'${id}' created: ${!!txtLives}`)  
                 res(txtLives)
             })
     })
@@ -113,10 +113,10 @@ const init = () => {
         const postfix = 'sec'
         findMe(id)
             .then(item => {
-                log(`'${id}' found: ${!!item}`)
+                // log(`'${id}' found: ${!!item}`)
                 txtTimer = new TxtTimer(id, item)
                 txtTimer.clearText()
-                log(`'${id}' created: ${!!txtTimer}`)  
+                // log(`'${id}' created: ${!!txtTimer}`)  
                 res(txtTimer)
             })
     })

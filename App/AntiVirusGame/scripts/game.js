@@ -39,11 +39,18 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
         }
     }
 
+    const increaseDroppedCounter = () => {
+        droppedCounter++
+        if (droppedCounter % 10 == 0) {
+            masks.addMask()
+        }
+    }
+
     const virusDroppedCallback = (side) => {
         log(`VIRUS DROPPED ON ${side} SIDE`)
         if (!side) return
 
-        droppedCounter++
+        increaseDroppedCounter()
 
         const faceSide = faces.getSide()
 

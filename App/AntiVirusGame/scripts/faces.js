@@ -7,7 +7,7 @@ const init = () => {
     var promise1 = initFace('face')
             .then(obj => {
                 face = obj
-                log(`face loaded: '${face.getId()}'`)
+                // log(`face loaded: '${face.getId()}'`)
             })
 
     return Promise.all([promise1])

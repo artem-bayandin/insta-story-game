@@ -147,9 +147,9 @@ const initVirus = (identifier) => {
     return new Promise((res, rej) => {
         Scene.root.findFirst(identifier)
             .then(item => {
-                log(`'${identifier}' virus found: ${!!item}`)
+                // log(`'${identifier}' virus found: ${!!item}`)
                 const virus = new Virus(identifier, item)
-                log(`'${identifier}' virus created: ${!!virus}`)
+                // log(`'${identifier}' virus created: ${!!virus}`)
                 res(virus)
             })
     })

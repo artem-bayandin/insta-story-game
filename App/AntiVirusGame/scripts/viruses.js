@@ -10,25 +10,25 @@ const init = () => {
     var promise1 = initVirus('virus1')
             .then(obj => {
                 topLeft = obj
-                log(`topLeft virus loaded: ${topLeft.getId()}`)
+                // log(`topLeft virus loaded: ${topLeft.getId()}`)
             })
     var promise2 = initVirus('virus2')
             .then(obj => {
                 bottomLeft = obj
-                log(`bottomLeft virus loaded: ${bottomLeft.getId()}`)
+                // log(`bottomLeft virus loaded: ${bottomLeft.getId()}`)
             })
     var promise3 = initVirus('virus3')
             .then(obj => {
                 topRight = obj
-                log(`topRight virus loaded: ${topRight.getId()}`)
+                // log(`topRight virus loaded: ${topRight.getId()}`)
             })
     var promise4 = initVirus('virus4')
             .then(obj => {
                 bottomRight = obj
-                log(`bottomRight virus loaded: ${bottomRight.getId()}`)
+                // log(`bottomRight virus loaded: ${bottomRight.getId()}`)
             })
     
-    log('loading viruses...')
+    // log('loading viruses...')
 
     return Promise.all([promise1, promise2, promise3, promise4]).then(() => {
         topLeft.hide()

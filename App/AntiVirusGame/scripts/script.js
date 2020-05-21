@@ -20,7 +20,7 @@ const startTheGame = () => {
 }
 
 Promise.all([
-    masks.init(),
+    masks.init(10),
     viruses.init(),
     faces.init(),
     texts.init()

@@ -11,9 +11,9 @@ const initFace = (identifier) => {
     return new Promise((res, rej) => {
         findMe(identifier)
             .then(item => {
-                log(`'${identifier}' face found: ${!!item}`)
+                // log(`'${identifier}' face found: ${!!item}`)
                 const face = new Face(identifier, item)
-                log(`'${identifier}' face created: ${!!face}`)
+                // log(`'${identifier}' face created: ${!!face}`)
                 res(face)
             })
     })
