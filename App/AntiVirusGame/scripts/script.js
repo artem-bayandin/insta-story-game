@@ -24,7 +24,7 @@ const startTheGame = () => {
 Promise.all([
     masks.init(7),
     viruses.init(),
-    faces.init(FACE_MATERIAL_FACE),
+    faces.init(FACE_MATERIAL_TRACTOR),
     texts.init()
 ])
 .then(Time.setTimeout(() => { startTheGame() }, 1000))
