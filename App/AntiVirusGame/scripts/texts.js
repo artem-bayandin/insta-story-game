@@ -44,6 +44,28 @@ class TxtScoreWithPostfix extends TxtScore {
     }
 }
 
+class TxtTimerWithPostfix extends TxtScoreWithPostfix {
+    constructor(id, obj, postfix) {
+        super(id, obj, postfix)
+    }
+
+    setText(text) {
+        let secondsString = ((+text)/1000).toFixed(1).replace('.', ':')
+        super.setText(secondsString)
+    }
+}
+
+class TxtTimer extends TxtScore {
+    constructor(id, obj) {
+        super(id, obj)
+    }
+
+    setText(text) {
+        let secondsString = ((+text)/1000).toFixed(1).replace('.', ':')
+        super.setText(secondsString)
+    }
+}
+
 let txtLevel = null
 let txtViruses = null
 let txtLives = null
@@ -88,11 +110,11 @@ const init = () => {
     })
     const txtTimerPromise = new Promise((res, rej) => {
         const id = 'txtTimer'
-        const postfix = 'ms'
+        const postfix = 'sec'
         findMe(id)
             .then(item => {
                 log(`'${id}' found: ${!!item}`)
-                txtTimer = new TxtScoreWithPostfix(id, item, postfix)
+                txtTimer = new TxtTimer(id, item)
                 txtTimer.clearText()
                 log(`'${id}' created: ${!!txtTimer}`)  
                 res(txtTimer)

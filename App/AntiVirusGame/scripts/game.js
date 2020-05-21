@@ -26,6 +26,7 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
     let go = true
 
     let timeCounter = 0
+    let timeInterval = null
 
     const increaseTickCounter = () => {
         ticksCounter++
@@ -52,6 +53,7 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
                 log('YOU DIED!')
                 // terminate
                 go = false
+                Time.clearInterval(timeInterval)
             }
         }
 
@@ -60,9 +62,9 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
 
     const tick = () => {
         viruses.tick(gameSpeed, virusDroppedCallback)
-        texts.setTime(timeCounter)
+        // texts.setTime(timeCounter)
 
-        timeCounter += gameSpeed
+        // timeCounter += gameSpeed
         increaseTickCounter()
         if (go) {
             Time.setTimeout(() => {
@@ -83,6 +85,10 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
         setNumberOfVirusesDropped(texts, level, droppedCounter, masks.livesLeft())
 
         tick()
+        timeInterval = Time.setInterval(() => {
+            texts.setTime(timeCounter)
+            timeCounter += 100
+        }, 100)
     }
 
     return {
