@@ -1,11 +1,25 @@
 import { createWithId, createWithCoordinates } from './inheritance'
 
-export const PLAYER_MATERIAL_TRACTOR = 'PLAYER_MATERIAL_TRACTOR'
-export const PLAYER_MATERIAL_FACE = 'PLAYER_MATERIAL_FACE'
+/*
+ *  PLAYER CONSTANTS
+ */
+
+export const PLAYER_TRACTOR = {
+    ID: 'PLAYER_TRACTOR',
+    MATERIAL: 'belarus-1',
+    SCALE_X: 1000,
+    SCALE_Y: 780
+}
+
+export const PLAYER_FACE = {
+    ID: 'PLAYER_FACE',
+    MATERIAL: 'face-2',
+    SCALE_X: 700,
+    SCALE_Y: 750
+}
 
 /*
  *  PLAYER ENTITY
- *  refactor it 
  */
 
 export const Player = (id, obj) => {

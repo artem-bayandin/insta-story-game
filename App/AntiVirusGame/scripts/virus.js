@@ -1,39 +1,13 @@
-const Scene = require('Scene')
 const Animation = require('Animation')
 const Time = require('Time')
 
 import { log } from './logger'
+import { linearSamplerUp, linearSamplerDown, animateVisibility, animateLinearMove, timeDriver } from './utils'
+import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
 
 const virusScaleX = 666
 const virusScaleY = 623
 const fastAnimationSpeed = 10
-// const slowAnimationSpeed = 333
-
-const samplerShow = (scale) => Animation.samplers.linear(0, scale)
-const samplerHide = (scale) => Animation.samplers.linear(scale, 0) 
-
-const animateVisibility = (virus, driver, samplerX, samplerY) => {
-    if (!samplerY) {
-        samplerY = samplerX
-    }
-    //create an animation signal to control the object x position
-    virus.transform.scaleX = Animation.animate(driver, samplerX)
-    virus.transform.scaleY = Animation.animate(driver, samplerY)
-
-    //start the animation
-    driver.start()
-}
-
-const animateMove = (mask, driver, to) => {
-    //create an animation signal to control the object x position
-    const currentX = mask.transform.x.pinLastValue()
-    const currentY = mask.transform.y.pinLastValue()
-    mask.transform.x = Animation.animate(driver, Animation.samplers.linear(currentX, to.x))
-    mask.transform.y = Animation.animate(driver, Animation.samplers.linear(currentY, to.y))
-
-    //start the animation
-    driver.start()
-}
 
 const dropLeft         = { x: -50, y: -180 }
 const dropRight        = { x:  50, y: -180 }
@@ -43,7 +17,73 @@ const topRightSteps    = [{ x:  155, y: 215 }, { x:  120, y: 200 }, { x:  85, y:
 const bottomRightSteps = [{ x:  155, y:  65 }, { x:  120, y:  50 }, { x:  85, y:  35 }, { x:  50, y:  20 }, dropRight]
 const routes = [ topLeftSteps, bottomLeftSteps, topRightSteps, bottomRightSteps ]
 
-class Virus {
+export const V = (id, obj) => {
+    let base = {
+        ...createWithCoordinates(obj),
+        ...createWithId(id),
+        ...createWithShowHide(obj),
+        ...createWithMove(obj),
+    }
+
+    let routes = null
+    let currentPosition = -1
+
+    const start = (num) => {
+        log(`VIRUS ${id} START`)
+        routes = routes[num]
+        currentPosition = 0
+        base.moveTo(routes[0].x, routes[0].y, fastAnimationSpeed)
+        base.show()
+    }
+
+    const step = (speed, virusDroppedCallback) => {
+        const innerSpeed = speed / 2
+        const dropSpeed = innerSpeed / 2
+
+        if (!base.isVisible()) return
+
+        log(`VIRUS ${id} STEP 2 visible: ${base.isVisible()}`)
+
+        if (currentPosition >= 0 && currentPosition < 2) {
+            log(`VIRUS ${id} STEP 3`)
+            currentPosition++
+            base.moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed)
+            return
+        }
+        log(`VIRUS ${id} STEP 4 cp ${currentPosition}`)
+        
+        // if (currentPosition == 2) {
+        //     // move to the end and drop
+        //     currentPosition++
+        //     var that = this
+        //     let onMoveCompleted = () => {
+        //         log(`virus '${that.id}' is on the edge!`)
+        //         that.currentPosition++
+        //         let onDroppedCompleted = () => {
+        //             log(`virus '${that.base.id}' dopped!`)
+        //             that.base.hide()
+        //             that.currentPosition = -1
+        //         }
+        //         that.base.moveTo(that.routes[that.routes.length - 1].x, that.routes[that.routes.length - 1].y, dropSpeed, onDroppedCompleted)
+                
+        //         let side = routes[currentPosition].x < 0 ? -1 : 1
+        //         Time.setTimeout(() => {
+        //             virusDroppedCallback(side)
+        //         }, dropSpeed / 2)
+        //     }
+        //     moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed, onMoveCompleted)
+        //     return
+        // }
+    }
+
+    return {
+        ...base,
+        start,
+        step
+    }
+}
+
+export class Virus {
     constructor(id, virus) {
         this.id = id
         this.virus = virus
@@ -53,38 +93,37 @@ class Virus {
         this.currentPosition = -1
     }
 
+    // NOT NEEDED
     fastDriver() {
-        return this.driver(fastAnimationSpeed)
+        return timeDriver(fastAnimationSpeed)
     }
 
-    // slowDriver() {
-    //     return this.driver(slowAnimationSpeed)
-    // }
-
-    driver(speed) {
-        return Animation.timeDriver({durationMilliseconds: speed})
-    }
-
+    // MOVED
     show() {
         if (this._isVisible) return
         // log(`SHOW_virus '${this.id}': ${!!this.virus}`)
-        animateVisibility(this.virus, this.fastDriver(), samplerShow(virusScaleX), samplerShow(virusScaleY))
+        animateVisibility(this.virus, this.fastDriver(), linearSamplerUp(virusScaleX), linearSamplerUp(virusScaleY))
         this._isVisible = true
     }
 
+    // MOVED
     hide() {
         if (!this._isVisible) return
         // log(`HIDE_virus '${this.id}': ${!!this.virus}`)
-        animateVisibility(this.virus, this.fastDriver(), samplerHide(virusScaleX), samplerHide(virusScaleY))
+        animateVisibility(this.virus, this.fastDriver(), linearSamplerDown(virusScaleX), linearSamplerDown(virusScaleY))
         this._isVisible = false
     }
 
+    // MOVED
     setVisibility(value) { this._isVisible = value }
 
+    // MOVED
     isVisible() { return this._isVisible }
 
+    // MOVED
     getId() { return this.id }
 
+    // SHOULD BE LEFT HERE
     step(speed, virusDroppedCallback) {
         const innerSpeed = speed / 2
         const dropSpeed = innerSpeed / 2
@@ -127,14 +166,16 @@ class Virus {
         }
     }
 
+    // MOVED
     moveTo(x, y, speed, onCompleted) {
-        let driver = this.driver(speed)
+        let driver = timeDriver(speed)
         if (onCompleted) {
             driver.onCompleted().subscribe(onCompleted)
         }
-        animateMove(this.virus, driver, { x, y })
+        animateLinearMove(this.virus, driver, { x, y })
     }
 
+    // SHOULD BE LEFT HERE
     start(num) {
         this.routes = routes[num]
         this.currentPosition = 0
@@ -142,17 +183,3 @@ class Virus {
         this.show()
     }
 }
-
-const initVirus = (identifier) => {
-    return new Promise((res, rej) => {
-        Scene.root.findFirst(identifier)
-            .then(item => {
-                // log(`'${identifier}' virus found: ${!!item}`)
-                const virus = new Virus(identifier, item)
-                // log(`'${identifier}' virus created: ${!!virus}`)
-                res(virus)
-            })
-    })
-}
-
-export default initVirus

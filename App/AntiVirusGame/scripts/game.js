@@ -6,7 +6,7 @@ import { log } from './logger'
 // - void increase()         // done
 // - bool decrease()      // done 
 
-// viruses:
+// virusService:
 // - [-1, 0, 1] tick()      // should return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 
 // playerService:
@@ -16,7 +16,7 @@ const setNumberOfVirusesDropped = (textService, level, virusesDropped, livesLeft
     textService.setText(level, virusesDropped, livesLeft)
 }
 
-const Game = (playerService, energyService, viruses, textService, exitCallback) => {
+const Game = (playerService, energyService, virusService, textService, exitCallback) => {
     let ticksCounter = 0
     let droppedCounter = 0
     let level = 0
@@ -68,7 +68,7 @@ const Game = (playerService, energyService, viruses, textService, exitCallback) 
     }
 
     const tick = () => {
-        viruses.tick(gameSpeed, virusDroppedCallback)
+        virusService.tick(gameSpeed, virusDroppedCallback)
         increaseTickCounter()
         if (go) {
             Time.setTimeout(() => {
@@ -84,7 +84,7 @@ const Game = (playerService, energyService, viruses, textService, exitCallback) 
     }
 
     const play = () => {
-        log(`Game started. Player service: ${!!playerService}, Energy service: ${!!energyService}, viruses: ${!!viruses}, Text service: ${!!textService}`)
+        log(`Game started. Player service: ${!!playerService}, Energy service: ${!!energyService}, Virus service: ${!!virusService}, Text service: ${!!textService}`)
 
         setNumberOfVirusesDropped(textService, level, droppedCounter, energyService.capacityLeft())
 

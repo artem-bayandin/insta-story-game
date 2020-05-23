@@ -1,3 +1,5 @@
+import { linearSamplerUp, linearSamplerDown, animateVisibility, animateLinearMove, timeDriver } from './utils'
+
 /*
  *  GENERAL CREATORS
  */
@@ -18,6 +20,47 @@ export const createWithCoordinates = (obj) => {
 
     return {
         getCoordinates
+    }
+}
+
+export const createWithShowHide = (obj) => {
+    let _isVisible = true
+
+    const show = (speed, scaleX, scaleY) => {
+        if (isVisible()) return
+        animateVisibility(obj, timeDriver(speed), linearSamplerUp(scaleX), linearSamplerUp(scaleY || scaleX))
+        setVisibility(true)
+    }
+
+    const hide = (speed, scaleX, scaleY) => {
+        if (!isVisible()) return
+        animateVisibility(obj, timeDriver(speed), linearSamplerDown(scaleX), linearSamplerDown(scaleY || scaleX))
+        setVisibility(false)
+    }
+
+    const setVisibility = (value) => _isVisible = value
+
+    const isVisible = () => _isVisible
+
+    return {
+        show,
+        hide,
+        setVisibility,
+        isVisible
+    }
+}
+
+export const createWithMove = (obj) => {
+    const moveTo = (x, y, speed, onCompleted = null) => {
+        let driver = timeDriver(speed)
+        if (onCompleted && typeof(onCompleted) === 'function') {
+            driver.onCompleted().subscribe(onCompleted)
+        }
+        animateLinearMove(obj, driver, { x, y })
+    }
+
+    return {
+        moveTo
     }
 }
 

@@ -1,6 +1,6 @@
 import { log } from './logger'
 import { findMe, findMaterial } from './utils'
-import { Player, PLAYER_MATERIAL_TRACTOR, PLAYER_MATERIAL_FACE } from './player'
+import { Player, PLAYER_TRACTOR, PLAYER_FACE } from './player'
 
 /*
  *  PLAYER SERVICE 
@@ -14,22 +14,22 @@ const init = (materialType) => {
         findMe(identifier)
             .then(item => {
                 switch(materialType) {
-                    case PLAYER_MATERIAL_FACE:
-                        findMaterial('face-2')
+                    case PLAYER_FACE.ID:
+                        findMaterial(PLAYER_FACE.MATERIAL)
                             .then(mat => {
                                 item.material = mat
-                                item.transform.scaleX = 700
-                                item.transform.scaleY = 750
+                                item.transform.scaleX = PLAYER_FACE.SCALE_X
+                                item.transform.scaleY = PLAYER_FACE.SCALE_Y
                                 player = new Player(identifier, item)
                                 res(player)
                             })
                         break
-                    case PLAYER_MATERIAL_TRACTOR:
-                        findMaterial('belarus-1')
+                    case PLAYER_TRACTOR.ID:
+                        findMaterial(PLAYER_TRACTOR.MATERIAL)
                             .then(mat => {
                                 item.material = mat
-                                item.transform.scaleX = 1000
-                                item.transform.scaleY = 780
+                                item.transform.scaleX = PLAYER_TRACTOR.SCALE_X
+                                item.transform.scaleY = PLAYER_TRACTOR.SCALE_Y
                                 player = new Player(identifier, item)
                                 res(player)
                             })

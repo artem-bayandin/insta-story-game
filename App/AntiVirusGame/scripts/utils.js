@@ -19,6 +19,9 @@ export const findMaterial = identifier => {
  */
 
 export const animateVisibility = (obj, driver, samplerX, samplerY) => {
+    if (!samplerY) {
+        samplerY = samplerX
+    }
     obj.transform.scaleX = Animation.animate(driver, samplerX)
     obj.transform.scaleY = Animation.animate(driver, samplerY)
     driver.start()
@@ -37,3 +40,5 @@ export const linearSamplerUp = scale => linearSamplerFromTo(0, scale)
 export const linearSamplerDown = scale => linearSamplerFromTo(scale, 0)
 
 export const linearSamplerFromTo = (from, to) => Animation.samplers.linear(from, to)
+
+export const timeDriver = (speed) => Animation.timeDriver({durationMilliseconds: speed})
