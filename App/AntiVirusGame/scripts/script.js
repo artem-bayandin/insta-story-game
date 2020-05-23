@@ -2,13 +2,13 @@ const Time = require('Time')
 
 import { log } from './logger'
 
-import masks from './masks'
+import energyService from './energyService'
 import viruses from './viruses'
-import faces from './faces'
-import texts from './texts'
+import playerService from './playerService'
+import textService from './textService'
 import Game from './game'
 
-import { FACE_MATERIAL_FACE, FACE_MATERIAL_TRACTOR } from './face'
+import { PLAYER_MATERIAL_TRACTOR, PLAYER_MATERIAL_FACE } from './player'
 
 const exitCallback = (virusesCount) => {
     log(`--- -- - game finised - -- - total score: ${virusesCount} viruses - -- ---`)
@@ -17,14 +17,14 @@ const exitCallback = (virusesCount) => {
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
 
-    const game = new Game(faces, masks, viruses, texts, exitCallback)
+    const game = new Game(playerService, energyService, viruses, textService, exitCallback)
     game.play()
 }
 
 Promise.all([
-    masks.init(7),
+    energyService.init(7),
     viruses.init(),
-    faces.init(FACE_MATERIAL_TRACTOR),
-    texts.init()
+    playerService.init(PLAYER_MATERIAL_TRACTOR),
+    textService.init()
 ])
 .then(Time.setTimeout(() => { startTheGame() }, 1000))

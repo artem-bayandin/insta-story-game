@@ -2,27 +2,27 @@ const Time = require('Time')
 
 import { log } from './logger'
 
-// masks:
-// - void addMask()         // done
-// - bool removeMask()      // done 
+// energyService:
+// - void increase()         // done
+// - bool decrease()      // done 
 
 // viruses:
 // - [-1, 0, 1] tick()      // should return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 
-// faces:
+// playerService:
 // - [-1, 0, 1] getSide()   // -1 if on the left, 1 if on the right, 0 if undefined state
 
-const setNumberOfVirusesDropped = (texts, level, virusesDropped, livesLeft) => {
-    texts.setText(level, virusesDropped, livesLeft)
+const setNumberOfVirusesDropped = (textService, level, virusesDropped, livesLeft) => {
+    textService.setText(level, virusesDropped, livesLeft)
 }
 
-const Game = (faces, masks, viruses, texts, exitCallback) => {
+const Game = (playerService, energyService, viruses, textService, exitCallback) => {
     let ticksCounter = 0
     let droppedCounter = 0
     let level = 0
 
     let stageCapacity = 6
-    let gameSpeed = 1500
+    let gameSpeed = 1350
     let go = true
 
     let timeCounter = 0
@@ -35,14 +35,14 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
                 gameSpeed -= 150
             }
             level++
-            log(`Game Speed Up. Level: ${level}, speed: ${gameSpeed}, ticks: ${ticksCounter}, dropped: ${droppedCounter}, lives left: ${masks.livesLeft()}`)
+            log(`Game Speed Up. Level: ${level}, speed: ${gameSpeed}, ticks: ${ticksCounter}, dropped: ${droppedCounter}, Energy service: ${energyService.capacityLeft()}`)
         }
     }
 
     const increaseDroppedCounter = () => {
         droppedCounter++
         if (droppedCounter % 10 == 0) {
-            masks.addMask()
+            energyService.increase()
         }
     }
 
@@ -52,10 +52,10 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
 
         increaseDroppedCounter()
 
-        const faceSide = faces.getSide()
+        const playerSide = playerService.getSide()
 
-        if (side === faceSide) {
-            const isAlive = masks.removeMask()
+        if (side === playerSide) {
+            const isAlive = energyService.decrease()
             if (!isAlive) {
                 log('YOU DIED!')
                 // terminate
@@ -64,14 +64,11 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
             }
         }
 
-        setNumberOfVirusesDropped(texts, level, droppedCounter, masks.livesLeft())
+        setNumberOfVirusesDropped(textService, level, droppedCounter, energyService.capacityLeft())
     }
 
     const tick = () => {
         viruses.tick(gameSpeed, virusDroppedCallback)
-        // texts.setTime(timeCounter)
-
-        // timeCounter += gameSpeed
         increaseTickCounter()
         if (go) {
             Time.setTimeout(() => {
@@ -87,13 +84,13 @@ const Game = (faces, masks, viruses, texts, exitCallback) => {
     }
 
     const play = () => {
-        log(`Game started. Face: ${!!faces}, masks: ${!!masks}, viruses: ${!!viruses}, texts: ${!!texts}`)
+        log(`Game started. Player service: ${!!playerService}, Energy service: ${!!energyService}, viruses: ${!!viruses}, Text service: ${!!textService}`)
 
-        setNumberOfVirusesDropped(texts, level, droppedCounter, masks.livesLeft())
+        setNumberOfVirusesDropped(textService, level, droppedCounter, energyService.capacityLeft())
 
         tick()
         timeInterval = Time.setInterval(() => {
-            texts.setTime(timeCounter)
+            textService.setTime(timeCounter)
             timeCounter += 100
         }, 100)
     }
