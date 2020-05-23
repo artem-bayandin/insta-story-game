@@ -6,8 +6,9 @@ import { log } from './logger'
 
 let capacity = 0
 
-const init = (initialCapacity) => {
-    capacity = initialCapacity
+const init = ({energyOptions}) => {
+    const { initial } = energyOptions
+    capacity = initial
     return 1
 }
 
@@ -19,8 +20,6 @@ const decrease = () => {
     capacity--
     if (capacity < 1) {
         log('you died...(')
-    } else {
-        log(`---------------------------------------------------------------------   LIVES:   ${capacity}`)
     }
     return capacity > 0
 }

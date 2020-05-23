@@ -10,21 +10,43 @@ import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './player'
 
+const startTheGame = () => {
+    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
+    const game = new Game(gameOptions)
+    game.play()
+}
+
 const exitCallback = (virusesCount) => {
     log(`--- -- - game finised - -- - total score: ${virusesCount} viruses - -- ---`)
 }
 
-const startTheGame = () => {
-    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
-
-    const game = new Game(playerService, energyService, virusService, textService, exitCallback)
-    game.play()
+const gameOptions = {
+    services: {
+        playerService,
+        energyService,
+        virusService,
+        textService,
+    },
+    exitCallback,
+    gameSpeedOptions: {
+        initialGameSpeed: 1300,
+        gameSpeedStep: 150,
+        maxGameSpeed: 450,
+        initialStageCapacity: 6
+    },
+    energyOptions: {
+        initial: 7,
+        increaseWhenDropped: 10
+    },
+    playerOptions: {
+        type: PLAYER_TRACTOR.ID
+    }
 }
 
 Promise.all([
-    energyService.init(7),
+    energyService.init(gameOptions),
     virusService.init(),
-    playerService.init(PLAYER_TRACTOR.ID),
+    playerService.init(gameOptions),
     textService.init()
 ])
 .then(Time.setTimeout(() => { startTheGame() }, 1000))

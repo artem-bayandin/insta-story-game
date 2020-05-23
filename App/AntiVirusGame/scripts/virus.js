@@ -45,7 +45,6 @@ export const Virus = (id, obj) => {
                 log(`virus '${id}' is on the edge!`)
                 currentPosition++
                 let onDroppedCompleted = () => {
-                    log(`virus '${id}' dopped!`)
                     base.hide()
                     currentPosition = -1
                 }

@@ -8,12 +8,14 @@ import { Player, PLAYER_TRACTOR, PLAYER_FACE } from './player'
 
 let player = null
 
-const init = (materialType) => {
+const init = ({playerOptions}) => {
+    const {type} = playerOptions
+
     var promise1 = new Promise((res, rej) => {
         const identifier = 'face'
         findMe(identifier)
             .then(item => {
-                switch(materialType) {
+                switch(type) {
                     case PLAYER_FACE.ID:
                         findMaterial(PLAYER_FACE.MATERIAL)
                             .then(mat => {
