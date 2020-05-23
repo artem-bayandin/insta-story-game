@@ -23,16 +23,18 @@ export const createWithCoordinates = (obj) => {
     }
 }
 
-export const createWithShowHide = (obj) => {
+export const createWithShowHide = (obj, speed, scaleX, scaleY) => {
     let _isVisible = true
 
-    const show = (speed, scaleX, scaleY) => {
+    // TODO: refactor to pass { speed, scaleX, scaleY } params
+    const show = () => {
         if (isVisible()) return
         animateVisibility(obj, timeDriver(speed), linearSamplerUp(scaleX), linearSamplerUp(scaleY || scaleX))
         setVisibility(true)
     }
 
-    const hide = (speed, scaleX, scaleY) => {
+    // TODO: refactor to pass { speed, scaleX, scaleY } params
+    const hide = () => {
         if (!isVisible()) return
         animateVisibility(obj, timeDriver(speed), linearSamplerDown(scaleX), linearSamplerDown(scaleY || scaleX))
         setVisibility(false)

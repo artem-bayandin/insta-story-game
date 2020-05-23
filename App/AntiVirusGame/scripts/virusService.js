@@ -1,6 +1,5 @@
 import { findMe } from './utils'
-import { log } from './logger'
-import { Virus, V } from './virus' 
+import { Virus } from './virus' 
 
 /*
  *  VIRUS SERVICE 
@@ -13,7 +12,8 @@ let bottomRight = null
 
 const initVirus = (identifier) => {
     return new Promise((res, rej) => {
-        findMe(identifier).then(item => {
+        findMe(identifier)
+            .then(item => {
                 const virus = new Virus(identifier, item)
                 res(virus)
             })
@@ -21,13 +21,32 @@ const initVirus = (identifier) => {
 }
 
 const init = () => {
-    var promise1 = initVirus('virus1').then(obj => topLeft = obj)
-    var promise2 = initVirus('virus2').then(obj => bottomLeft = obj)
-    var promise3 = initVirus('virus3').then(obj => topRight = obj)
-    var promise4 = initVirus('virus4').then(obj => bottomRight = obj)
+    var promise1 = new Promise((res, rej) => {
+            initVirus('virus1').then(obj => {
+                topLeft = obj
+                res(topLeft)
+            })
+        })
+    var promise2 = new Promise((res, rej) => {
+            initVirus('virus2').then(obj => {
+                bottomLeft = obj
+                res(bottomLeft)
+            })
+        })
+    var promise3 = new Promise((res, rej) => {
+            initVirus('virus3').then(obj => {
+                topRight = obj
+                res(topRight)
+            })
+        })
+    var promise4 = new Promise((res, rej) => {
+            initVirus('virus4').then(obj => {
+                bottomRight = obj
+                res(bottomRight)
+            })
+        })
 
     return Promise.all([promise1, promise2, promise3, promise4]).then(() => {
-        log(JSON.stringify(topLeft))
         topLeft.hide()
         bottomLeft.hide()
         topRight.hide()
