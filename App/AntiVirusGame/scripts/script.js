@@ -39,7 +39,14 @@ const gameOptions = {
         increaseWhenDropped: 10
     },
     playerOptions: {
+        identifier: 'face',
         type: PLAYER_TRACTOR.ID
+    },
+    textServiceOptions: {
+        txtLevelId: 'txtLevel',
+        txtVirusesId: 'txtViruses',
+        txtLivesId: 'txtLives',
+        txtTimerId: 'txtTimer'
     }
 }
 
@@ -47,6 +54,6 @@ Promise.all([
     energyService.init(gameOptions),
     virusService.init(),
     playerService.init(gameOptions),
-    textService.init()
+    textService.init(gameOptions)
 ])
 .then(Time.setTimeout(() => { startTheGame() }, 1000))

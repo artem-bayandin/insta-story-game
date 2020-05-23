@@ -10,36 +10,34 @@ let txtViruses = null
 let txtLives = null
 let txtTimer = null
 
-const init = () => {
+const init = ({textServiceOptions}) => {
+    const { txtLevelId, txtVirusesId, txtLivesId, txtTimerId } = textServiceOptions
+
     const txtLevelPromise = new Promise((res, rej) => {
-        const id = 'txtLevel'
-        findMe(id)
+        findMe(txtLevelId)
             .then(item => {
-                txtLevel = new TxtScore(id, item)
+                txtLevel = new TxtScore(txtLevelId, item)
                 res(txtLevel)
             })
     })
     const txtVirusesPromise = new Promise((res, rej) => {
-        const id = 'txtViruses'
-        findMe(id)
+        findMe(txtVirusesId)
             .then(item => {
-                txtViruses = new TxtScore(id, item)
+                txtViruses = new TxtScore(txtVirusesId, item)
                 res(txtViruses)
             })
     })
     const txtLivesPromise = new Promise((res, rej) => {
-        const id = 'txtLives'
-        findMe(id)
+        findMe(txtLivesId)
             .then(item => {
-                txtLives = new TxtScore(id, item)
+                txtLives = new TxtScore(txtLivesId, item)
                 res(txtLives)
             })
     })
     const txtTimerPromise = new Promise((res, rej) => {
-        const id = 'txtTimer'
-        findMe(id)
+        findMe(txtTimerId)
             .then(item => {
-                txtTimer = new TxtTimer(id, item)
+                txtTimer = new TxtTimer(txtTimerId, item)
                 res(txtTimer)
             })
     })

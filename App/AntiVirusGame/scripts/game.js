@@ -46,9 +46,10 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
 
         increaseDroppedCounter()
 
-        const playerSide = playerService.getSide()
+        // TODO: how will I compare vertical position???
+        const [ playerSideX, playerSideY ] = playerService.getSides()
 
-        if (side === playerSide) {
+        if (side === playerSideX) {
             const isAlive = energyService.decrease()
             if (!isAlive) {
                 log('YOU DIED!')

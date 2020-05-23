@@ -7,38 +7,33 @@ import { Player, PLAYER_TRACTOR, PLAYER_FACE } from './player'
  */
 
 let player = null
+let playerConfig = null
 
 const init = ({playerOptions}) => {
-    const {type} = playerOptions
+    const {type, identifier} = playerOptions
+    switch (type) {
+        case PLAYER_FACE.ID:
+            playerConfig = PLAYER_FACE
+            break
+        case PLAYER_TRACTOR.ID:
+            playerConfig = PLAYER_TRACTOR
+            break
+        default:
+            playerConfig = PLAYER_TRACTOR
+            break
+    }
 
     var promise1 = new Promise((res, rej) => {
-        const identifier = 'face'
         findMe(identifier)
             .then(item => {
-                switch(type) {
-                    case PLAYER_FACE.ID:
-                        findMaterial(PLAYER_FACE.MATERIAL)
-                            .then(mat => {
-                                item.material = mat
-                                item.transform.scaleX = PLAYER_FACE.SCALE_X
-                                item.transform.scaleY = PLAYER_FACE.SCALE_Y
-                                player = new Player(identifier, item)
-                                res(player)
-                            })
-                        break
-                    case PLAYER_TRACTOR.ID:
-                        findMaterial(PLAYER_TRACTOR.MATERIAL)
-                            .then(mat => {
-                                item.material = mat
-                                item.transform.scaleX = PLAYER_TRACTOR.SCALE_X
-                                item.transform.scaleY = PLAYER_TRACTOR.SCALE_Y
-                                player = new Player(identifier, item)
-                                res(player)
-                            })
-                        break
-                    default:
-                        break
-                }
+                findMaterial(playerConfig.MATERIAL)
+                    .then(mat => {
+                        item.material = mat
+                        item.transform.scaleX = playerConfig.SCALE_X
+                        item.transform.scaleY = playerConfig.SCALE_Y
+                        player = new Player(identifier, item)
+                        res(player)
+                    })
             })
     })
 
@@ -46,15 +41,17 @@ const init = ({playerOptions}) => {
 }
 
 // return -1 if on the left, 1 if on the right, 0 if undefined state
-const getSide = () => {
+const getSides = () => {
     const [ x, y ] = player.getCoordinates()
     log(`face coords: ${x}:${y}`)
-    return x >= 40 ? 1 : x <= -40 ? -1 : 0
+    const sideX = x >= playerConfig.POSITION_DETECTOR.RIGHT ? 1 : x <= playerConfig.POSITION_DETECTOR.LEFT ? -1 : 0
+    const sideY = y >= playerConfig.POSITION_DETECTOR.TOP ? 1 : y <= playerConfig.POSITION_DETECTOR.BOTTOM ? -1 : 0
+    return [ sideX, sideY ]
 }
 
 const playerService = {
     init,
-    getSide,
+    getSides,
 }
 
 export default playerService
