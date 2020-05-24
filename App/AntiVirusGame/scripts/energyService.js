@@ -12,25 +12,27 @@ const init = ({energyOptions}) => {
     return 1
 }
 
+const addEnergy = (amount) => capacity += amount
+
 const increase = () => {
     capacity++
 }
 
 const decrease = () => {
     capacity--
-    if (capacity < 1) {
-        log('you died...(')
-    }
-    return capacity > 0
 }
 
 const capacityLeft = () => capacity
 
+const isAlive = () => capacity > 0
+
 const energyService = {
     init,
+    addEnergy,
     increase,
     decrease,
-    capacityLeft
+    capacityLeft,
+    isAlive
 }
 
 export default energyService

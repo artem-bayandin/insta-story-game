@@ -41,7 +41,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         }
     }
 
-    const virusDroppedCallback = (side) => {
+    const virusDroppedCallback = ({side, weight}) => {
         log(`VIRUS DROPPED ON ${side} SIDE`)
         if (!side) return
 
@@ -51,8 +51,8 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         const [ playerSideX, playerSideY ] = playerService.getSides()
 
         if (side === playerSideX) {
-            const isAlive = energyService.decrease()
-            if (!isAlive) {
+            energyService.addEnergy(weight)
+            if (!energyService.isAlive()) {
                 log('YOU DIED!')
                 go = false
                 clearInterval(timeInterval)

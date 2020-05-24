@@ -49,7 +49,7 @@ export const Virus = (id, obj) => {
                 
                 let side = routes[currentPosition].x < 0 ? -1 : 1
                 setTimeout(() => {
-                    virusDroppedCallback(side)
+                    virusDroppedCallback({side, weight: config.WEIGHT})
                 }, dropSpeed / 2)
             }
             base.moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed, onMoveCompleted)

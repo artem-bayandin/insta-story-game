@@ -18,7 +18,8 @@ export const VIRUS_RED_RIGHT = {
     ID: 'VIRUS_RED_RIGHT',
     MATERIAL: 'virus-red-right',
     SCALE_X: 650,
-    SCALE_Y: 650
+    SCALE_Y: 650,
+    WEIGHT: -1
 }
 
 export const VIRUS_RED_LEFT = {
@@ -31,7 +32,8 @@ export const VIRUS_BLUE_RIGHT = {
     ID: 'VIRUS_BLUE_RIGHT',
     MATERIAL: 'virus-blue-right',
     SCALE_X: 650,
-    SCALE_Y: 650
+    SCALE_Y: 650,
+    WEIGHT: -1
 }
 
 export const VIRUS_BLUE_LEFT = {
