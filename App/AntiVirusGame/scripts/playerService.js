@@ -27,6 +27,8 @@ const init = ({playerOptions}) => {
     var promise1 = new Promise((res, rej) => {
         findMe(identifier)
             .then(item => {
+                // TODO: refactor this call of material service or prove that player material will always exist here
+                log('TODO: refactor this call of material service or prove that player material will always exist here')
                 item.material = materialService.get(playerConfig.MATERIAL)
                 item.transform.scaleX = playerConfig.SCALE_X
                 item.transform.scaleY = playerConfig.SCALE_Y
