@@ -38,7 +38,7 @@ const gameOptions = {
         increaseWhenDropped: 10
     },
     playerOptions: {
-        identifier: 'face',
+        identifier: 'player',
         type: PLAYER_TRACTOR.ID
     },
     textServiceOptions: {
@@ -54,7 +54,7 @@ Promise.all([
     eggService.init(),
     playerService.init(gameOptions),
     textService.init(gameOptions),
-    materialService.init()
+    materialService.init(),
 ])
 .then(() => {
     // this line is left to easy test
