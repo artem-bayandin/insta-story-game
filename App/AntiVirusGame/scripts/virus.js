@@ -2,25 +2,18 @@ const Time = require('Time')
 
 import { log } from './logger'
 import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
+import { VIRUS_COORDINATES, VIRUS_DEFAULT } from './virusConstants'
 
-const virusScaleX = 666
-const virusScaleY = 623
 const fastAnimationSpeed = 10
-
-const dropLeft         = { x: -50, y: -180 }
-const dropRight        = { x:  50, y: -180 }
-const topLeftSteps     = [{ x: -155, y: 215 }, { x: -120, y: 200 }, { x: -85, y: 185 }, { x: -50, y: 170 }, dropLeft]
-const bottomLeftSteps  = [{ x: -155, y:  65 }, { x: -120, y:  50 }, { x: -85, y:  35 }, { x: -50, y:  20 }, dropLeft]
-const topRightSteps    = [{ x:  155, y: 215 }, { x:  120, y: 200 }, { x:  85, y: 185 }, { x:  50, y: 170 }, dropRight]
-const bottomRightSteps = [{ x:  155, y:  65 }, { x:  120, y:  50 }, { x:  85, y:  35 }, { x:  50, y:  20 }, dropRight]
-const globalRoutes     = [ topLeftSteps, bottomLeftSteps, topRightSteps, bottomRightSteps ]
 
 export const Virus = (id, obj) => {
     let routes = null
     let currentPosition = -1
+    let config = VIRUS_DEFAULT
 
-    const start = (num) => {
-        routes = globalRoutes[num]
+    const start = (num, objectConfig) => {
+        config = objectConfig
+        routes = VIRUS_COORDINATES.GLOBAL_ROUTES[num]
         currentPosition = 0
         base.moveTo(routes[0].x, routes[0].y, fastAnimationSpeed)
         base.show()
@@ -63,7 +56,7 @@ export const Virus = (id, obj) => {
     let base = {
         ...createWithCoordinates(obj),
         ...createWithId(id),
-        ...createWithShowHide(obj, fastAnimationSpeed, virusScaleX, virusScaleY),
+        ...createWithShowHide(obj, fastAnimationSpeed, config.SCALE_X, config.SCALE_Y),
         ...createWithMove(obj),
         start,
         step

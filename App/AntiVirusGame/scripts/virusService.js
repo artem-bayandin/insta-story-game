@@ -1,5 +1,6 @@
 import { findMe } from './utils'
 import { Virus } from './virus' 
+import { VIRUS_DEFAULT } from './virusConstants'
 
 /*
  *  VIRUS SERVICE 
@@ -58,9 +59,7 @@ const rand = () => +(Math.random() * 4).toFixed(0) % 4
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 const tick = (gameSpeed, virusDroppedCallback) => {
-    
     const rndValue = rand()
-
     const speed = Math.max(gameSpeed / 2, 350)
 
     topLeft.step(speed, virusDroppedCallback)
@@ -69,13 +68,13 @@ const tick = (gameSpeed, virusDroppedCallback) => {
     bottomRight.step(speed, virusDroppedCallback)
 
     if (!topLeft.isVisible()) {
-        topLeft.start(rndValue)
+        topLeft.start(rndValue, VIRUS_DEFAULT)
     } else if (!bottomLeft.isVisible()) {
-        bottomLeft.start(rndValue)
+        bottomLeft.start(rndValue, VIRUS_DEFAULT)
     } else if (!topRight.isVisible()) {
-        topRight.start(rndValue)
+        topRight.start(rndValue, VIRUS_DEFAULT)
     } else if (!bottomRight.isVisible()) {
-        bottomRight.start(rndValue)
+        bottomRight.start(rndValue, VIRUS_DEFAULT)
     }
 }
 

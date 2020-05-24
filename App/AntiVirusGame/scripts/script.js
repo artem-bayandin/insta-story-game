@@ -8,7 +8,7 @@ import playerService from './playerService'
 import textService from './textService'
 import Game from './game'
 
-import { PLAYER_TRACTOR, PLAYER_FACE } from './player'
+import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)

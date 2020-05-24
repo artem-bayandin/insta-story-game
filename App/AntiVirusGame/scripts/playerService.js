@@ -1,6 +1,7 @@
 import { log } from './logger'
 import { findMe, findMaterial } from './utils'
-import { Player, PLAYER_TRACTOR, PLAYER_FACE } from './player'
+import { Player} from './player'
+import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 
 /*
  *  PLAYER SERVICE 
