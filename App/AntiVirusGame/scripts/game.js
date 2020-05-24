@@ -1,11 +1,11 @@
 import { log, setTimeout, setInterval, clearInterval } from './utils'
 
-const setNumberOfVirusesDropped = (textService, level, virusesDropped, livesLeft) => {
-    textService.setText(level, virusesDropped, livesLeft)
+const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
+    textService.setText(level, eggsDropped, livesLeft)
 }
 
 const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
-    const { playerService, energyService, virusService, textService } = services
+    const { playerService, energyService, eggService, textService } = services
     const { initialGameSpeed, gameSpeedStep, maxGameSpeed, initialStageCapacity } = gameSpeedOptions
     const { increaseWhenDropped } = energyOptions
     
@@ -41,8 +41,8 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         }
     }
 
-    const virusDroppedCallback = ({side, weight}) => {
-        log(`VIRUS DROPPED ON ${side} SIDE`)
+    const eggDroppedCallback = ({side, weight}) => {
+        log(`EGG DROPPED ON ${side} SIDE`)
         if (!side) return
 
         increaseDroppedCounter()
@@ -59,11 +59,11 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
             }
         }
 
-        setNumberOfVirusesDropped(textService, level, droppedCounter, energyService.capacityLeft())
+        setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
     }
 
     const tick = () => {
-        virusService.tick(gameSpeed, virusDroppedCallback)
+        eggService.tick(gameSpeed, eggDroppedCallback)
         increaseTickCounter()
         if (go) {
             setTimeout(() => {
@@ -79,7 +79,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
     }
 
     const play = () => {
-        setNumberOfVirusesDropped(textService, level, droppedCounter, energyService.capacityLeft())
+        setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
 
         tick()
 

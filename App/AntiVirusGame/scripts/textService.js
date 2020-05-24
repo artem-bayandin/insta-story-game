@@ -6,12 +6,12 @@ import { TxtScore, TxtTimer } from './text'
  */
 
 let txtLevel = null
-let txtViruses = null
+let txtEggs = null
 let txtLives = null
 let txtTimer = null
 
 const init = ({textServiceOptions}) => {
-    const { txtLevelId, txtVirusesId, txtLivesId, txtTimerId } = textServiceOptions
+    const { txtLevelId, txtEggsId, txtLivesId, txtTimerId } = textServiceOptions
 
     const txtLevelPromise = new Promise((res, rej) => {
         findMe(txtLevelId).then(item => {
@@ -19,10 +19,10 @@ const init = ({textServiceOptions}) => {
             res(txtLevel)
         })
     })
-    const txtVirusesPromise = new Promise((res, rej) => {
-        findMe(txtVirusesId).then(item => {
-            txtViruses = new TxtScore(txtVirusesId, item)
-            res(txtViruses)
+    const txtEggsPromise = new Promise((res, rej) => {
+        findMe(txtEggsId).then(item => {
+            txtEggs = new TxtScore(txtEggsId, item)
+            res(txtEggs)
         })
     })
     const txtLivesPromise = new Promise((res, rej) => {
@@ -38,12 +38,12 @@ const init = ({textServiceOptions}) => {
         })
     })
 
-    return Promise.all([txtLevelPromise, txtVirusesPromise, txtLivesPromise, txtTimerPromise])
+    return Promise.all([txtLevelPromise, txtEggsPromise, txtLivesPromise, txtTimerPromise])
 }
 
-const setText = (level, virusesDropped, livesLeft) => {
+const setText = (level, eggsDropped, livesLeft) => {
     txtLevel.setText(level)
-    txtViruses.setText(virusesDropped)
+    txtEggs.setText(eggsDropped)
     txtLives.setText(livesLeft)
 }
 

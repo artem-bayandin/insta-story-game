@@ -1,7 +1,7 @@
 import { log, setTimeout } from './utils'
 
 import energyService from './energyService'
-import virusService from './virusService'
+import eggService from './eggService'
 import playerService from './playerService'
 import textService from './textService'
 import Game from './game'
@@ -14,15 +14,15 @@ const startTheGame = () => {
     game.play()
 }
 
-const exitCallback = (virusesCount) => {
-    log(`--- -- - game finised - -- - total score: ${virusesCount} viruses - -- ---`)
+const exitCallback = (eggsCount) => {
+    log(`--- -- - game finised - -- - total score: ${eggsCount} eggs - -- ---`)
 }
 
 const gameOptions = {
     services: {
         playerService,
         energyService,
-        virusService,
+        eggService,
         textService,
     },
     exitCallback,
@@ -42,7 +42,7 @@ const gameOptions = {
     },
     textServiceOptions: {
         txtLevelId: 'txtLevel',
-        txtVirusesId: 'txtViruses',
+        txtEggsId: 'txtEggs',
         txtLivesId: 'txtLives',
         txtTimerId: 'txtTimer'
     }
@@ -50,7 +50,7 @@ const gameOptions = {
 
 Promise.all([
     energyService.init(gameOptions),
-    virusService.init(),
+    eggService.init(),
     playerService.init(gameOptions),
     textService.init(gameOptions)
 ])

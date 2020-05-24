@@ -1,29 +1,33 @@
 import { log, setTimeout } from './utils'
 import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
-import { VIRUS_COORDINATES, VIRUS_RED_RIGHT } from './virusConstants'
+import { EGG_COORDINATES, EGG_VIRUSRED_RIGHT } from './eggConstants'
 
 const fastAnimationSpeed = 10
 
-export const Virus = (id, obj) => {
+/*
+ *  EGG ENTITY
+ */
+
+export const Egg = (id, obj) => {
     let routes = null
     let currentPosition = -1
-    let config = VIRUS_RED_RIGHT
+    let config = EGG_VIRUSRED_RIGHT
 
     const start = ({position, objectConfig, material}) => {
-        if (config.ID !== objectConfig.ID) {
+        // if (config.ID !== objectConfig.ID) {
             config = objectConfig
             obj.material = material
             obj.transform.scaleX = config.SCALE_X
             obj.transform.scaleY = config.SCALE_Y
-        }
+        // }
 
-        routes = VIRUS_COORDINATES.GLOBAL_ROUTES[position]
+        routes = EGG_COORDINATES.GLOBAL_ROUTES[position]
         currentPosition = 0
         base.moveTo(routes[0].x, routes[0].y, fastAnimationSpeed)
         base.show()
     }
 
-    const step = (speed, virusDroppedCallback) => {
+    const step = (speed, eggDroppedCallback) => {
         const innerSpeed = speed / 2
         const dropSpeed = innerSpeed / 2
 
@@ -39,7 +43,7 @@ export const Virus = (id, obj) => {
             // move to the end and drop
             currentPosition++
             let onMoveCompleted = () => {
-                log(`virus '${id}' is on the edge!`)
+                log(`egg '${id}' is on the edge!`)
                 currentPosition++
                 let onDroppedCompleted = () => {
                     base.hide()
@@ -49,7 +53,7 @@ export const Virus = (id, obj) => {
                 
                 let side = routes[currentPosition].x < 0 ? -1 : 1
                 setTimeout(() => {
-                    virusDroppedCallback({side, weight: config.WEIGHT})
+                    eggDroppedCallback({side, weight: config.WEIGHT})
                 }, dropSpeed / 2)
             }
             base.moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed, onMoveCompleted)
