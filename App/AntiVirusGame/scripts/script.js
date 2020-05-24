@@ -1,4 +1,4 @@
-import { log, setTimeout } from './utils'
+import { log, setTimeout, findMe } from './utils'
 
 import energyService from './energyService'
 import eggService from './eggService'
@@ -60,5 +60,21 @@ Promise.all([
 ])
 .then(() => {
     // this line is left to easy test
-    setTimeout(() => { startTheGame() }, 1000)
+    setTimeout(() => { startTheGame() }, 100000)
+
+    findMe('game-canvas')
+        .then(item => {
+            log(`Game canvas found`)
+            for (var p in item) {
+                log(`prop: ${p}`)
+            }
+            const width = item.width.pinLastValue()
+            const height = item.height.pinLastValue()
+            log(`width: ${width}`)
+            log(`height: ${height}`)
+            log(`Game canvas trace end`)
+        })
+        .catch(err => {
+            log(`Error when looking for game-canvas: ${err}`)
+        })
 })
