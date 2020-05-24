@@ -5,6 +5,8 @@ const Materials = require('Materials')
 
 export const log = (message) => Diagnostics.log(message)
 
+export const randomIntFromZeroToX = (max) => +(Math.random() * max).toFixed(0) % max
+
 export const findMe = identifier => {
     return new Promise((res, rej) => Scene.root.findFirst(identifier).then(item => { res(item) }))
 }

@@ -11,7 +11,7 @@ export const Virus = (id, obj) => {
     let currentPosition = -1
     let config = VIRUS_DEFAULT
 
-    const start = (num, objectConfig, material) => {
+    const start = ({position, objectConfig, material}) => {
         if (config.ID !== objectConfig.ID) {
             config = objectConfig
             obj.material = material
@@ -19,7 +19,7 @@ export const Virus = (id, obj) => {
             obj.transform.scaleY = config.SCALE_Y
         }
 
-        routes = VIRUS_COORDINATES.GLOBAL_ROUTES[num]
+        routes = VIRUS_COORDINATES.GLOBAL_ROUTES[position]
         currentPosition = 0
         base.moveTo(routes[0].x, routes[0].y, fastAnimationSpeed)
         base.show()

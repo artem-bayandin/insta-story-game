@@ -20,3 +20,10 @@ export const VIRUS_DEFAULT = {
     SCALE_X: 666,
     SCALE_Y: 623
 }
+
+export const VIRUS_BLUE = {
+    ID: 'VIRUS_BLUE',
+    MATERIAL: 'virus-blue',
+    SCALE_X: 666,
+    SCALE_Y: 623
+}
