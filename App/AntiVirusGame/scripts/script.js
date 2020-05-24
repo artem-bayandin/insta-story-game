@@ -29,9 +29,9 @@ const gameOptions = {
     },
     exitCallback,
     gameSpeedOptions: {
-        initialGameSpeed: 1300,
+        initialGameSpeed: 1350,
         gameSpeedStep: 150,
-        maxGameSpeed: 450,
+        maxGameSpeed: 500,
         initialStageCapacity: 6
     },
     energyOptions: {

@@ -27,6 +27,9 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         if (ticksCounter % stageCapacity === 0) {
             if (gameSpeed > maxGameSpeed) {
                 gameSpeed -= gameSpeedStep
+                if (gameSpeed < maxGameSpeed) {
+                    gameSpeed = maxGameSpeed
+                }
             }
             level++
             log(`Game Speed Up. Level: ${level}, speed: ${gameSpeed}, ticks: ${ticksCounter}, dropped: ${droppedCounter}, energy: ${energyService.capacityLeft()}`)
