@@ -5,6 +5,7 @@ import eggService from './eggService'
 import playerService from './playerService'
 import textService from './textService'
 import materialService from './materialService'
+import gamepadService from './gamepadService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
@@ -55,6 +56,7 @@ Promise.all([
     playerService.init(gameOptions),
     textService.init(gameOptions),
     materialService.init(),
+    gamepadService.init(),
 ])
 .then(() => {
     // this line is left to easy test

@@ -1,6 +1,6 @@
-import { log, findMe } from './utils'
+import { log, findMe, animateLinearMove, timeDriver } from './utils'
 import { Player} from './player'
-import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
+import { PLAYER_TRACTOR, PLAYER_FACE, LEFT_SIDE_X, RIGHT_SIDE_X, POSITION_TRANSITION_SPEED } from './playerConstants'
 import materialService from './materialService'
 
 /*
@@ -9,6 +9,9 @@ import materialService from './materialService'
 
 let player = null
 let playerConfig = PLAYER_TRACTOR
+
+log(`TODO: refactor to avoid this line`)
+let playerObject = null
 
 const init = ({playerOptions}) => {
     const {type, identifier} = playerOptions
@@ -32,6 +35,7 @@ const init = ({playerOptions}) => {
                 item.material = materialService.get(playerConfig.MATERIAL)
                 item.transform.scaleX = playerConfig.SCALE_X
                 item.transform.scaleY = playerConfig.SCALE_Y
+                playerObject = item
                 player = new Player(identifier, item)
                 res(player)
             })
@@ -49,9 +53,42 @@ const getSides = () => {
     return [ sideX, sideY ]
 }
 
+// const movePlayerObject = (side) => {
+//     log(`TODO: refactor to avoid this direct call to object`)
+//     if (side < 0) {
+//         // move left
+//         log(`MOVING ${playerConfig.ID} TO THE LEFT`)
+//         findMe(playerConfig.ID).then(item => {
+//             log(`player was found, will be moved now...`)
+//             animateLinearMove(item, timeDriver(POSITION_TRANSITION_SPEED), { x: LEFT_SIDE_X })
+//         })
+//     }
+//     if (side > 0) {
+//         // move right
+//         log(`MOVING ${playerConfig.ID} TO THE RIGHT`)
+//         findMe(playerConfig.ID).then(item => {
+//             log(`player was found, will be moved now...`)
+//             animateLinearMove(item, timeDriver(POSITION_TRANSITION_SPEED), { x: RIGHT_SIDE_X })
+//         })
+//     }
+// }
+
+const movePlayerObject = (side) => {
+    log(`TODO: refactor to avoid this direct call to object`)
+    if (side < 0) {
+        // move left
+        animateLinearMove(playerObject, timeDriver(POSITION_TRANSITION_SPEED), { x: LEFT_SIDE_X })
+    }
+    if (side > 0) {
+        // move right
+        animateLinearMove(playerObject, timeDriver(POSITION_TRANSITION_SPEED), { x: RIGHT_SIDE_X })
+    }
+}
+
 const playerService = {
     init,
     getSides,
+    movePlayerObject
 }
 
 export default playerService
