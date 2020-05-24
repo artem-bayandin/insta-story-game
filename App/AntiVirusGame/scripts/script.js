@@ -60,7 +60,7 @@ Promise.all([
 ])
 .then(() => {
     // this line is left to easy test
-    setTimeout(() => { startTheGame() }, 100000)
+    setTimeout(() => { startTheGame() }, 1000)
 
     findMe('game-canvas')
         .then(item => {

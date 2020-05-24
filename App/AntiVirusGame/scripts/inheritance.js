@@ -1,4 +1,4 @@
-import { linearSamplerUp, linearSamplerDown, animateVisibility, animateLinearMove, timeDriver } from './utils'
+import { linearSamplerUp, linearSamplerDown, animateVisibility, animateMove, timeDriver, MOVE_TYPES, randomInt, setTimeout } from './utils'
 
 /*
  *  GENERAL CREATORS
@@ -52,13 +52,17 @@ export const createWithShowHide = (obj, speed, scaleX, scaleY) => {
     }
 }
 
-export const createWithMove = (obj) => {
+export const createWithMove = (obj, type = MOVE_TYPES.LINEAR, maxDelay = 0) => {
+    // const minDelay = 33 // TODO: well, not a good UX
+
     const moveTo = (x, y, speed, onCompleted = null) => {
         let driver = timeDriver(speed)
         if (onCompleted && typeof(onCompleted) === 'function') {
             driver.onCompleted().subscribe(onCompleted)
         }
-        animateLinearMove(obj, driver, { x, y })
+        // const delay = maxDelay >= minDelay ? randomInt(minDelay, maxDelay) : 0
+        // setTimeout(() => animateMove(obj, driver, { x, y }, type), delay)
+        animateMove(obj, driver, { x, y }, type)
     }
 
     return {

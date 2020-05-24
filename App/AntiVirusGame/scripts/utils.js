@@ -77,26 +77,65 @@ export const animateVisibility = (obj, driver, samplerX, samplerY) => {
     driver.start()
 }
 
-export const animateLinearMove = (obj, driver, to) => {
+export const MOVE_TYPES = {
+    LINEAR: 'LINEAR',
+    EASE_IN_QUART: 'EASE_IN_QUART',
+    EASE_OUT_QUART: 'EASE_OUT_QUART',
+    EASE_IN_CUBIC: 'EASE_IN_CUBIC',
+    EASE_OUT_CUBIC: 'EASE_OUT_CUBIC',
+}
+
+const samplerFabric = (type, from, to) => {
+    switch (type) {
+        case MOVE_TYPES.LINEAR:
+            return linearSamplerFromTo(from, to)
+        case MOVE_TYPES.EASE_IN_QUART:
+            return easeInQuartSamplerFromTo(from, to)
+        case MOVE_TYPES.EASE_OUT_QUART:
+            return easeOutQuartSamplerFromTo(from, to)
+        case MOVE_TYPES.EASE_IN_CUBIC:
+            return easeInCubicSamplerFromTo(from, to)
+        case MOVE_TYPES.EASE_OUT_CUBIC:
+            return easeOutCubicSamplerFromTo(from, to)
+        default:
+            return linearSamplerFromTo(from, to)
+    }
+}
+
+export const animateMove = (obj, driver, to, type = MOVE_TYPES.LINEAR) => {
     if(typeof(to.x) !== 'undefined') {
         const currentX = obj.transform.x.pinLastValue()
-        obj.transform.x = Animation.animate(driver, linearSamplerFromTo(currentX, to.x))
+        obj.transform.x = Animation.animate(driver, samplerFabric(type, currentX, to.x))
     }
     if(typeof(to.y) !== 'undefined') {
         const currentY = obj.transform.y.pinLastValue()
-        obj.transform.y = Animation.animate(driver, linearSamplerFromTo(currentY, to.y))
+        obj.transform.y = Animation.animate(driver, samplerFabric(type, currentY, to.y))
     }
     if(typeof(to.z) !== 'undefined') {
         const currentZ = obj.transform.z.pinLastValue()
-        obj.transform.z = Animation.animate(driver, linearSamplerFromTo(currentZ, to.z))
+        obj.transform.z = Animation.animate(driver, samplerFabric(type, currentZ, to.z))
     }
     driver.start()
 }
 
 export const linearSamplerUp = scale => linearSamplerFromTo(0, scale)
-
 export const linearSamplerDown = scale => linearSamplerFromTo(scale, 0)
-
 export const linearSamplerFromTo = (from, to) => Animation.samplers.linear(from, to)
+
+export const easeInQuartSamplerUp = scale => easeInQuartSamplerFromTo(0, scale)
+export const easeInQuartSamplerDown = scale => easeInQuartSamplerFromTo(scale, 0)
+export const easeInQuartSamplerFromTo = (from, to) => Animation.samplers.easeInQuart(from, to)
+
+export const easeOutQuartSamplerUp = scale => easeOutQuartSamplerFromTo(0, scale)
+export const easeOutQuartSamplerDown = scale => easeOutQuartSamplerFromTo(scale, 0)
+export const easeOutQuartSamplerFromTo = (from, to) => Animation.samplers.easeOutQuart(from, to)
+
+export const easeInCubicSamplerUp = scale => easeInCubicSamplerFromTo(0, scale)
+export const easeInCubicSamplerDown = scale => easeInCubicSamplerFromTo(scale, 0)
+export const easeInCubicSamplerFromTo = (from, to) => Animation.samplers.easeInCubic(from, to)
+
+export const easeOutCubicSamplerUp = scale => easeOutCubicSamplerFromTo(0, scale)
+export const easeOutCubicSamplerDown = scale => easeOutCubicSamplerFromTo(scale, 0)
+export const easeOutCubicSamplerFromTo = (from, to) => Animation.samplers.easeOutCubic(from, to)
 
 export const timeDriver = (speed) => Animation.timeDriver({durationMilliseconds: speed})

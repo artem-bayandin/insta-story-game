@@ -1,4 +1,4 @@
-import { log, findMe, animateLinearMove, timeDriver } from './utils'
+import { log, findMe, animateMove, timeDriver, MOVE_TYPES } from './utils'
 import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_FACE, LEFT_SIDE_X, RIGHT_SIDE_X, POSITION_TRANSITION_SPEED } from './playerConstants'
 import materialService from './materialService'
@@ -60,7 +60,7 @@ const getSides = () => {
 //         log(`MOVING ${playerConfig.ID} TO THE LEFT`)
 //         findMe(playerConfig.ID).then(item => {
 //             log(`player was found, will be moved now...`)
-//             animateLinearMove(item, timeDriver(POSITION_TRANSITION_SPEED), { x: LEFT_SIDE_X })
+//             animateMove(item, timeDriver(POSITION_TRANSITION_SPEED), { x: LEFT_SIDE_X })
 //         })
 //     }
 //     if (side > 0) {
@@ -68,7 +68,7 @@ const getSides = () => {
 //         log(`MOVING ${playerConfig.ID} TO THE RIGHT`)
 //         findMe(playerConfig.ID).then(item => {
 //             log(`player was found, will be moved now...`)
-//             animateLinearMove(item, timeDriver(POSITION_TRANSITION_SPEED), { x: RIGHT_SIDE_X })
+//             animateMove(item, timeDriver(POSITION_TRANSITION_SPEED), { x: RIGHT_SIDE_X })
 //         })
 //     }
 // }
@@ -77,11 +77,11 @@ const movePlayerObject = (side) => {
     log(`TODO: refactor to avoid this direct call to object`)
     if (side < 0) {
         // move left
-        animateLinearMove(playerObject, timeDriver(POSITION_TRANSITION_SPEED), { x: LEFT_SIDE_X })
+        animateMove(playerObject, timeDriver(POSITION_TRANSITION_SPEED), { x: LEFT_SIDE_X }, MOVE_TYPES.EASE_IN_QUART)
     }
     if (side > 0) {
         // move right
-        animateLinearMove(playerObject, timeDriver(POSITION_TRANSITION_SPEED), { x: RIGHT_SIDE_X })
+        animateMove(playerObject, timeDriver(POSITION_TRANSITION_SPEED), { x: RIGHT_SIDE_X }, MOVE_TYPES.EASE_IN_QUART)
     }
 }
 

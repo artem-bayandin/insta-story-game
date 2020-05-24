@@ -1,4 +1,4 @@
-import { log, setTimeout } from './utils'
+import { log, setTimeout, MOVE_TYPES } from './utils'
 import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
 import { EGG_COORDINATES, EGG_VIRUSRED_RIGHT } from './eggConstants'
 import materialService from './materialService'
@@ -66,7 +66,7 @@ export const Egg = (id, obj) => {
         ...createWithCoordinates(obj),
         ...createWithId(id),
         ...createWithShowHide(obj, fastAnimationSpeed, config.SCALE_X, config.SCALE_Y),
-        ...createWithMove(obj),
+        ...createWithMove(obj, MOVE_TYPES.EASE_OUT_CUBIC),
         start,
         step
     }
