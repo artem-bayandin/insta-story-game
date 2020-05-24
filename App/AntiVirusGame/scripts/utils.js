@@ -1,11 +1,60 @@
-const Diagnostics = require('Diagnostics')
-const Scene = require('Scene')
 const Animation = require('Animation')
+const Diagnostics = require('Diagnostics')
 const Materials = require('Materials')
+const Scene = require('Scene')
+const Time = require('Time')
+const TouchGestures = require('TouchGestures')
+
+/*
+ * DIAGNOSTICS
+ */
 
 export const log = (message) => Diagnostics.log(message)
+export const watch = (tag, signal) => Diagnostics.watch(tag, signal)
 
-export const randomIntFromZeroToX = (max) => +(Math.random() * max).toFixed(0) % max
+/*
+ * RANDOMIZER
+ */
+
+export const randomInt = (min, max) => Math.floor(Math.random() * max) + min
+export const randomFloat = (min, max) => Math.random() * max + min
+export const randomItem = (arrayOfElements) => arrayOfElements[randomInt(0, arrayOfElements.length - 1)]
+
+/*
+ * SHOW / HIDE USING OBJECT PROPERTY SETTER
+ */
+
+export const toggleHidden = (element, isHidden) => (element.hidden = isHidden)
+export const hide = (element) => { if (!element.hidden) toggleHidden(element, true) }
+export const hideAll = (arrayOfElements) => { arrayOfElements.forEach(hide) }
+export const show = (element) => { if (element.hidden) toggleHidden(element, false) }
+export const showAll = (arrayOfElements) => { arrayOfElements.forEach(show) }
+
+/*
+ * TEXT
+ */
+
+export const setText = (element, text) => element.text = text
+export const clearText = (element) => setText(element, '')
+
+/*
+ * TIMER
+ */
+
+export const setTimeout = (func, timeout) => Time.setTimeout(func, timeout)
+export const setInterval = (func, interval) => { return Time.setInterval(func, interval) }
+export const clearInterval = (func) => Time.clearInterval(func)
+
+/*
+ * TAP
+ */
+
+export const registerTap = (element, func) => { return TouchGestures.onTap(element).subscribe(func) }
+export const unregisterTap = (tapSubscription) => tapSubscription.unsubscribe()
+
+/*
+ * ANIMTAION UTILS
+ */
 
 export const findMe = identifier => {
     return new Promise((res, rej) => Scene.root.findFirst(identifier).then(item => { res(item) }))

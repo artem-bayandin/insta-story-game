@@ -1,6 +1,4 @@
-const Time = require('Time')
-
-import { log } from './utils'
+import { log, setTimeout, setInterval, clearInterval } from './utils'
 
 const setNumberOfVirusesDropped = (textService, level, virusesDropped, livesLeft) => {
     textService.setText(level, virusesDropped, livesLeft)
@@ -57,7 +55,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
             if (!isAlive) {
                 log('YOU DIED!')
                 go = false
-                Time.clearInterval(timeInterval)
+                clearInterval(timeInterval)
             }
         }
 
@@ -68,7 +66,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         virusService.tick(gameSpeed, virusDroppedCallback)
         increaseTickCounter()
         if (go) {
-            Time.setTimeout(() => {
+            setTimeout(() => {
                 if (go) {
                     tick()
                 } else {
@@ -85,7 +83,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
 
         tick()
 
-        timeInterval = Time.setInterval(() => {
+        timeInterval = setInterval(() => {
             textService.setTime(timeCounter)
             timeCounter += 100
         }, 100)

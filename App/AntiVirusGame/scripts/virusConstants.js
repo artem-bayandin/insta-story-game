@@ -14,16 +14,28 @@ export const VIRUS_COORDINATES = {
     GLOBAL_ROUTES: globalRoutes
 }
 
-export const VIRUS_DEFAULT = {
-    ID: 'VIRUS_DEFAULT',
-    MATERIAL: 'virus-1',
+export const VIRUS_RED_RIGHT = {
+    ID: 'VIRUS_RED_RIGHT',
+    MATERIAL: 'virus-red-right',
     SCALE_X: 666,
-    SCALE_Y: 623
+    SCALE_Y: 666
 }
 
-export const VIRUS_BLUE = {
-    ID: 'VIRUS_BLUE',
-    MATERIAL: 'virus-blue',
+export const VIRUS_RED_LEFT = {
+    ...VIRUS_RED_RIGHT,
+    ID: 'VIRUS_RED_LEFT',
+    MATERIAL: 'virus-red-left'
+}
+
+export const VIRUS_BLUE_RIGHT = {
+    ID: 'VIRUS_BLUE_RIGHT',
+    MATERIAL: 'virus-blue-right',
     SCALE_X: 666,
-    SCALE_Y: 623
+    SCALE_Y: 666
+}
+
+export const VIRUS_BLUE_LEFT = {
+    ...VIRUS_BLUE_RIGHT,
+    ID: 'VIRUS_BLUE_LEFT',
+    MATERIAL: 'virus-blue-left'
 }

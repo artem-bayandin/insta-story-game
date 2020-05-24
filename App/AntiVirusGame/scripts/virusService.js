@@ -1,18 +1,20 @@
-import { findMe, findMaterial, randomIntFromZeroToX } from './utils'
+import { findMe, findMaterial, randomInt, log } from './utils'
 import { Virus } from './virus' 
-import { VIRUS_DEFAULT, VIRUS_BLUE } from './virusConstants'
+import { VIRUS_RED_RIGHT, VIRUS_RED_LEFT, VIRUS_BLUE_RIGHT, VIRUS_BLUE_LEFT } from './virusConstants'
 
 /*
  *  VIRUS SERVICE 
  */
 
-let topLeft = null
-let topRight = null
-let bottomLeft = null
-let bottomRight = null
+let virus1 = null
+let virus3 = null
+let virus2 = null
+let virus4 = null
 
-let materialDefault = null
-let materialVirusBlue = null
+let matVirusRedRight = null
+let matVirusRedLeft = null
+let matVirusBlueRight = null
+let matVirusBlueLeft = null
 
 const initVirus = (identifier) => {
     return new Promise((res, rej) => {
@@ -26,76 +28,95 @@ const initVirus = (identifier) => {
 const init = () => {
     var promise1 = new Promise((res, rej) => {
             initVirus('virus1').then(obj => {
-                topLeft = obj
-                res(topLeft)
+                virus1 = obj
+                res(virus1)
             })
         })
     var promise2 = new Promise((res, rej) => {
             initVirus('virus2').then(obj => {
-                bottomLeft = obj
-                res(bottomLeft)
+                virus2 = obj
+                res(virus2)
             })
         })
     var promise3 = new Promise((res, rej) => {
             initVirus('virus3').then(obj => {
-                topRight = obj
-                res(topRight)
+                virus3 = obj
+                res(virus3)
             })
         })
     var promise4 = new Promise((res, rej) => {
             initVirus('virus4').then(obj => {
-                bottomRight = obj
-                res(bottomRight)
+                virus4 = obj
+                res(virus4)
             })
         })
-    var materialDefaultPromise = new Promise((res, rej) => {
-        findMaterial(VIRUS_DEFAULT.MATERIAL).then(mat => {
-            materialDefault = mat
-            res(materialDefault)
+    var matVirusRedRightPromise = new Promise((res, rej) => {
+        findMaterial(VIRUS_RED_RIGHT.MATERIAL).then(mat => {
+            log(`material found: ${VIRUS_RED_RIGHT.MATERIAL}`)
+            matVirusRedRight = mat
+            res(matVirusRedRight)
         })
     })
-    var materialVirusBluePromise = new Promise((res, rej) => {
-        findMaterial(VIRUS_BLUE.MATERIAL).then(mat => {
-            materialVirusBlue = mat
-            res(materialVirusBlue)
+    var matVirusRedLeftPromise = new Promise((res, rej) => {
+        findMaterial(VIRUS_RED_LEFT.MATERIAL).then(mat => {
+            log(`material found: ${VIRUS_RED_LEFT.MATERIAL}`)
+            matVirusRedLeft = mat
+            res(matVirusRedLeft)
+        })
+    })
+    var matVirusBlueRightPromise = new Promise((res, rej) => {
+        findMaterial(VIRUS_BLUE_RIGHT.MATERIAL).then(mat => {
+            log(`material found: ${VIRUS_BLUE_RIGHT.MATERIAL}`)
+            matVirusBlueRight = mat
+            res(matVirusBlueRight)
+        })
+    })
+    var matVirusBlueLeftPromise = new Promise((res, rej) => {
+        findMaterial(VIRUS_BLUE_LEFT.MATERIAL).then(mat => {
+            log(`material found: ${VIRUS_BLUE_LEFT.MATERIAL}`)
+            matVirusBlueLeft = mat
+            res(matVirusBlueLeft)
         })
     })
 
-    return Promise.all([promise1, promise2, promise3, promise4, materialDefaultPromise, materialVirusBluePromise]).then(() => {
-        topLeft.hide()
-        bottomLeft.hide()
-        topRight.hide()
-        bottomRight.hide()
+    return Promise.all([promise1, promise2, promise3, promise4
+        , matVirusRedRightPromise, matVirusRedLeftPromise, matVirusBlueRightPromise, matVirusBlueLeftPromise]).then(() => {
+        virus1.hide()
+        virus2.hide()
+        virus3.hide()
+        virus4.hide()
     })
 }
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 const tick = (gameSpeed, virusDroppedCallback) => {
-    const rndValue4 = randomIntFromZeroToX(4)
-    const rndValue2 = randomIntFromZeroToX(2)
+    const rndValue4 = randomInt(0, 4)
+    const rndValue2 = randomInt(0, 2)
     const speed = Math.max(gameSpeed / 2, 350)
 
-    topLeft.step(speed, virusDroppedCallback)
-    bottomLeft.step(speed, virusDroppedCallback)
-    topRight.step(speed, virusDroppedCallback)
-    bottomRight.step(speed, virusDroppedCallback)
+    virus1.step(speed, virusDroppedCallback)
+    virus2.step(speed, virusDroppedCallback)
+    virus3.step(speed, virusDroppedCallback)
+    virus4.step(speed, virusDroppedCallback)
 
     const configAndMaterial = rndValue2 == 0
-                                    ? { objectConfig: VIRUS_DEFAULT, material: materialDefault }
-                                    : { objectConfig: VIRUS_BLUE, material: materialVirusBlue }
+                                    ? { objectConfig: VIRUS_RED_RIGHT, material: matVirusRedRight }
+                                    : { objectConfig: VIRUS_BLUE_LEFT, material: matVirusBlueLeft }
     const startConfig = {
         position: rndValue4,
         ...configAndMaterial
     }
 
-    if (!topLeft.isVisible()) {
-        topLeft.start(startConfig)
-    } else if (!bottomLeft.isVisible()) {
-        bottomLeft.start(startConfig)
-    } else if (!topRight.isVisible()) {
-        topRight.start(startConfig)
-    } else if (!bottomRight.isVisible()) {
-        bottomRight.start(startConfig)
+    log(`${JSON.stringify(startConfig)}`)
+
+    if (!virus1.isVisible()) {
+        virus1.start(startConfig)
+    } else if (!virus2.isVisible()) {
+        virus2.start(startConfig)
+    } else if (!virus3.isVisible()) {
+        virus3.start(startConfig)
+    } else if (!virus4.isVisible()) {
+        virus4.start(startConfig)
     }
 }
 

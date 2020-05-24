@@ -1,6 +1,4 @@
-const Time = require('Time')
-
-import { log } from './utils'
+import { log, setTimeout } from './utils'
 
 import energyService from './energyService'
 import virusService from './virusService'
@@ -56,4 +54,4 @@ Promise.all([
     playerService.init(gameOptions),
     textService.init(gameOptions)
 ])
-.then(Time.setTimeout(() => { startTheGame() }, 1000))
+.then(setTimeout(() => { startTheGame() }, 1000))

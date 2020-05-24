@@ -1,15 +1,13 @@
-const Time = require('Time')
-
-import { log } from './utils'
+import { log, setTimeout } from './utils'
 import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
-import { VIRUS_COORDINATES, VIRUS_DEFAULT } from './virusConstants'
+import { VIRUS_COORDINATES, VIRUS_RED_RIGHT } from './virusConstants'
 
 const fastAnimationSpeed = 10
 
 export const Virus = (id, obj) => {
     let routes = null
     let currentPosition = -1
-    let config = VIRUS_DEFAULT
+    let config = VIRUS_RED_RIGHT
 
     const start = ({position, objectConfig, material}) => {
         if (config.ID !== objectConfig.ID) {
@@ -50,7 +48,7 @@ export const Virus = (id, obj) => {
                 base.moveTo(routes[routes.length - 1].x, routes[routes.length - 1].y, dropSpeed, onDroppedCompleted)
                 
                 let side = routes[currentPosition].x < 0 ? -1 : 1
-                Time.setTimeout(() => {
+                setTimeout(() => {
                     virusDroppedCallback(side)
                 }, dropSpeed / 2)
             }
