@@ -1,6 +1,6 @@
 const Time = require('Time')
 
-import { log } from './logger'
+import { log } from './utils'
 
 import energyService from './energyService'
 import virusService from './virusService'

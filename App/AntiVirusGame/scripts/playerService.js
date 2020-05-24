@@ -1,5 +1,4 @@
-import { log } from './logger'
-import { findMe, findMaterial } from './utils'
+import { log, findMe, findMaterial } from './utils'
 import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 

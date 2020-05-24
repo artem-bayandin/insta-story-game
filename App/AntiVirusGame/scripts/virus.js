@@ -1,6 +1,6 @@
 const Time = require('Time')
 
-import { log } from './logger'
+import { log } from './utils'
 import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
 import { VIRUS_COORDINATES, VIRUS_DEFAULT } from './virusConstants'
 
@@ -11,8 +11,14 @@ export const Virus = (id, obj) => {
     let currentPosition = -1
     let config = VIRUS_DEFAULT
 
-    const start = (num, objectConfig) => {
-        config = objectConfig
+    const start = (num, objectConfig, material) => {
+        if (config.ID !== objectConfig.ID) {
+            config = objectConfig
+            obj.material = material
+            obj.transform.scaleX = config.SCALE_X
+            obj.transform.scaleY = config.SCALE_Y
+        }
+
         routes = VIRUS_COORDINATES.GLOBAL_ROUTES[num]
         currentPosition = 0
         base.moveTo(routes[0].x, routes[0].y, fastAnimationSpeed)

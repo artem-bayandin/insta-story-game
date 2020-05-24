@@ -1,4 +1,4 @@
-import { findMe } from './utils'
+import { findMe, findMaterial } from './utils'
 import { Virus } from './virus' 
 import { VIRUS_DEFAULT } from './virusConstants'
 
@@ -11,13 +11,14 @@ let topRight = null
 let bottomLeft = null
 let bottomRight = null
 
+let materialDefault = null
+
 const initVirus = (identifier) => {
     return new Promise((res, rej) => {
-        findMe(identifier)
-            .then(item => {
-                const virus = new Virus(identifier, item)
-                res(virus)
-            })
+        findMe(identifier).then(item => {
+            const virus = new Virus(identifier, item)
+            res(virus)
+        })
     })
 }
 
@@ -46,8 +47,14 @@ const init = () => {
                 res(bottomRight)
             })
         })
+    var materialDefaultPromise = new Promise((res, rej) => {
+        findMaterial(VIRUS_DEFAULT.MATERIAL).then(mat => {
+            materialDefault = mat
+            res(materialDefault)
+        })
+    })
 
-    return Promise.all([promise1, promise2, promise3, promise4]).then(() => {
+    return Promise.all([promise1, promise2, promise3, promise4, materialDefaultPromise]).then(() => {
         topLeft.hide()
         bottomLeft.hide()
         topRight.hide()
@@ -68,13 +75,13 @@ const tick = (gameSpeed, virusDroppedCallback) => {
     bottomRight.step(speed, virusDroppedCallback)
 
     if (!topLeft.isVisible()) {
-        topLeft.start(rndValue, VIRUS_DEFAULT)
+        topLeft.start(rndValue, VIRUS_DEFAULT, materialDefault)
     } else if (!bottomLeft.isVisible()) {
-        bottomLeft.start(rndValue, VIRUS_DEFAULT)
+        bottomLeft.start(rndValue, VIRUS_DEFAULT, materialDefault)
     } else if (!topRight.isVisible()) {
-        topRight.start(rndValue, VIRUS_DEFAULT)
+        topRight.start(rndValue, VIRUS_DEFAULT, materialDefault)
     } else if (!bottomRight.isVisible()) {
-        bottomRight.start(rndValue, VIRUS_DEFAULT)
+        bottomRight.start(rndValue, VIRUS_DEFAULT, materialDefault)
     }
 }
 

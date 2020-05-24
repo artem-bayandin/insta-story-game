@@ -1,17 +1,16 @@
+const Diagnostics = require('Diagnostics')
 const Scene = require('Scene')
 const Animation = require('Animation')
 const Materials = require('Materials')
 
+export const log = (message) => Diagnostics.log(message)
+
 export const findMe = identifier => {
-    return new Promise((res, rej) => {
-        Scene.root.findFirst(identifier).then(item => { res(item) })
-    })
+    return new Promise((res, rej) => Scene.root.findFirst(identifier).then(item => { res(item) }))
 }
 
 export const findMaterial = identifier => {
-    return new Promise((res, rej) => {
-        Materials.findFirst(identifier).then(mat => { res(mat) })
-    })
+    return new Promise((res, rej) => Materials.findFirst(identifier).then(mat => { res(mat) }))
 }
 
 /*

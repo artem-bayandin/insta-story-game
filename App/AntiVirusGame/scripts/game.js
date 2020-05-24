@@ -1,6 +1,6 @@
 const Time = require('Time')
 
-import { log } from './logger'
+import { log } from './utils'
 
 const setNumberOfVirusesDropped = (textService, level, virusesDropped, livesLeft) => {
     textService.setText(level, virusesDropped, livesLeft)
