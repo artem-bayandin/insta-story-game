@@ -17,8 +17,8 @@ export const VIRUS_COORDINATES = {
 export const VIRUS_RED_RIGHT = {
     ID: 'VIRUS_RED_RIGHT',
     MATERIAL: 'virus-red-right',
-    SCALE_X: 666,
-    SCALE_Y: 666
+    SCALE_X: 650,
+    SCALE_Y: 650
 }
 
 export const VIRUS_RED_LEFT = {
@@ -30,8 +30,8 @@ export const VIRUS_RED_LEFT = {
 export const VIRUS_BLUE_RIGHT = {
     ID: 'VIRUS_BLUE_RIGHT',
     MATERIAL: 'virus-blue-right',
-    SCALE_X: 666,
-    SCALE_Y: 666
+    SCALE_X: 650,
+    SCALE_Y: 650
 }
 
 export const VIRUS_BLUE_LEFT = {
