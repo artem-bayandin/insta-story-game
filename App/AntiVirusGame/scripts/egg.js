@@ -1,6 +1,7 @@
 import { log, setTimeout } from './utils'
 import { createWithId, createWithCoordinates, createWithShowHide, createWithMove } from './inheritance'
 import { EGG_COORDINATES, EGG_VIRUSRED_RIGHT } from './eggConstants'
+import materialService from './materialService'
 
 const fastAnimationSpeed = 10
 
@@ -13,10 +14,10 @@ export const Egg = (id, obj) => {
     let currentPosition = -1
     let config = EGG_VIRUSRED_RIGHT
 
-    const start = ({position, objectConfig, material}) => {
+    const start = ({position, objectConfig}) => {
         // if (config.ID !== objectConfig.ID) {
             config = objectConfig
-            obj.material = material
+            obj.material = materialService.get(config.MATERIAL)
             obj.transform.scaleX = config.SCALE_X
             obj.transform.scaleY = config.SCALE_Y
         // }

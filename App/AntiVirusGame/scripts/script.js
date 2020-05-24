@@ -4,6 +4,7 @@ import energyService from './energyService'
 import eggService from './eggService'
 import playerService from './playerService'
 import textService from './textService'
+import materialService from './materialService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
@@ -52,6 +53,10 @@ Promise.all([
     energyService.init(gameOptions),
     eggService.init(),
     playerService.init(gameOptions),
-    textService.init(gameOptions)
+    textService.init(gameOptions),
+    materialService.init()
 ])
-.then(setTimeout(() => { startTheGame() }, 1000))
+.then(() => {
+    // this line is left to easy test
+    setTimeout(() => { startTheGame() }, 1000)
+})

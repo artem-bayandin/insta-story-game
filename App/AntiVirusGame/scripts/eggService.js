@@ -1,4 +1,4 @@
-import { findMe, findMaterial, randomInt, log } from './utils'
+import { findMe, randomInt, log } from './utils'
 import { Egg } from './egg' 
 import { EGG_VIRUSRED_RIGHT, EGG_VIRUSRED_LEFT, EGG_VIRUSBLUE_RIGHT, EGG_VIRUSBLUE_LEFT } from './eggConstants'
 
@@ -11,81 +11,31 @@ let egg2 = null
 let egg3 = null
 let egg4 = null
 
-let matEggVirusRedRight = null
-let matEggVirusRedLeft = null
-let matEggVirusBlueRight = null
-let matEggVirusBlueLeft = null
-
-let eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT, material: matEggVirusRedLeft }, { objectConfig: EGG_VIRUSRED_RIGHT, material: matEggVirusRedRight } ]
-let eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT, material: matEggVirusBlueLeft }, { objectConfig: EGG_VIRUSBLUE_RIGHT, material: matEggVirusBlueRight } ]
+let eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT }, { objectConfig: EGG_VIRUSRED_RIGHT } ]
+let eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT }, { objectConfig: EGG_VIRUSBLUE_RIGHT } ]
 
 const initEgg = (identifier) => {
-    return new Promise((res, rej) => {
-        findMe(identifier).then(item => {
-            const egg = new Egg(identifier, item)
-            res(egg)
-        })
-    })
+    return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
 }
 
 const init = () => {
-    var promise1 = new Promise((res, rej) => {
-            initEgg('egg1').then(obj => {
-                egg1 = obj
-                res(egg1)
-            })
-        })
-    var promise2 = new Promise((res, rej) => {
-            initEgg('egg2').then(obj => {
-                egg2 = obj
-                res(egg2)
-            })
-        })
-    var promise3 = new Promise((res, rej) => {
-            initEgg('egg3').then(obj => {
-                egg3 = obj
-                res(egg3)
-            })
-        })
-    var promise4 = new Promise((res, rej) => {
-            initEgg('egg4').then(obj => {
-                egg4 = obj
-                res(egg4)
-            })
-        })
-    var matEggVirusRedRightPromise = new Promise((res, rej) => {
-        findMaterial(EGG_VIRUSRED_RIGHT.MATERIAL).then(mat => {
-            matEggVirusRedRight = mat
-            res(matEggVirusRedRight)
-        })
-    })
-    var matEggVirusRedLeftPromise = new Promise((res, rej) => {
-        findMaterial(EGG_VIRUSRED_LEFT.MATERIAL).then(mat => {
-            matEggVirusRedLeft = mat
-            res(matEggVirusRedLeft)
-        })
-    })
-    var matEggVirusBlueRightPromise = new Promise((res, rej) => {
-        findMaterial(EGG_VIRUSBLUE_RIGHT.MATERIAL).then(mat => {
-            matEggVirusBlueRight = mat
-            res(matEggVirusBlueRight)
-        })
-    })
-    var matEggVirusBlueLeftPromise = new Promise((res, rej) => {
-        findMaterial(EGG_VIRUSBLUE_LEFT.MATERIAL).then(mat => {
-            matEggVirusBlueLeft = mat
-            res(matEggVirusBlueLeft)
-        })
-    })
+    var promise1 = new Promise((res, rej) => initEgg('egg1').then(obj => res(egg1 = obj)))
+    var promise2 = new Promise((res, rej) => initEgg('egg2').then(obj => res(egg2 = obj)))
+    var promise3 = new Promise((res, rej) => initEgg('egg3').then(obj => res(egg3 = obj)))
+    var promise4 = new Promise((res, rej) => initEgg('egg4').then(obj => res(egg4 = obj)))
 
-    return Promise.all([promise1, promise2, promise3, promise4
-        , matEggVirusRedRightPromise, matEggVirusRedLeftPromise, matEggVirusBlueRightPromise, matEggVirusBlueLeftPromise]).then(() => {
+    return Promise.all([
+        promise1
+        , promise2
+        , promise3
+        , promise4
+    ]).then(() => {
         egg1.hide()
         egg2.hide()
         egg3.hide()
         egg4.hide()
-        eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT, material: matEggVirusRedLeft }, { objectConfig: EGG_VIRUSRED_RIGHT, material: matEggVirusRedRight } ]
-        eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT, material: matEggVirusBlueLeft }, { objectConfig: EGG_VIRUSBLUE_RIGHT, material: matEggVirusBlueRight } ]
+        eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT }, { objectConfig: EGG_VIRUSRED_RIGHT } ]
+        eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT }, { objectConfig: EGG_VIRUSBLUE_RIGHT } ]
     })
 }
 
@@ -100,11 +50,11 @@ const tick = (gameSpeed, eggDroppedCallback) => {
     egg3.step(speed, eggDroppedCallback)
     egg4.step(speed, eggDroppedCallback)
 
-    const configAndMaterial = redBlueSelector == 0 ? eggRedVirusConfig[position % 2] : eggBlueVirusConfig[position % 2]
+    const config = redBlueSelector == 0 ? eggRedVirusConfig[position % 2] : eggBlueVirusConfig[position % 2]
 
     const startConfig = {
         position,
-        ...configAndMaterial
+        ...config
     }
 
     if (!egg1.isVisible()) {

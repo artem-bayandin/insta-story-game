@@ -1,6 +1,7 @@
-import { log, findMe, findMaterial } from './utils'
+import { log, findMe } from './utils'
 import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
+import materialService from './materialService'
 
 /*
  *  PLAYER SERVICE 
@@ -26,14 +27,11 @@ const init = ({playerOptions}) => {
     var promise1 = new Promise((res, rej) => {
         findMe(identifier)
             .then(item => {
-                findMaterial(playerConfig.MATERIAL)
-                    .then(mat => {
-                        item.material = mat
-                        item.transform.scaleX = playerConfig.SCALE_X
-                        item.transform.scaleY = playerConfig.SCALE_Y
-                        player = new Player(identifier, item)
-                        res(player)
-                    })
+                item.material = materialService.get(playerConfig.MATERIAL)
+                item.transform.scaleX = playerConfig.SCALE_X
+                item.transform.scaleY = playerConfig.SCALE_Y
+                player = new Player(identifier, item)
+                res(player)
             })
     })
 
