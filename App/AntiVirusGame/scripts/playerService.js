@@ -7,7 +7,7 @@ import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
  */
 
 let player = null
-let playerConfig = null
+let playerConfig = PLAYER_TRACTOR
 
 const init = ({playerOptions}) => {
     const {type, identifier} = playerOptions
