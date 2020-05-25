@@ -89,8 +89,13 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         }, 100)
     }
 
+    const togglePlay = () => {
+        log(`play/pause toggled`)
+    }
+
     return {
-        play
+        play,
+        togglePlay
     }
 }
 

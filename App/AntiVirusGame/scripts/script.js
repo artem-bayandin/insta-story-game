@@ -12,7 +12,6 @@ import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
-    const game = new Game(gameOptions)
     game.play()
 }
 
@@ -35,10 +34,18 @@ const gameOptions = {
         initialStageCapacity: 6
     },
     energyOptions: {
-        initial: 7,
         increaseWhenDropped: 10
+    }
+}
+
+const game = new Game(gameOptions)
+
+const servicesOptions = {
+    ...gameOptions,
+    energyServiceOptions: {
+        initial: 7        
     },
-    playerOptions: {
+    playerServiceOptions: {
         identifier: 'player',
         type: PLAYER_TRACTOR.ID
     },
@@ -47,16 +54,19 @@ const gameOptions = {
         txtEggsId: 'txtEggs',
         txtLivesId: 'txtLives',
         txtTimerId: 'txtTimer'
+    },
+    gamepadServiceOptions: {
+        togglePlay: () => game.togglePlay()
     }
 }
 
 Promise.all([
-    energyService.init(gameOptions),
+    energyService.init(servicesOptions),
     eggService.init(),
-    playerService.init(gameOptions),
-    textService.init(gameOptions),
+    playerService.init(servicesOptions),
+    textService.init(servicesOptions),
     materialService.init(),
-    gamepadService.init(),
+    gamepadService.init(servicesOptions),
 ])
 .then(() => {
     // this line is left to easy test
@@ -64,15 +74,9 @@ Promise.all([
 
     findMe('game-canvas')
         .then(item => {
-            log(`Game canvas found`)
-            for (var p in item) {
-                log(`prop: ${p}`)
-            }
             const width = item.width.pinLastValue()
             const height = item.height.pinLastValue()
-            log(`width: ${width}`)
-            log(`height: ${height}`)
-            log(`Game canvas trace end`)
+            log(`Game canvas = width: ${width}, height: ${height}`)
         })
         .catch(err => {
             log(`Error when looking for game-canvas: ${err}`)

@@ -6,8 +6,8 @@ import { log } from './utils'
 
 let capacity = 0
 
-const init = ({energyOptions}) => {
-    const { initial } = energyOptions
+const init = ({energyServiceOptions}) => {
+    const { initial } = energyServiceOptions
     capacity = initial
     return 1
 }

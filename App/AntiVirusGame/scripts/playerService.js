@@ -13,8 +13,8 @@ let playerConfig = PLAYER_TRACTOR
 log(`TODO: refactor to avoid this line`)
 let playerObject = null
 
-const init = ({playerOptions}) => {
-    const {type, identifier} = playerOptions
+const init = ({playerServiceOptions}) => {
+    const {type, identifier} = playerServiceOptions
     switch (type) {
         case PLAYER_FACE.ID:
             playerConfig = PLAYER_FACE
