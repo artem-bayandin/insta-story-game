@@ -34,7 +34,7 @@ const init = ({gamepadServiceOptions}) => {
         // registerTap(btnRightTop, rightClick)
         // registerTap(btnLeftBottom, leftClick)
         // registerTap(btnRightBottom, rightClick)
-        registerTap(btnPause, togglePlay)
+        // registerTap(btnPause, togglePlay)
     })
 }
 

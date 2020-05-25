@@ -20,6 +20,9 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
     let timeCounter = 0
     let timeInterval = null
 
+    let playing = false
+    // let pausedTicksCounter = 0
+
     const increaseTickCounter = () => {
         ticksCounter++
         if (ticksCounter % stageCapacity === 0) {
@@ -55,7 +58,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
             if (!energyService.isAlive()) {
                 log('YOU DIED!')
                 go = false
-                clearInterval(timeInterval)
+                clearTimerInterval()
             }
         }
 
@@ -63,34 +66,63 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
     }
 
     const tick = () => {
-        eggService.tick(gameSpeed, eggDroppedCallback)
-        increaseTickCounter()
-        if (go) {
-            setTimeout(() => {
-                if (go) {
-                    tick()
-                } else {
-                    exitCallback(droppedCounter)
-                }
-            }, gameSpeed)
+        if (playing) {
+            eggService.tick(gameSpeed, eggDroppedCallback)
+            increaseTickCounter()
+            if (go) {
+                setTimeout(() => {
+                    if (go) {
+                        tick()
+                    } else {
+                        exitCallback(droppedCounter)
+                    }
+                }, gameSpeed)
+            } else {
+                exitCallback(droppedCounter)
+            }
         } else {
-            exitCallback(droppedCounter)
+            setTimeout(tick, gameSpeed)
         }
     }
 
-    const play = () => {
-        setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
-
-        tick()
-
+    const setTimerInterval = () => {
+        if (timeInterval) {
+            clearInterval(timeInterval)
+            timeInterval = null
+        }
         timeInterval = setInterval(() => {
             textService.setTime(timeCounter)
             timeCounter += 100
         }, 100)
     }
 
+    const clearTimerInterval = () => {
+        if (timeInterval) {
+            clearInterval(timeInterval)
+        }
+        timeInterval = null
+    }
+
+    const play = () => {
+        setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
+        playing = true
+        tick()
+        setTimerInterval()
+    }
+
     const togglePlay = () => {
         log(`play/pause toggled`)
+        if (playing) {
+            // pause
+            playing = false
+            clearTimerInterval()
+        } else {
+            // resume
+            if (go) {
+                playing = true
+                setTimerInterval()
+            }
+        }
     }
 
     return {
