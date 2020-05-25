@@ -19,6 +19,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
 
     let timeCounter = 0
     let timeInterval = null
+    let timeIntervalDuration = 100
 
     let playing = false
     // let pausedTicksCounter = 0
@@ -74,15 +75,19 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
                     if (go) {
                         tick()
                     } else {
-                        exitCallback(droppedCounter)
+                        exit()
                     }
                 }, gameSpeed)
             } else {
-                exitCallback(droppedCounter)
+                exit()
             }
         } else {
             setTimeout(tick, gameSpeed)
         }
+    }
+
+    const exit = () => {
+        exitCallback({eggs: droppedCounter, time: timeCounter - timeIntervalDuration})
     }
 
     const setTimerInterval = () => {
@@ -92,8 +97,8 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         }
         timeInterval = setInterval(() => {
             textService.setTime(timeCounter)
-            timeCounter += 100
-        }, 100)
+            timeCounter += timeIntervalDuration
+        }, timeIntervalDuration)
     }
 
     const clearTimerInterval = () => {

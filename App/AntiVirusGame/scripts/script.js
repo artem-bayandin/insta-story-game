@@ -15,8 +15,8 @@ const startTheGame = () => {
     game.play()
 }
 
-const exitCallback = (eggsCount) => {
-    log(`--- -- - game finised - -- - total score: ${eggsCount} eggs - -- ---`)
+const exitCallback = ({eggs, time}) => {
+    log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${((+time)/1000).toFixed(1)} seconds - -- ---`)
 }
 
 const gameOptions = {
