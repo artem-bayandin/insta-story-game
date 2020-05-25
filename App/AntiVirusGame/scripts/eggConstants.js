@@ -28,6 +28,19 @@ export const EGG_VIRUSRED_LEFT = {
     MATERIAL: 'virus-red-left'
 }
 
+export const EGG_VIRUS_RED = {
+    ID: 'EGG_VIRUS_RED',
+    SCALE_X: 650,
+    SCALE_Y: 650,
+    WEIGHT: -1,
+    LEFT: {
+        MATERIAL: 'virus-red-left'
+    },
+    RIGHT: {
+        MATERIAL: 'virus-red-right'
+    }
+}
+
 export const EGG_VIRUSBLUE_RIGHT = {
     ID: 'EGG_VIRUSBLUE_RIGHT',
     MATERIAL: 'virus-blue-right',
@@ -40,4 +53,17 @@ export const EGG_VIRUSBLUE_LEFT = {
     ...EGG_VIRUSBLUE_RIGHT,
     ID: 'EGG_VIRUSBLUE_LEFT',
     MATERIAL: 'virus-blue-left'
+}
+
+export const EGG_VIRUS_BLUE = {
+    ID: 'EGG_VIRUS_BLUE',
+    SCALE_X: 650,
+    SCALE_Y: 650,
+    WEIGHT: -1,
+    LEFT: {
+        MATERIAL: 'virus-blue-left'
+    },
+    RIGHT: {
+        MATERIAL: 'virus-blue-right'
+    }
 }
