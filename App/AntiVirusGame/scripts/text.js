@@ -1,4 +1,4 @@
-import { createTextScore, createTextTimer } from './inheritance'
+import { createTextScore, createTextTimer, createBase } from './inheritance'
 
 /*
  *  TEXT ENTITIES 
@@ -6,6 +6,7 @@ import { createTextScore, createTextTimer } from './inheritance'
 
 export const TxtScore = (id, obj) => {
     const object = {
+        ...createBase(id, obj),
         ...createTextScore(obj)
     }
     object.clearText()
@@ -14,6 +15,7 @@ export const TxtScore = (id, obj) => {
 
 export const TxtTimer = (id, obj) => {
     const object = {
+        ...createBase(id, obj),
         ...createTextTimer(obj)
     }
     object.clearText()

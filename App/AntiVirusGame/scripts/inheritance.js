@@ -23,6 +23,13 @@ export const createWithCoordinates = (obj) => {
     }
 }
 
+export const createBase = (id, obj) => {
+    return {
+        ...createWithId(id),
+        ...createWithCoordinates(obj)
+    }
+}
+
 export const createWithShowHide = (obj, speed, scaleX, scaleY) => {
     let _isVisible = true
 

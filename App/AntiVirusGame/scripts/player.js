@@ -1,4 +1,4 @@
-import { createWithId, createWithCoordinates } from './inheritance'
+import { createBase } from './inheritance'
 
 /*
  *  PLAYER ENTITY
@@ -6,7 +6,6 @@ import { createWithId, createWithCoordinates } from './inheritance'
 
 export const Player = (id, obj) => {
     return {
-        ...createWithId(id),
-        ...createWithCoordinates(obj)
+        ...createBase(id, obj)
     }
 }
