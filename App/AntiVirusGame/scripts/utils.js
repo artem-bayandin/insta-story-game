@@ -53,20 +53,28 @@ export const registerTap = (element, func) => { return TouchGestures.onTap(eleme
 export const unregisterTap = (tapSubscription) => tapSubscription.unsubscribe()
 
 /*
- * ANIMTAION UTILS
+ * WRAPPERS
  */
 
-export const findMe = identifier => {
+export const findMe = (identifier) => {
     return new Promise((res, rej) => Scene.root.findFirst(identifier).then(item => { res(item) }))
 }
 
-export const findMaterial = identifier => {
+export const findMaterial = (identifier) => {
     return new Promise((res, rej) => Materials.findFirst(identifier).then(mat => { res(mat) }))
 }
 
 /*
  * NEXT CODE SHOULD BE REVIEWED AND REFACTORED
  */
+
+export const MOVE_TYPES = {
+    LINEAR: 'LINEAR',
+    EASE_IN_QUART: 'EASE_IN_QUART',
+    EASE_OUT_QUART: 'EASE_OUT_QUART',
+    EASE_IN_CUBIC: 'EASE_IN_CUBIC',
+    EASE_OUT_CUBIC: 'EASE_OUT_CUBIC',
+}
 
 export const animateVisibility = (obj, driver, samplerX, samplerY) => {
     if (!samplerY) {
@@ -75,14 +83,6 @@ export const animateVisibility = (obj, driver, samplerX, samplerY) => {
     obj.transform.scaleX = Animation.animate(driver, samplerX)
     obj.transform.scaleY = Animation.animate(driver, samplerY)
     driver.start()
-}
-
-export const MOVE_TYPES = {
-    LINEAR: 'LINEAR',
-    EASE_IN_QUART: 'EASE_IN_QUART',
-    EASE_OUT_QUART: 'EASE_OUT_QUART',
-    EASE_IN_CUBIC: 'EASE_IN_CUBIC',
-    EASE_OUT_CUBIC: 'EASE_OUT_CUBIC',
 }
 
 const samplerFabric = (type, from, to) => {
@@ -118,24 +118,22 @@ export const animateMove = (obj, driver, to, type = MOVE_TYPES.LINEAR) => {
     driver.start()
 }
 
-export const linearSamplerUp = scale => linearSamplerFromTo(0, scale)
-export const linearSamplerDown = scale => linearSamplerFromTo(scale, 0)
+/* 
+ * SAMPLERS
+ */
+
 export const linearSamplerFromTo = (from, to) => Animation.samplers.linear(from, to)
 
-export const easeInQuartSamplerUp = scale => easeInQuartSamplerFromTo(0, scale)
-export const easeInQuartSamplerDown = scale => easeInQuartSamplerFromTo(scale, 0)
 export const easeInQuartSamplerFromTo = (from, to) => Animation.samplers.easeInQuart(from, to)
 
-export const easeOutQuartSamplerUp = scale => easeOutQuartSamplerFromTo(0, scale)
-export const easeOutQuartSamplerDown = scale => easeOutQuartSamplerFromTo(scale, 0)
 export const easeOutQuartSamplerFromTo = (from, to) => Animation.samplers.easeOutQuart(from, to)
 
-export const easeInCubicSamplerUp = scale => easeInCubicSamplerFromTo(0, scale)
-export const easeInCubicSamplerDown = scale => easeInCubicSamplerFromTo(scale, 0)
 export const easeInCubicSamplerFromTo = (from, to) => Animation.samplers.easeInCubic(from, to)
 
-export const easeOutCubicSamplerUp = scale => easeOutCubicSamplerFromTo(0, scale)
-export const easeOutCubicSamplerDown = scale => easeOutCubicSamplerFromTo(scale, 0)
 export const easeOutCubicSamplerFromTo = (from, to) => Animation.samplers.easeOutCubic(from, to)
+
+/*
+ * DRIVERS
+ */
 
 export const timeDriver = (speed) => Animation.timeDriver({durationMilliseconds: speed})
