@@ -63,8 +63,8 @@ export const Egg = (id, obj) => {
     }
 
     let base = {
-        ...createWithCoordinates(obj),
         ...createWithId(id),
+        ...createWithCoordinates(obj),
         ...createWithShowHide(obj, fastAnimationSpeed, config.SCALE_X, config.SCALE_Y),
         ...createWithMove(obj, MOVE_TYPES.EASE_OUT_CUBIC),
         start,

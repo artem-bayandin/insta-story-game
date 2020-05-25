@@ -6,7 +6,7 @@ import { createWithId, createWithCoordinates } from './inheritance'
 
 export const Player = (id, obj) => {
     return {
-        ...createWithCoordinates(obj),
-        ...createWithId(id)
+        ...createWithId(id),
+        ...createWithCoordinates(obj)
     }
 }
