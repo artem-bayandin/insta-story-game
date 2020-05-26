@@ -2,16 +2,20 @@
  *  EGG CONSTANTS
  */
 
+const yTopRow          = 170
+const yBottomRow       = 20
 const dropLeft         = { x: -50, y: -180 }
 const dropRight        = { x:  50, y: -180 }
-const topLeftSteps     = [{ x: -155, y: 215 }, { x: -120, y: 200 }, { x: -85, y: 185 }, { x: -50, y: 170 }, dropLeft]
-const bottomLeftSteps  = [{ x: -155, y:  65 }, { x: -120, y:  50 }, { x: -85, y:  35 }, { x: -50, y:  20 }, dropLeft]
-const topRightSteps    = [{ x:  155, y: 215 }, { x:  120, y: 200 }, { x:  85, y: 185 }, { x:  50, y: 170 }, dropRight]
-const bottomRightSteps = [{ x:  155, y:  65 }, { x:  120, y:  50 }, { x:  85, y:  35 }, { x:  50, y:  20 }, dropRight]
+const topLeftSteps     = [{ x: -155, y: 215 }, { x: -120, y: 200 }, { x: -85, y: 185 }, { x: -50, y: yTopRow    }, dropLeft]
+const bottomLeftSteps  = [{ x: -155, y:  65 }, { x: -120, y:  50 }, { x: -85, y:  35 }, { x: -50, y: yBottomRow }, dropLeft]
+const topRightSteps    = [{ x:  155, y: 215 }, { x:  120, y: 200 }, { x:  85, y: 185 }, { x:  50, y: yTopRow    }, dropRight]
+const bottomRightSteps = [{ x:  155, y:  65 }, { x:  120, y:  50 }, { x:  85, y:  35 }, { x:  50, y: yBottomRow }, dropRight]
 const globalRoutes     = [ topLeftSteps, topRightSteps, bottomLeftSteps, bottomRightSteps ]
 
 export const EGG_COORDINATES = {
-    GLOBAL_ROUTES: globalRoutes
+    GLOBAL_ROUTES: globalRoutes,
+    Y_TOP_ROW: yTopRow,
+    Y_BOTTOM_ROW: yBottomRow
 }
 
 export const EGG_VIRUSRED_RIGHT = {

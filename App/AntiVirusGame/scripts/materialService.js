@@ -4,7 +4,7 @@ import { PLAYER_FACE, PLAYER_TRACTOR } from './playerConstants'
 
 let materials = {}
 
-const init = () => {
+const init = ({}) => {
     // materials for eggs
     var promise1 = new Promise((res, rej) => findMaterial(EGG_VIRUSRED_RIGHT.MATERIAL).then(mat => res(materials[EGG_VIRUSRED_RIGHT.MATERIAL] = mat) ) )
     var promise2 = new Promise((res, rej) => findMaterial(EGG_VIRUSRED_LEFT.MATERIAL).then(mat => res(materials[EGG_VIRUSRED_LEFT.MATERIAL] = mat) ) )

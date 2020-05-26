@@ -35,6 +35,9 @@ const gameOptions = {
     },
     energyOptions: {
         increaseWhenDropped: 10
+    },
+    dropSettings: {
+        allowDrop: true
     }
 }
 
@@ -63,10 +66,10 @@ const servicesOptions = {
 
 Promise.all([
     energyService.init(servicesOptions),
-    eggService.init(),
+    eggService.init(servicesOptions),
     playerService.init(servicesOptions),
     textService.init(servicesOptions),
-    materialService.init(),
+    materialService.init(servicesOptions),
     gamepadService.init(servicesOptions),
 ])
 .then(() => {

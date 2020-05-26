@@ -2,6 +2,7 @@ import { log, findMe, animateMove, timeDriver, MOVE_TYPES, subscribeToPatchPulse
 import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_FACE, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 import materialService from './materialService'
+import { SIDE } from './commonConstants'
 
 const timeDriverMove = () => timeDriver(PLAYER_POSITION_DEFAULTS.TRANSITION_SPEED)
 const moveType = MOVE_TYPES.EASE_OUT_BACK
@@ -13,8 +14,9 @@ const moveType = MOVE_TYPES.EASE_OUT_BACK
 let player = null
 let playerConfig = PLAYER_TRACTOR
 
-const init = ({playerServiceOptions}) => {
-    const {type, identifier, allowY} = playerServiceOptions
+const init = ({playerServiceOptions, dropSettings}) => {
+    const { type, identifier } = playerServiceOptions
+    const { allowDrop } = dropSettings
     switch (type) {
         case PLAYER_FACE.ID:
             playerConfig = PLAYER_FACE
@@ -38,16 +40,15 @@ const init = ({playerServiceOptions}) => {
                 item.transform.scaleX = playerConfig.SCALE_X
                 item.transform.scaleY = playerConfig.SCALE_Y
 
-                // animateMove(item, timeDriverMove(), { x: PLAYER_POSITION_DEFAULTS.X_DEFAULT, y: PLAYER_POSITION_DEFAULTS.Y_DEFAULT }, moveType)
                 item.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
-                item.transform.y = allowY ? PLAYER_POSITION_DEFAULTS.Y_DEFAULT : PLAYER_POSITION_DEFAULTS.Y_ONLY_X
+                item.transform.y = allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
 
                 player = new Player(identifier, item)
 
                 // subscribe to move
                 subscribeToPatchPulse('movePlayerLeft', moveLeft)
                 subscribeToPatchPulse('movePlayerRight', moveRight)
-                if (allowY) {
+                if (!allowDrop) {
                     subscribeToPatchPulse('movePlayerTop', moveTop)
                     subscribeToPatchPulse('movePlayerBottom', moveBottom)
                 }
@@ -61,10 +62,8 @@ const init = ({playerServiceOptions}) => {
 // return -1 if on the left, 1 if on the right, 0 if undefined state
 const getSides = () => {
     const [ x, y ] = player.getCoordinates()
-    const sideX = x >= playerConfig.POSITION_DETECTOR.RIGHT ? 1 : x <= playerConfig.POSITION_DETECTOR.LEFT ? -1 : 0
-    const sideY = y >= playerConfig.POSITION_DETECTOR.TOP ? 1 : y <= playerConfig.POSITION_DETECTOR.BOTTOM ? -1 : 0
-
-    log(`face coords: ${x}:${y}, face sides: ${sideX}:${sideY}`)
+    const sideX = x >= playerConfig.POSITION_DETECTOR.RIGHT ? SIDE.RIGHT : x <= playerConfig.POSITION_DETECTOR.LEFT ? SIDE.LEFT : SIDE.NEUTRAL
+    const sideY = y >= playerConfig.POSITION_DETECTOR.TOP ? SIDE.TOP : y <= playerConfig.POSITION_DETECTOR.BOTTOM ? SIDE.BOTTOM : SIDE.NEUTRAL
     return [ sideX, sideY ]
 }
 

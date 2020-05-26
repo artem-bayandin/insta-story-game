@@ -5,9 +5,9 @@
 const X_LEFT = -50
 const X_RIGHT = 50
 const X_DEFAULT = 0
-const Y_TOP = 170
-const Y_BOTTOM = 20
-const Y_DEFAULT = 20
+const Y_TOP = 160
+const Y_BOTTOM = 0
+const Y_DEFAULT = 0
 const Y_ONLY_X = -170
 const TRANSITION_SPEED = 175
 
@@ -30,8 +30,8 @@ export const PLAYER_TRACTOR = {
     POSITION_DETECTOR: {
         LEFT:   -40,
         RIGHT:  40,
-        TOP:    0,
-        BOTTOM: 0
+        TOP:    100,
+        BOTTOM: 60
     }
 }
 
@@ -43,7 +43,7 @@ export const PLAYER_FACE = {
     POSITION_DETECTOR: {
         LEFT:   -40,
         RIGHT:  40,
-        TOP:    0,
-        BOTTOM: 0
+        TOP:    100,
+        BOTTOM: 60
     }
 }

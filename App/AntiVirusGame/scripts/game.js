@@ -4,10 +4,11 @@ const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
     textService.setText(level, eggsDropped, livesLeft)
 }
 
-const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
+const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, dropSettings}) => {
     const { playerService, energyService, eggService, textService } = services
     const { initialGameSpeed, gameSpeedStep, maxGameSpeed, initialStageCapacity } = gameSpeedOptions
     const { increaseWhenDropped } = energyOptions
+    const { allowDrop } = dropSettings
     
     let ticksCounter = 0
     let droppedCounter = 0
@@ -45,17 +46,22 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions}) => {
         }
     }
 
-    const eggDroppedCallback = ({side, weight}) => {
-        log(`EGG DROPPED ON ${side} SIDE`)
-        if (!side) return
+    const eggDroppedCallback = ({sides, weight}) => {
+        const [ eggSideX, eggSideY ] = sides
+        const [ playerSideX, playerSideY ] = playerService.getSides()
 
         increaseDroppedCounter()
 
-        // TODO: how will I compare vertical position???
-        const [ playerSideX, playerSideY ] = playerService.getSides()
+        log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
 
-        if (side === playerSideX) {
+        if (// 2 positions: X must coinside
+            allowDrop && eggSideX === playerSideX
+            || 
+            // 4 positions - X:Y must coinside
+            !allowDrop && eggSideX === playerSideX && eggSideY === playerSideY
+            ) {
             energyService.addEnergy(weight)
+
             if (!energyService.isAlive()) {
                 log('YOU DIED!')
                 go = false

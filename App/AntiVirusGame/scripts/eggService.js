@@ -11,6 +11,8 @@ let egg2 = null
 let egg3 = null
 let egg4 = null
 
+let allowDrop = false
+
 let eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT }, { objectConfig: EGG_VIRUSRED_RIGHT } ]
 let eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT }, { objectConfig: EGG_VIRUSBLUE_RIGHT } ]
 
@@ -18,7 +20,9 @@ const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
 }
 
-const init = () => {
+const init = ({dropSettings}) => {
+    allowDrop = dropSettings.allowDrop
+
     var promise1 = new Promise((res, rej) => initEgg('egg1').then(obj => res(egg1 = obj)))
     var promise2 = new Promise((res, rej) => initEgg('egg2').then(obj => res(egg2 = obj)))
     var promise3 = new Promise((res, rej) => initEgg('egg3').then(obj => res(egg3 = obj)))
@@ -45,16 +49,18 @@ const tick = (gameSpeed, eggDroppedCallback) => {
     const redBlueSelector = randomInt(1, 2) - 1
     const speed = Math.max(gameSpeed / 2, 350)
 
-    egg1.step(speed, eggDroppedCallback)
-    egg2.step(speed, eggDroppedCallback)
-    egg3.step(speed, eggDroppedCallback)
-    egg4.step(speed, eggDroppedCallback)
+    egg1.step(speed)
+    egg2.step(speed)
+    egg3.step(speed)
+    egg4.step(speed)
 
     const config = redBlueSelector == 0 ? eggRedVirusConfig[position % 2] : eggBlueVirusConfig[position % 2]
 
     const startConfig = {
         position,
-        ...config
+        allowDrop,
+        eggDroppedCallback,
+        ...config,
     }
 
     if (!egg1.isVisible()) {

@@ -2,6 +2,7 @@ import { log, setTimeout, MOVE_TYPES } from './utils'
 import { createWithShowHide, createWithMove, createBase } from './inheritance'
 import { EGG_COORDINATES, EGG_VIRUSRED_RIGHT } from './eggConstants'
 import materialService from './materialService'
+import { SIDE } from './commonConstants'
 
 const fastAnimationSpeed = 10
 
@@ -13,8 +14,13 @@ export const Egg = (id, obj) => {
     let routes = null
     let currentPosition = -1
     let config = EGG_VIRUSRED_RIGHT
+    let callback = null
+    let dropAllowed = false
 
-    const start = ({position, objectConfig}) => {
+    const start = ({position, objectConfig, eggDroppedCallback, allowDrop}) => {
+        callback = eggDroppedCallback
+        dropAllowed = allowDrop
+
         // if (config.ID !== objectConfig.ID) {
             config = objectConfig
             obj.material = materialService.get(config.MATERIAL)
@@ -28,7 +34,7 @@ export const Egg = (id, obj) => {
         base.show()
     }
 
-    const step = (speed, eggDroppedCallback) => {
+    const step = (speed) => {
         const innerSpeed = speed / 2
         const dropSpeed = innerSpeed / 2
 
@@ -43,19 +49,26 @@ export const Egg = (id, obj) => {
         if (currentPosition == 2) {
             // move to the end and drop
             currentPosition++
+
+            let sideX = routes[currentPosition].x < 0 ? SIDE.LEFT : SIDE.RIGHT
+            let sideY = routes[currentPosition].y == EGG_COORDINATES.Y_TOP_ROW ? SIDE.TOP : SIDE.BOTTOM
+
+            let hideAndResetPosition = () => {
+                base.hide()
+                currentPosition = -1
+            }
+
             let onMoveCompleted = () => {
-                log(`egg '${id}' is on the edge!`)
-                currentPosition++
-                let onDroppedCompleted = () => {
-                    base.hide()
-                    currentPosition = -1
+                if (dropAllowed) {
+                    base.moveTo(routes[routes.length - 1].x, routes[routes.length - 1].y, dropSpeed, hideAndResetPosition)
+                    
+                    setTimeout(() => {
+                        callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT})
+                    }, dropSpeed / 2)
+                } else {
+                    callback({sides: [ sideX, sideY ], weight: config.WEIGHT})
+                    hideAndResetPosition()
                 }
-                base.moveTo(routes[routes.length - 1].x, routes[routes.length - 1].y, dropSpeed, onDroppedCompleted)
-                
-                let side = routes[currentPosition].x < 0 ? -1 : 1
-                setTimeout(() => {
-                    eggDroppedCallback({side, weight: config.WEIGHT})
-                }, dropSpeed / 2)
             }
             base.moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed, onMoveCompleted)
             return
