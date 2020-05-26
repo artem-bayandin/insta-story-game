@@ -25,7 +25,7 @@ export const subscribeToPatchPulse = (identifier, func) => { return Patches.outp
 
 export const randomInt = (min, max) => Math.floor(Math.random() * max) + min
 export const randomFloat = (min, max) => Math.random() * max + min
-export const randomItem = (arrayOfElements) => arrayOfElements[randomInt(0, arrayOfElements.length - 1)]
+export const randomItem = (arrayOfElements) => arrayOfElements[randomInt(1, arrayOfElements.length) - 1]
 
 /*
  * SHOW / HIDE USING OBJECT PROPERTY SETTER

@@ -1,6 +1,6 @@
 import { log, setTimeout, MOVE_TYPES } from './utils'
 import { createWithShowHide, createWithMove, createBase } from './inheritance'
-import { EGG_COORDINATES, EGG_VIRUSRED_RIGHT } from './eggConstants'
+import { EGG_COORDINATES, EGG_VIRUS_RED } from './eggConstants'
 import materialService from './materialService'
 import { SIDE } from './commonConstants'
 
@@ -11,26 +11,26 @@ const fastAnimationSpeed = 10
  */
 
 export const Egg = (id, obj) => {
-    let routes = null
+    let currentRoute = null
     let currentPosition = -1
-    let config = EGG_VIRUSRED_RIGHT
+    let config = EGG_VIRUS_RED
     let callback = null
     let dropAllowed = false
 
-    const start = ({position, objectConfig, eggDroppedCallback, allowDrop}) => {
-        callback = eggDroppedCallback
+    const start = ({route, allowDrop, eggCallback, objectConfig, newMaterial}) => {
+        callback = eggCallback
         dropAllowed = allowDrop
 
         // if (config.ID !== objectConfig.ID) {
             config = objectConfig
-            obj.material = materialService.get(config.MATERIAL)
+            obj.material = materialService.get(newMaterial)
             obj.transform.scaleX = config.SCALE_X
             obj.transform.scaleY = config.SCALE_Y
         // }
 
-        routes = EGG_COORDINATES.GLOBAL_ROUTES[position]
+        currentRoute = route
         currentPosition = 0
-        base.moveTo(routes[0].x, routes[0].y, fastAnimationSpeed)
+        base.moveTo(currentRoute[0].x, currentRoute[0].y, fastAnimationSpeed)
         base.show()
     }
 
@@ -42,7 +42,7 @@ export const Egg = (id, obj) => {
 
         if (currentPosition >= 0 && currentPosition < 2) {
             currentPosition++
-            base.moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed)
+            base.moveTo(currentRoute[currentPosition].x, currentRoute[currentPosition].y, innerSpeed)
             return
         }
         
@@ -50,8 +50,8 @@ export const Egg = (id, obj) => {
             // move to the end and drop
             currentPosition++
 
-            let sideX = routes[currentPosition].x < 0 ? SIDE.LEFT : SIDE.RIGHT
-            let sideY = routes[currentPosition].y == EGG_COORDINATES.Y_TOP_ROW ? SIDE.TOP : SIDE.BOTTOM
+            let sideX = currentRoute[currentPosition].x < 0 ? SIDE.LEFT : SIDE.RIGHT
+            let sideY = currentRoute[currentPosition].y == EGG_COORDINATES.Y_TOP_ROW ? SIDE.TOP : SIDE.BOTTOM
 
             let hideAndResetPosition = () => {
                 base.hide()
@@ -60,7 +60,7 @@ export const Egg = (id, obj) => {
 
             let onMoveCompleted = () => {
                 if (dropAllowed) {
-                    base.moveTo(routes[routes.length - 1].x, routes[routes.length - 1].y, dropSpeed, hideAndResetPosition)
+                    base.moveTo(currentRoute[currentRoute.length - 1].x, currentRoute[currentRoute.length - 1].y, dropSpeed, hideAndResetPosition)
                     
                     setTimeout(() => {
                         callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT})
@@ -70,7 +70,7 @@ export const Egg = (id, obj) => {
                     hideAndResetPosition()
                 }
             }
-            base.moveTo(routes[currentPosition].x, routes[currentPosition].y, innerSpeed, onMoveCompleted)
+            base.moveTo(currentRoute[currentPosition].x, currentRoute[currentPosition].y, innerSpeed, onMoveCompleted)
             return
         }
     }

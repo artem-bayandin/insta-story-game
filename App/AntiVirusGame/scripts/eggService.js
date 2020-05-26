@@ -1,6 +1,7 @@
-import { findMe, randomInt, log } from './utils'
+import { findMe, randomInt, log, randomItem } from './utils'
 import { Egg } from './egg' 
-import { EGG_VIRUSRED_RIGHT, EGG_VIRUSRED_LEFT, EGG_VIRUSBLUE_RIGHT, EGG_VIRUSBLUE_LEFT } from './eggConstants'
+import { EGG_VIRUS_RED, EGG_VIRUS_BLUE, EGG_COORDINATES } from './eggConstants'
+import { SIDE } from './commonConstants'
 
 /*
  *  EGG SERVICE 
@@ -13,15 +14,19 @@ let egg4 = null
 
 let allowDrop = false
 
-let eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT }, { objectConfig: EGG_VIRUSRED_RIGHT } ]
-let eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT }, { objectConfig: EGG_VIRUSBLUE_RIGHT } ]
+let eggProbabilityArray = [EGG_VIRUS_RED]
 
 const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
 }
 
-const init = ({dropSettings}) => {
+const init = ({eggServiceOptions, dropSettings}) => {
     allowDrop = dropSettings.allowDrop
+    if (eggServiceOptions.eggProbabilityArray && eggServiceOptions.eggProbabilityArray.length) {
+        log(`set up egg array`)
+        eggProbabilityArray = eggServiceOptions.eggProbabilityArray
+        log(`new array: ${JSON.stringify(eggProbabilityArray)}`)
+    }
 
     var promise1 = new Promise((res, rej) => initEgg('egg1').then(obj => res(egg1 = obj)))
     var promise2 = new Promise((res, rej) => initEgg('egg2').then(obj => res(egg2 = obj)))
@@ -38,15 +43,11 @@ const init = ({dropSettings}) => {
         egg2.hide()
         egg3.hide()
         egg4.hide()
-        eggRedVirusConfig = [ { objectConfig: EGG_VIRUSRED_LEFT }, { objectConfig: EGG_VIRUSRED_RIGHT } ]
-        eggBlueVirusConfig = [ { objectConfig: EGG_VIRUSBLUE_LEFT }, { objectConfig: EGG_VIRUSBLUE_RIGHT } ]
     })
 }
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
-const tick = (gameSpeed, eggDroppedCallback) => {
-    const position = randomInt(1, 4) - 1
-    const redBlueSelector = randomInt(1, 2) - 1
+const tick = (gameSpeed, eggCallback) => {
     const speed = Math.max(gameSpeed / 2, 350)
 
     egg1.step(speed)
@@ -54,13 +55,18 @@ const tick = (gameSpeed, eggDroppedCallback) => {
     egg3.step(speed)
     egg4.step(speed)
 
-    const config = redBlueSelector == 0 ? eggRedVirusConfig[position % 2] : eggBlueVirusConfig[position % 2]
+
+    const { linePoints, side } = randomItem(EGG_COORDINATES.GLOBAL_ROUTES)
+    const config = randomItem(eggProbabilityArray)
+
+    log(`new config: ${config.ID}`)
 
     const startConfig = {
-        position,
+        route: linePoints,
         allowDrop,
-        eggDroppedCallback,
-        ...config,
+        eggCallback,
+        objectConfig: config,
+        newMaterial: side === SIDE.LEFT ? config.MATERIAL.LEFT : config.MATERIAL.RIGHT,
     }
 
     if (!egg1.isVisible()) {

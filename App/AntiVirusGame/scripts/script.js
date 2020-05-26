@@ -9,6 +9,7 @@ import gamepadService from './gamepadService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
+import { EGG_VIRUS_BLUE, EGG_VIRUS_RED } from './eggConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
@@ -61,6 +62,9 @@ const servicesOptions = {
     },
     gamepadServiceOptions: {
         togglePlay: () => game.togglePlay()
+    },
+    eggServiceOptions: {
+        eggProbabilityArray: [EGG_VIRUS_RED, EGG_VIRUS_BLUE]
     }
 }
 
