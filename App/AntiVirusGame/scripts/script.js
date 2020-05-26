@@ -47,7 +47,8 @@ const servicesOptions = {
     },
     playerServiceOptions: {
         identifier: 'player',
-        type: PLAYER_TRACTOR.ID
+        type: PLAYER_TRACTOR.ID,
+        allowY: false
     },
     textServiceOptions: {
         txtLevelId: 'txtLevel',

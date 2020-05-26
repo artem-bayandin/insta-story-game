@@ -1,6 +1,7 @@
 const Animation = require('Animation')
 const Diagnostics = require('Diagnostics')
 const Materials = require('Materials')
+const Patches = require('Patches')
 const Scene = require('Scene')
 const Time = require('Time')
 const TouchGestures = require('TouchGestures')
@@ -11,6 +12,12 @@ const TouchGestures = require('TouchGestures')
 
 export const log = (message) => Diagnostics.log(message)
 export const watch = (tag, signal) => Diagnostics.watch(tag, signal)
+
+/*
+ * PATCH
+ */
+
+export const subscribeToPatchPulse = (identifier, func) => { return Patches.outputs.getPulse(identifier).then(pulse => pulse.subscribe(func)) }
 
 /*
  * RANDOMIZER
@@ -74,6 +81,8 @@ export const MOVE_TYPES = {
     EASE_OUT_QUART: 'EASE_OUT_QUART',
     EASE_IN_CUBIC: 'EASE_IN_CUBIC',
     EASE_OUT_CUBIC: 'EASE_OUT_CUBIC',
+    EASE_IN_BACK: 'EASE_IN_BACK',
+    EASE_OUT_BACK: 'EASE_OUT_BACK',
 }
 
 export const animateVisibility = (obj, driver, samplerX, samplerY) => {
@@ -97,6 +106,10 @@ const samplerFabric = (type, from, to) => {
             return easeInCubicSamplerFromTo(from, to)
         case MOVE_TYPES.EASE_OUT_CUBIC:
             return easeOutCubicSamplerFromTo(from, to)
+        case MOVE_TYPES.EASE_IN_BACK:
+            return easeInBackSamplerFromTo(from, to)
+        case MOVE_TYPES.EASE_OUT_BACK:
+            return easeOutBackSamplerFromTo(from, to)
         default:
             return linearSamplerFromTo(from, to)
     }
@@ -131,6 +144,10 @@ export const easeOutQuartSamplerFromTo = (from, to) => Animation.samplers.easeOu
 export const easeInCubicSamplerFromTo = (from, to) => Animation.samplers.easeInCubic(from, to)
 
 export const easeOutCubicSamplerFromTo = (from, to) => Animation.samplers.easeOutCubic(from, to)
+
+export const easeInBackSamplerFromTo = (from, to) => Animation.samplers.easeInBack(from, to)
+
+export const easeOutBackSamplerFromTo = (from, to) => Animation.samplers.easeOutBack(from, to)
 
 /*
  * DRIVERS

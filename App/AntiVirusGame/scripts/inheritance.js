@@ -23,10 +23,19 @@ export const createWithCoordinates = (obj) => {
     }
 }
 
+export const createWithObject = (obj) => {
+    const getObj = () => obj
+
+    return {
+        getObj
+    }
+}
+
 export const createBase = (id, obj) => {
     return {
         ...createWithId(id),
-        ...createWithCoordinates(obj)
+        ...createWithCoordinates(obj),
+        ...createWithObject(obj)
     }
 }
 
