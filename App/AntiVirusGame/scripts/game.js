@@ -46,11 +46,13 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, dropSett
         }
     }
 
-    const eggDroppedCallback = ({sides, weight}) => {
+    const eggDroppedCallback = ({sides, weight, countDrop}) => {
         const [ eggSideX, eggSideY ] = sides
         const [ playerSideX, playerSideY ] = playerService.getSides()
 
-        increaseDroppedCounter()
+        if (countDrop) {
+            increaseDroppedCounter()
+        }
 
         log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
 
@@ -122,7 +124,6 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, dropSett
     }
 
     const togglePlay = () => {
-        log(`play/pause toggled`)
         if (playing) {
             // pause
             playing = false

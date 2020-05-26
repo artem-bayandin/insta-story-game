@@ -1,4 +1,4 @@
-import { linearSamplerFromTo, animateVisibility, animateMove, timeDriver, MOVE_TYPES, randomInt, setTimeout } from './utils'
+import { linearSamplerFromTo, animateVisibility, animateMove, timeDriver, MOVE_TYPES, randomInt, setTimeout, log } from './utils'
 
 /*
  *  GENERAL CREATORS
@@ -39,20 +39,31 @@ export const createBase = (id, obj) => {
     }
 }
 
-export const createWithShowHide = (obj, speed, scaleX, scaleY) => {
+export const createWithShowHide = (obj, speed = 0, scaleX = 0, scaleY = 0) => {
     let _isVisible = true
+    let _speed = speed
+    let _scaleX = scaleX
+    let _scaleY = scaleY
 
-    // TODO: refactor to pass { speed, scaleX, scaleY } params
-    const show = () => {
-        if (isVisible()) return
-        animateVisibility(obj, timeDriver(speed), linearSamplerFromTo(0, scaleX), linearSamplerFromTo(0, scaleY || scaleX))
+    const show = ({speed = 0, scaleX = 0, scaleY = 0} = {speed: 0, scaleX: 0, scaleY: 0}) => {
+        const [ s, x, y ] = [ speed || _speed, scaleX || _scaleX, scaleY || _scaleY ]
+        if (isVisible() || !(s > 0 && x > 0 && y > 0)) return
+        animateVisibility(obj
+            , timeDriver(s)
+            , linearSamplerFromTo(0, x)
+            , linearSamplerFromTo(0, y)
+        )
         setVisibility(true)
     }
 
-    // TODO: refactor to pass { speed, scaleX, scaleY } params
-    const hide = () => {
+    const hide = ({speed = 1} = {speed: 1}) => {
+        const s = speed || _speed
         if (!isVisible()) return
-        animateVisibility(obj, timeDriver(speed), linearSamplerFromTo(scaleX, 0), linearSamplerFromTo(scaleY || scaleX, 0))
+        animateVisibility(obj
+            , timeDriver(s)
+            , linearSamplerFromTo(obj.transform.scaleX.pinLastValue(), 0)
+            , linearSamplerFromTo(obj.transform.scaleY.pinLastValue(), 0)
+        )
         setVisibility(false)
     }
 

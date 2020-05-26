@@ -4,7 +4,7 @@
 
 const X_LEFT = -50
 const X_RIGHT = 50
-const X_DEFAULT = 0
+const X_DEFAULT = X_LEFT
 const Y_TOP = 160
 const Y_BOTTOM = 0
 const Y_DEFAULT = 0

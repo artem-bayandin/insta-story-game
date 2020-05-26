@@ -1,6 +1,6 @@
 import { log, findMe, animateMove, timeDriver, MOVE_TYPES, subscribeToPatchPulse } from './utils'
 import { Player} from './player'
-import { PLAYER_TRACTOR, PLAYER_FACE, PLAYER_POSITION_DEFAULTS } from './playerConstants'
+import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 import materialService from './materialService'
 import { SIDE } from './commonConstants'
 
@@ -15,19 +15,9 @@ let player = null
 let playerConfig = PLAYER_TRACTOR
 
 const init = ({playerServiceOptions, dropSettings}) => {
-    const { type, identifier } = playerServiceOptions
+    const { identifier } = playerServiceOptions
     const { allowDrop } = dropSettings
-    switch (type) {
-        case PLAYER_FACE.ID:
-            playerConfig = PLAYER_FACE
-            break
-        case PLAYER_TRACTOR.ID:
-            playerConfig = PLAYER_TRACTOR
-            break
-        default:
-            playerConfig = PLAYER_TRACTOR
-            break
-    }
+    playerConfig = playerServiceOptions.playerConfig || playerConfig
 
     var promise1 = new Promise((res, rej) => {
         findMe(identifier)

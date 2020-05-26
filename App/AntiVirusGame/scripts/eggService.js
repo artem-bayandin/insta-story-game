@@ -1,6 +1,6 @@
-import { findMe, randomInt, log, randomItem } from './utils'
+import { findMe, log, randomItem } from './utils'
 import { Egg } from './egg' 
-import { EGG_VIRUS_RED, EGG_VIRUS_BLUE, EGG_COORDINATES } from './eggConstants'
+import { EGG_VIRUS_RED, EGG_COORDINATES } from './eggConstants'
 import { SIDE } from './commonConstants'
 
 /*
@@ -14,7 +14,7 @@ let egg4 = null
 
 let allowDrop = false
 
-let eggProbabilityArray = [EGG_VIRUS_RED]
+let eggs = [EGG_VIRUS_RED]
 
 const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
@@ -22,10 +22,15 @@ const initEgg = (identifier) => {
 
 const init = ({eggServiceOptions, dropSettings}) => {
     allowDrop = dropSettings.allowDrop
-    if (eggServiceOptions.eggProbabilityArray && eggServiceOptions.eggProbabilityArray.length) {
-        log(`set up egg array`)
-        eggProbabilityArray = eggServiceOptions.eggProbabilityArray
-        log(`new array: ${JSON.stringify(eggProbabilityArray)}`)
+    const inputEggs = eggServiceOptions.eggProbabilityArray
+    if (inputEggs && inputEggs.length) {
+        eggs.length = 0
+        inputEggs.forEach(item => {
+            const [ inputType, inputNumber ] = item
+            for (var i = 0; i < inputNumber; i++) {
+                eggs.push(inputType)
+            }
+        });
     }
 
     var promise1 = new Promise((res, rej) => initEgg('egg1').then(obj => res(egg1 = obj)))
@@ -39,7 +44,7 @@ const init = ({eggServiceOptions, dropSettings}) => {
         , promise3
         , promise4
     ]).then(() => {
-        egg1.hide()
+        egg1.hide({})
         egg2.hide()
         egg3.hide()
         egg4.hide()
@@ -55,11 +60,8 @@ const tick = (gameSpeed, eggCallback) => {
     egg3.step(speed)
     egg4.step(speed)
 
-
     const { linePoints, side } = randomItem(EGG_COORDINATES.GLOBAL_ROUTES)
-    const config = randomItem(eggProbabilityArray)
-
-    log(`new config: ${config.ID}`)
+    const config = randomItem(eggs)
 
     const startConfig = {
         route: linePoints,

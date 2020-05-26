@@ -9,7 +9,7 @@ import gamepadService from './gamepadService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
-import { EGG_VIRUS_BLUE, EGG_VIRUS_RED } from './eggConstants'
+import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
@@ -27,17 +27,24 @@ const gameOptions = {
         eggService,
         textService,
     },
+    // callback to run when game is over
     exitCallback,
     gameSpeedOptions: {
         initialGameSpeed: 1350,
         gameSpeedStep: 150,
-        maxGameSpeed: 500,
+        maxGameSpeed: 400,
+        // how frequently do we speed up the game
         initialStageCapacity: 6
     },
     energyOptions: {
+        // if X items are dropped - add 1 live
         increaseWhenDropped: 10
     },
     dropSettings: {
+        // set to TRUE to move Player only in X axis
+        // set to FALSE to move Player in X and Y axises
+        // TODO: when FALSE - update gaming logic not to play unlimited amount of time and dropped eggs - double callback needed: 
+        //                    if on the edge - check where's player - if not here - drop, if here - survive
         allowDrop: true
     }
 }
@@ -47,12 +54,14 @@ const game = new Game(gameOptions)
 const servicesOptions = {
     ...gameOptions,
     energyServiceOptions: {
+        // initial number of lives
         initial: 7        
     },
     playerServiceOptions: {
+        // id of item in SparkAR
         identifier: 'player',
-        type: PLAYER_TRACTOR.ID,
-        allowY: false
+        // this is to set up player image and parameters
+        playerConfig: PLAYER_TRACTOR
     },
     textServiceOptions: {
         txtLevelId: 'txtLevel',
@@ -61,10 +70,16 @@ const servicesOptions = {
         txtTimerId: 'txtTimer'
     },
     gamepadServiceOptions: {
+        // play / pause the Game
         togglePlay: () => game.togglePlay()
     },
     eggServiceOptions: {
-        eggProbabilityArray: [EGG_VIRUS_RED, EGG_VIRUS_BLUE]
+        // 1 out of 6 is a healing mask
+        eggProbabilityArray: [
+            [ EGG_VIRUS_RED, 4 ]
+            , [ EGG_VIRUS_BLUE, 4 ]
+            , [ EGG_MASK_GREEN, 1 ]
+        ]
     }
 }
 
@@ -80,6 +95,7 @@ Promise.all([
     // this line is left to easy test
     setTimeout(() => { startTheGame() }, 1000)
 
+    // this is to test screen size, as I'd like elements to be relatively positioned, not static
     findMe('game-canvas')
         .then(item => {
             const width = item.width.pinLastValue()

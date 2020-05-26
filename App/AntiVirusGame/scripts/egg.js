@@ -21,17 +21,14 @@ export const Egg = (id, obj) => {
         callback = eggCallback
         dropAllowed = allowDrop
 
-        // if (config.ID !== objectConfig.ID) {
-            config = objectConfig
-            obj.material = materialService.get(newMaterial)
-            obj.transform.scaleX = config.SCALE_X
-            obj.transform.scaleY = config.SCALE_Y
-        // }
+        config = objectConfig
+        obj.material = materialService.get(newMaterial)
 
         currentRoute = route
         currentPosition = 0
         base.moveTo(currentRoute[0].x, currentRoute[0].y, fastAnimationSpeed)
-        base.show()
+
+        base.show({scaleX: config.SCALE_X, scaleY: config.SCALE_Y})
     }
 
     const step = (speed) => {
@@ -63,10 +60,10 @@ export const Egg = (id, obj) => {
                     base.moveTo(currentRoute[currentRoute.length - 1].x, currentRoute[currentRoute.length - 1].y, dropSpeed, hideAndResetPosition)
                     
                     setTimeout(() => {
-                        callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT})
+                        callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT, countDrop: config.COUNT_DROP})
                     }, dropSpeed / 2)
                 } else {
-                    callback({sides: [ sideX, sideY ], weight: config.WEIGHT})
+                    callback({sides: [ sideX, sideY ], weight: config.WEIGHT, countDrop: config.COUNT_DROP})
                     hideAndResetPosition()
                 }
             }
@@ -77,7 +74,7 @@ export const Egg = (id, obj) => {
 
     let base = {
         ...createBase(id, obj),
-        ...createWithShowHide(obj, fastAnimationSpeed, config.SCALE_X, config.SCALE_Y),
+        ...createWithShowHide(obj, fastAnimationSpeed),
         ...createWithMove(obj, MOVE_TYPES.EASE_OUT_CUBIC),
         start,
         step

@@ -25,6 +25,7 @@ export const EGG_VIRUS_RED = {
     SCALE_X: 650,
     SCALE_Y: 650,
     WEIGHT: -1,
+    COUNT_DROP: true,
     MATERIAL: {
         LEFT: 'virus-red-left',
         RIGHT: 'virus-red-right'
@@ -36,8 +37,21 @@ export const EGG_VIRUS_BLUE = {
     SCALE_X: 650,
     SCALE_Y: 650,
     WEIGHT: -1,
+    COUNT_DROP: true,
     MATERIAL: {
         LEFT: 'virus-blue-left',
         RIGHT: 'virus-blue-right'
+    }
+}
+
+export const EGG_MASK_GREEN = {
+    ID: 'EGG_VIRUS_MASK',
+    SCALE_X: 700,
+    SCALE_Y: 500,
+    WEIGHT: +1,
+    COUNT_DROP: false,
+    MATERIAL: {
+        LEFT: 'mask-green',
+        RIGHT: 'mask-green'
     }
 }
