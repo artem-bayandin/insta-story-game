@@ -62,7 +62,7 @@ const gameOptions = {
         allowDrop: true,
         // set to TRUE to collect all the eggs (so you have not to allow an egg to break)
         // set to FALSE to your Player has to avoid contacts with eggs
-        collect: false
+        collect: true
     },
     UI: {
         playerCoordMaxLeft: -50,
@@ -97,11 +97,12 @@ const servicesOptions = {
         togglePlay: () => game.togglePlay()
     },
     eggServiceOptions: {
-        // 1 out of 6 is a healing mask
+        // if (collect)     then killers::healers should be 1:4
+        // if (!colelct)    then killers::healers should be 4:1
         eggProbabilityArray: [
             [ EGG_VIRUS_RED, 2 ]
             , [ EGG_VIRUS_BLUE, 2 ]
-            , [ EGG_MASK_GREEN, 1 ]
+            , [ EGG_MASK_GREEN, 2 ]
         ]
     }
 }

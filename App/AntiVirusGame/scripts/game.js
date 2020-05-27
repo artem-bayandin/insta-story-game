@@ -69,69 +69,66 @@ if (allowDrop) {
     if (collect) {
         // => allowDrop && collect 
         // => collector mode (player on the ground)
-        // update energy
         if (touched && weight < 0) {
             log(`killer touch - decrease energy`)
             energyService.addEnergy(weight)
+        } else if (touched && weight) {
+            log(`healer touch - increase counter`)
+            increaseDroppedCounter()
+        } else if (!touched && weight < 0) {
+            log(`killer missed - do nothing`)
         } else if (!touched && weight) {
             log(`healer missed - decrease energy`)
             energyService.addEnergy(0 - weight)
         }
-        // update counter
-        if (touched && weight) {
-            log(`healer touched - increase counter`)
-            increaseDroppedCounter()
-        }
     } else {
         // => allowDrop && !collect
         // => survival mode (player on the ground)
-        // update energy
         if (touched && weight < 0) {
             log(`killer touch - decrease energy`)
             energyService.addEnergy(weight)
         } else if (touched && weight) {
             log(`healer touch - increase energy`)
             energyService.addEnergy(weight)
-        }
-        // update counter
-        if (!touched && weight < 0) {
+        } else if (!touched && weight < 0) {
             log(`killer missed - increase counter`)
             increaseDroppedCounter()
+        } else if (!touched && weight) {
+            log(`healer missed - do nothing`)
         }
     }
 } else { // !allowDrop
     if (collect) {
         // => !allowDrop && collect 
         // => 4-points collector mode, aka standard 'Wolf and Eggs'
-        // update energy
         if (touched && weight < 0) {
             log(`killer touch - decrease energy`)
             energyService.addEnergy(weight)
         } else if (touched && weight) {
             log(`healer touch - increase energy`)
             energyService.addEnergy(weight)
-        }
-        // update counter
-        if (touched && weight) {
-            log(`healer touched - increase counter`)
+            log(`healer touch - increase counter`)
             increaseDroppedCounter()
+        } else if (!touched && weight < 0) {
+            log(`killer missed - do nothing`)
+        } else if (!touched && weight) {
+            log(`healer missed - do nothing`)
         }
     } else {
         // => !allowDrop && !collect
         // FUCK, what's the hell is going on?))
         log(`Are you sure you need this mode?`)
-        // update energy
         if (touched && weight < 0) {
             log(`killer touch - decrease energy`)
             energyService.addEnergy(weight)
         } else if (touched && weight) {
             log(`healer touch - increase energy`)
             energyService.addEnergy(weight)
-        }
-        // update counter
-        if (!touched && weight < 0) {
+        } else if (!touched && weight < 0) {
             log(`killer missed - increase counter`)
             increaseDroppedCounter()
+        } else if (!touched && weight) {
+            log(`healer missed - do nothing`)
         }
     }
 }
