@@ -59,7 +59,7 @@ const gameOptions = {
         // set to FALSE to move Player in X and Y axises
         // TODO: when FALSE - update gaming logic not to play unlimited amount of time and dropped eggs - double callback needed: 
         //                    if on the edge - check where's player - if not here - drop, if here - survive
-        allowDrop: true,
+        allowDrop: false,
         // set to TRUE to collect all the eggs (so you have not to allow an egg to break)
         // set to FALSE to your Player has to avoid contacts with eggs
         collect: true
@@ -102,7 +102,7 @@ const servicesOptions = {
         eggProbabilityArray: [
             [ EGG_VIRUS_RED, 2 ]
             , [ EGG_VIRUS_BLUE, 2 ]
-            , [ EGG_MASK_GREEN, 2 ]
+            , [ EGG_MASK_GREEN, 5 ]
         ]
     }
 }

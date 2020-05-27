@@ -105,14 +105,13 @@ if (allowDrop) {
             log(`killer touch - decrease energy`)
             energyService.addEnergy(weight)
         } else if (touched && weight) {
-            log(`healer touch - increase energy`)
-            energyService.addEnergy(weight)
             log(`healer touch - increase counter`)
             increaseDroppedCounter()
         } else if (!touched && weight < 0) {
             log(`killer missed - do nothing`)
         } else if (!touched && weight) {
-            log(`healer missed - do nothing`)
+            log(`healer missed - decrease energy`)
+            energyService.addEnergy(0 - weight)
         }
     } else {
         // => !allowDrop && !collect
