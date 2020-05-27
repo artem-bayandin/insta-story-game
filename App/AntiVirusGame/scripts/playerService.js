@@ -3,6 +3,7 @@ import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 import materialService from './materialService'
 import { SIDE } from './commonConstants'
+import uiBinderService from './uiBinderService'
 
 const timeDriverMove = () => timeDriver(PLAYER_POSITION_DEFAULTS.TRANSITION_SPEED)
 const moveType = MOVE_TYPES.EASE_OUT_BACK
@@ -36,11 +37,9 @@ const init = ({playerServiceOptions, dropSettings}) => {
                 player = new Player(identifier, item)
 
                 // subscribe to move
-                subscribeToPatchPulse('movePlayerLeft', moveLeft)
-                subscribeToPatchPulse('movePlayerRight', moveRight)
+                uiBinderService.subscribeToPlayerMovements({moveLeft, moveRight})
                 if (!allowDrop) {
-                    subscribeToPatchPulse('movePlayerTop', moveTop)
-                    subscribeToPatchPulse('movePlayerBottom', moveBottom)
+                    uiBinderService.subscribeToPlayerMovements({moveTop, moveBottom})
                 }
                 res(player)
             })

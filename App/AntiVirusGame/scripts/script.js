@@ -6,6 +6,7 @@ import playerService from './playerService'
 import textService from './textService'
 import materialService from './materialService'
 import gamepadService from './gamepadService'
+import uiBinderService from './uiBinderService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
@@ -26,6 +27,7 @@ const gameOptions = {
         energyService,
         eggService,
         textService,
+        uiBinderService
     },
     // callback to run when game is over
     exitCallback,
@@ -46,6 +48,12 @@ const gameOptions = {
         // TODO: when FALSE - update gaming logic not to play unlimited amount of time and dropped eggs - double callback needed: 
         //                    if on the edge - check where's player - if not here - drop, if here - survive
         allowDrop: true
+    },
+    UI: {
+        playerCoordMaxLeft: -50,
+        playerCoordMaxRight: 50,
+        playerCoordMaxTop: 160,
+        playerCoordMaxBottom: -170
     }
 }
 
@@ -90,6 +98,7 @@ Promise.all([
     textService.init(servicesOptions),
     materialService.init(servicesOptions),
     gamepadService.init(servicesOptions),
+    uiBinderService.init(servicesOptions),
 ])
 .then(() => {
     // this line is left to easy test
