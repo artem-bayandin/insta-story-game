@@ -43,6 +43,18 @@ const gameOptions = {
         increaseWhenDropped: 10
     },
     gameMode: {
+        // => allowDrop && collect 
+        // => collector mode (player on the ground)
+
+        // => allowDrop && !collect
+        // => survival mode (player on the ground)
+
+        // => !allowDrop && collect 
+        // => 4-points collector mode, aka standard 'Wolf and Eggs'
+
+        // => !allowDrop && !collect
+        // FUCK, what's the hell is going on?))
+
         // set to TRUE to move Player only in X axis
         // set to FALSE to move Player in X and Y axises
         // TODO: when FALSE - update gaming logic not to play unlimited amount of time and dropped eggs - double callback needed: 
@@ -87,8 +99,8 @@ const servicesOptions = {
     eggServiceOptions: {
         // 1 out of 6 is a healing mask
         eggProbabilityArray: [
-            [ EGG_VIRUS_RED, 4 ]
-            , [ EGG_VIRUS_BLUE, 4 ]
+            [ EGG_VIRUS_RED, 2 ]
+            , [ EGG_VIRUS_BLUE, 2 ]
             , [ EGG_MASK_GREEN, 1 ]
         ]
     }
