@@ -62,7 +62,7 @@ const gameOptions = {
         allowDrop: false,
         // set to TRUE to collect all the eggs (so you have not to allow an egg to break)
         // set to FALSE to your Player has to avoid contacts with eggs
-        collect: true
+        collect: false
     },
     UI: {
         playerCoordMaxLeft: -50,
@@ -102,7 +102,7 @@ const servicesOptions = {
         eggProbabilityArray: [
             [ EGG_VIRUS_RED, 2 ]
             , [ EGG_VIRUS_BLUE, 2 ]
-            , [ EGG_MASK_GREEN, 5 ]
+            , [ EGG_MASK_GREEN, 2 ]
         ]
     }
 }
