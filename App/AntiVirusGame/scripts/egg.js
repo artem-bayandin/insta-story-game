@@ -62,13 +62,13 @@ export const Egg = (id, obj) => {
                     dropEgg()
                     
                     setTimeout(() => {
-                        callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT, countDrop: config.COUNT_DROP})
+                        callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT})
                     }, dropSpeed / 2)
                 } else {
                     // TODO: get face position
                     // if Face.Position == Egg.Position => callback
                     // else => dropEgg()
-                    callback({sides: [ sideX, sideY ], weight: config.WEIGHT, countDrop: config.COUNT_DROP})
+                    callback({sides: [ sideX, sideY ], weight: config.WEIGHT})
                     hideAndResetPosition()
                 }
             }

@@ -45,7 +45,7 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode
         }
     }
 
-    const eggDroppedCallback = ({sides, weight, countDrop}) => {
+    const eggDroppedCallback = ({sides, weight}) => {
         const [ eggSideX, eggSideY ] = sides
         const [ playerSideX, playerSideY ] = playerService.getSides()
         log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
