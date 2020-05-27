@@ -20,9 +20,9 @@ const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
 }
 
-const init = ({eggServiceOptions, gameMode}) => {
+const init = ({eggOptions, gameMode}) => {
     gMode = gameMode
-    const inputEggs = eggServiceOptions.eggProbabilityArray
+    const inputEggs = eggOptions.probability
     if (inputEggs && inputEggs.length) {
         eggs.length = 0
         inputEggs.forEach(item => {
@@ -37,7 +37,6 @@ const init = ({eggServiceOptions, gameMode}) => {
     var promise2 = new Promise((res, rej) => initEgg('egg2').then(obj => res(egg2 = obj)))
     var promise3 = new Promise((res, rej) => initEgg('egg3').then(obj => res(egg3 = obj)))
     var promise4 = new Promise((res, rej) => initEgg('egg4').then(obj => res(egg4 = obj)))
-
     return Promise.all([
         promise1
         , promise2

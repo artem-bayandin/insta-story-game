@@ -21,6 +21,25 @@ const exitCallback = ({eggs, time}) => {
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${((+time)/1000).toFixed(1)} seconds - -- ---`)
 }
 
+const tractorOptions = {
+    gameMode: {
+        allowDrop: true,
+        collect: false
+    },
+    playerOptions: {
+        playerConfig: PLAYER_TRACTOR
+    },
+    eggOptions: {
+        // if (collect)     then killers::healers should be 1:4
+        // if (!colelct)    then killers::healers should be 4:1
+        probability: [
+            [ EGG_VIRUS_RED(-1), 4 ]
+            , [ EGG_VIRUS_BLUE(-1), 3 ]
+            , [ EGG_MASK_GREEN(1), 1 ]
+        ]
+    }
+}
+
 const gameOptions = {
     services: {
         playerService,
@@ -69,22 +88,27 @@ const gameOptions = {
         playerCoordMaxRight: 50,
         playerCoordMaxTop: 160,
         playerCoordMaxBottom: -170
-    }
-}
-
-const game = new Game(gameOptions)
-
-const servicesOptions = {
-    ...gameOptions,
-    energyServiceOptions: {
-        // initial number of lives
-        initial: 7        
     },
-    playerServiceOptions: {
+    playerOptions: {
         // id of item in SparkAR
         identifier: 'player',
         // this is to set up player image and parameters
         playerConfig: PLAYER_TRACTOR
+    },
+}
+
+const gameAndPlayerOptions = {
+    ...gameOptions,
+    ...tractorOptions
+}
+
+const game = new Game(gameAndPlayerOptions)
+
+const servicesOptions = {
+    ...gameAndPlayerOptions,
+    energyServiceOptions: {
+        // initial number of lives
+        initial: 7        
     },
     textServiceOptions: {
         txtLevelId: 'txtLevel',
@@ -95,15 +119,6 @@ const servicesOptions = {
     gamepadServiceOptions: {
         // play / pause the Game
         togglePlay: () => game.togglePlay()
-    },
-    eggServiceOptions: {
-        // if (collect)     then killers::healers should be 1:4
-        // if (!colelct)    then killers::healers should be 4:1
-        eggProbabilityArray: [
-            [ EGG_VIRUS_RED(-1), 2 ]
-            , [ EGG_VIRUS_BLUE(-1), 2 ]
-            , [ EGG_MASK_GREEN(1), 2 ]
-        ]
     }
 }
 

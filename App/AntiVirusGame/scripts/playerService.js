@@ -16,10 +16,10 @@ let player = null
 let playerConfig = PLAYER_TRACTOR
 let gMode = null
 
-const init = ({playerServiceOptions, gameMode}) => {
-    const { identifier } = playerServiceOptions
+const init = ({playerOptions, gameMode}) => {
+    playerConfig = playerOptions.playerConfig || playerConfig
+    const identifier = playerConfig.PLAYER_OBJECT_ID
     gMode = gameMode
-    playerConfig = playerServiceOptions.playerConfig || playerConfig
 
     var promise1 = new Promise((res, rej) => {
         findMe(identifier)

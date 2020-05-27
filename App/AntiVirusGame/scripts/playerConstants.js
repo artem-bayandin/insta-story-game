@@ -22,8 +22,11 @@ export const PLAYER_POSITION_DEFAULTS = {
     TRANSITION_SPEED
 }
 
+const PLAYER_OBJECT_ID = 'player'
+
 export const PLAYER_TRACTOR = {
     ID: 'PLAYER_TRACTOR',
+    PLAYER_OBJECT_ID,
     MATERIAL: 'belarus-1',
     SCALE_X: 1000,
     SCALE_Y: 780,
@@ -37,6 +40,7 @@ export const PLAYER_TRACTOR = {
 
 export const PLAYER_FACE = {
     ID: 'PLAYER_FACE',
+    PLAYER_OBJECT_ID,
     MATERIAL: 'face-2',
     SCALE_X: 700,
     SCALE_Y: 750,
