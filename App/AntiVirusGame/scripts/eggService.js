@@ -1,6 +1,6 @@
 import { findMe, log, randomItem } from './utils'
 import { Egg } from './egg' 
-import { EGG_VIRUS_RED, EGG_COORDINATES } from './eggConstants'
+import { EGG_COORDINATES } from './eggConstants'
 import { SIDE } from './commonConstants'
 
 /*
@@ -14,7 +14,7 @@ let egg4 = null
 
 let gMode = null
 
-let eggs = [EGG_VIRUS_RED]
+let eggs = []
 
 const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
