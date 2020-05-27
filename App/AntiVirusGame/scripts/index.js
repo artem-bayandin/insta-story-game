@@ -42,12 +42,15 @@ const gameOptions = {
         // if X items are dropped - add 1 live
         increaseWhenDropped: 10
     },
-    dropSettings: {
+    gameMode: {
         // set to TRUE to move Player only in X axis
         // set to FALSE to move Player in X and Y axises
         // TODO: when FALSE - update gaming logic not to play unlimited amount of time and dropped eggs - double callback needed: 
         //                    if on the edge - check where's player - if not here - drop, if here - survive
-        allowDrop: true
+        allowDrop: true,
+        // set to TRUE to collect all the eggs (so you have not to allow an egg to break)
+        // set to FALSE to your Player has to avoid contacts with eggs
+        collect: false
     },
     UI: {
         playerCoordMaxLeft: -50,

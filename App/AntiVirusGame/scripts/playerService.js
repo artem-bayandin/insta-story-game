@@ -14,17 +14,17 @@ const moveType = MOVE_TYPES.EASE_OUT_BACK
 
 let player = null
 let playerConfig = PLAYER_TRACTOR
+let gMode = null
 
-const init = ({playerServiceOptions, dropSettings}) => {
+const init = ({playerServiceOptions, gameMode}) => {
     const { identifier } = playerServiceOptions
-    const { allowDrop } = dropSettings
+    gMode = gameMode
     playerConfig = playerServiceOptions.playerConfig || playerConfig
 
     var promise1 = new Promise((res, rej) => {
         findMe(identifier)
             .then(item => {
                 // TODO: refactor this call of material service or prove that player material will always exist here
-                log('TODO: refactor this call of material service or prove that player material will always exist here')
                 item.material = materialService.get(playerConfig.MATERIAL)
 
                 // setup player scale and positioning
@@ -32,13 +32,13 @@ const init = ({playerServiceOptions, dropSettings}) => {
                 item.transform.scaleY = playerConfig.SCALE_Y
 
                 item.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
-                item.transform.y = allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
+                item.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
 
                 player = new Player(identifier, item)
 
                 // subscribe to move
                 uiBinderService.subscribeToPlayerMovements({moveLeft, moveRight})
-                if (!allowDrop) {
+                if (!gMode.allowDrop) {
                     uiBinderService.subscribeToPlayerMovements({moveTop, moveBottom})
                 }
                 res(player)

@@ -12,7 +12,7 @@ let egg2 = null
 let egg3 = null
 let egg4 = null
 
-let allowDrop = false
+let gMode = null
 
 let eggs = [EGG_VIRUS_RED]
 
@@ -20,8 +20,8 @@ const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
 }
 
-const init = ({eggServiceOptions, dropSettings}) => {
-    allowDrop = dropSettings.allowDrop
+const init = ({eggServiceOptions, gameMode}) => {
+    gMode = gameMode
     const inputEggs = eggServiceOptions.eggProbabilityArray
     if (inputEggs && inputEggs.length) {
         eggs.length = 0
@@ -65,7 +65,7 @@ const tick = (gameSpeed, eggCallback) => {
 
     const startConfig = {
         route: linePoints,
-        allowDrop,
+        gameMode: gMode,
         eggCallback,
         objectConfig: config,
         newMaterial: side === SIDE.LEFT ? config.MATERIAL.LEFT : config.MATERIAL.RIGHT,

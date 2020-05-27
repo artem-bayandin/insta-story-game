@@ -80,15 +80,11 @@ export const createWithShowHide = (obj, speed = 0, scaleX = 0, scaleY = 0) => {
 }
 
 export const createWithMove = (obj, type = MOVE_TYPES.LINEAR, maxDelay = 0) => {
-    // const minDelay = 33 // TODO: well, not a good UX
-
     const moveTo = (x, y, speed, onCompleted = null) => {
         let driver = timeDriver(speed)
         if (onCompleted && typeof(onCompleted) === 'function') {
             driver.onCompleted().subscribe(onCompleted)
         }
-        // const delay = maxDelay >= minDelay ? randomInt(minDelay, maxDelay) : 0
-        // setTimeout(() => animateMove(obj, driver, { x, y }, type), delay)
         animateMove(obj, driver, { x, y }, type)
     }
 

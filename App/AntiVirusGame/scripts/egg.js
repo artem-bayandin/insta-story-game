@@ -15,11 +15,11 @@ export const Egg = (id, obj) => {
     let currentPosition = -1
     let config = EGG_VIRUS_RED
     let callback = null
-    let dropAllowed = false
+    let gMode = null
 
-    const start = ({route, allowDrop, eggCallback, objectConfig, newMaterial}) => {
+    const start = ({route, eggCallback, objectConfig, newMaterial, gameMode}) => {
         callback = eggCallback
-        dropAllowed = allowDrop
+        gMode = gameMode
 
         config = objectConfig
         obj.material = materialService.get(newMaterial)
@@ -55,14 +55,19 @@ export const Egg = (id, obj) => {
                 currentPosition = -1
             }
 
+            let dropEgg = () => base.moveTo(currentRoute[currentRoute.length - 1].x, currentRoute[currentRoute.length - 1].y, dropSpeed, hideAndResetPosition)
+
             let onMoveCompleted = () => {
-                if (dropAllowed) {
-                    base.moveTo(currentRoute[currentRoute.length - 1].x, currentRoute[currentRoute.length - 1].y, dropSpeed, hideAndResetPosition)
+                if (gMode.allowDrop) {
+                    dropEgg()
                     
                     setTimeout(() => {
                         callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT, countDrop: config.COUNT_DROP})
                     }, dropSpeed / 2)
                 } else {
+                    // TODO: get face position
+                    // if Face.Position == Egg.Position => callback
+                    // else => dropEgg()
                     callback({sides: [ sideX, sideY ], weight: config.WEIGHT, countDrop: config.COUNT_DROP})
                     hideAndResetPosition()
                 }

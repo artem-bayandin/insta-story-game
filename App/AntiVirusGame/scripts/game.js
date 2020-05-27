@@ -4,11 +4,10 @@ const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
     textService.setText(level, eggsDropped, livesLeft)
 }
 
-const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, dropSettings}) => {
+const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode}) => {
     const { playerService, energyService, eggService, textService } = services
     const { initialGameSpeed, gameSpeedStep, maxGameSpeed, initialStageCapacity } = gameSpeedOptions
     const { increaseWhenDropped } = energyOptions
-    const { allowDrop } = dropSettings
     
     let ticksCounter = 0
     let droppedCounter = 0
@@ -57,10 +56,10 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, dropSett
         log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
 
         if (// 2 positions: X must coinside
-            allowDrop && eggSideX === playerSideX
+            gameMode.allowDrop && eggSideX === playerSideX
             || 
             // 4 positions - X:Y must coinside
-            !allowDrop && eggSideX === playerSideX && eggSideY === playerSideY
+            !gameMode.allowDrop && eggSideX === playerSideX && eggSideY === playerSideY
             ) {
             energyService.addEnergy(weight)
 
