@@ -100,9 +100,9 @@ const servicesOptions = {
         // if (collect)     then killers::healers should be 1:4
         // if (!colelct)    then killers::healers should be 4:1
         eggProbabilityArray: [
-            [ EGG_VIRUS_RED, 2 ]
-            , [ EGG_VIRUS_BLUE, 2 ]
-            , [ EGG_MASK_GREEN, 2 ]
+            [ EGG_VIRUS_RED(-1), 2 ]
+            , [ EGG_VIRUS_BLUE(-1), 2 ]
+            , [ EGG_MASK_GREEN(1), 2 ]
         ]
     }
 }

@@ -20,35 +20,41 @@ export const EGG_COORDINATES = {
     Y_BOTTOM_ROW: yBottomRow
 }
 
-export const EGG_VIRUS_RED = {
-    ID: 'EGG_VIRUS_RED',
-    SCALE_X: 650,
-    SCALE_Y: 650,
-    WEIGHT: -1,
-    MATERIAL: {
-        LEFT: 'virus-red-left',
-        RIGHT: 'virus-red-right'
+export const EGG_VIRUS_RED = (weight = 0) => {
+    return {
+        ID: 'EGG_VIRUS_RED',
+        SCALE_X: 650,
+        SCALE_Y: 650,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: 'virus-red-left',
+            RIGHT: 'virus-red-right'
+        }
     }
 }
 
-export const EGG_VIRUS_BLUE = {
-    ID: 'EGG_VIRUS_BLUE',
-    SCALE_X: 650,
-    SCALE_Y: 650,
-    WEIGHT: -1,
-    MATERIAL: {
-        LEFT: 'virus-blue-left',
-        RIGHT: 'virus-blue-right'
+export const EGG_VIRUS_BLUE = (weight = 0) => {
+    return {
+        ID: 'EGG_VIRUS_BLUE',
+        SCALE_X: 650,
+        SCALE_Y: 650,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: 'virus-blue-left',
+            RIGHT: 'virus-blue-right'
+        }
     }
 }
 
-export const EGG_MASK_GREEN = {
-    ID: 'EGG_VIRUS_MASK',
-    SCALE_X: 700,
-    SCALE_Y: 500,
-    WEIGHT: +1,
-    MATERIAL: {
-        LEFT: 'mask-green',
-        RIGHT: 'mask-green'
+export const EGG_MASK_GREEN = (weight = 0) => {
+    return {
+        ID: 'EGG_VIRUS_MASK',
+        SCALE_X: 700,
+        SCALE_Y: 500,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: 'mask-green',
+            RIGHT: 'mask-green'
+        }
     }
 }

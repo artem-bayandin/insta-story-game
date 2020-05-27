@@ -13,7 +13,7 @@ const fastAnimationSpeed = 10
 export const Egg = (id, obj) => {
     let currentRoute = null
     let currentPosition = -1
-    let config = EGG_VIRUS_RED
+    let config = EGG_VIRUS_RED(-1)
     let callback = null
     let gMode = null
 
