@@ -23,7 +23,6 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode
     let timeIntervalDuration = 100
 
     let playing = false
-    // let pausedTicksCounter = 0
 
     const increaseTickCounter = () => {
         ticksCounter++
@@ -50,99 +49,41 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode
         const [ eggSideX, eggSideY ] = sides
         const [ playerSideX, playerSideY ] = playerService.getSides()
         log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
+                        
+        const touched = 
+            // 2 positions: X must coinside
+            allowDrop && eggSideX === playerSideX
+            // 4 positions - X:Y must coinside
+            || !allowDrop && eggSideX === playerSideX && eggSideY === playerSideY
 
-        // TODO: is it still needed? if we have all the logic in { allowDrop, collect }
-        // if (countDrop) {
-        //     increaseDroppedCounter()
-        // }
-        // most likely, we need to count every egg with new logic
-        // or not? fck...
-        // increaseDroppedCounter()
-
-                        // 2 positions: X must coinside
-        const touched = allowDrop && eggSideX === playerSideX
-                        // 4 positions - X:Y must coinside
-                        || !allowDrop && eggSideX === playerSideX && eggSideY === playerSideY
-
- // update counters
-if (allowDrop) {
-    if (collect) {
-        // => allowDrop && collect 
-        // => collector mode (player on the ground)
-        if (touched && weight < 0) {
-            log(`killer touch - decrease energy`)
-            energyService.addEnergy(weight)
-        } else if (touched && weight) {
-            log(`healer touch - increase counter`)
-            increaseDroppedCounter()
-        } else if (!touched && weight < 0) {
-            log(`killer missed - do nothing`)
-        } else if (!touched && weight) {
-            log(`healer missed - decrease energy`)
-            energyService.addEnergy(0 - weight)
+        // it happened so, that score logic does not depend on allowDrop
+        if (collect) {
+            if (touched && weight < 0) {
+                log(`killer touch - decrease energy`)
+                energyService.addEnergy(weight)
+            } else if (touched && weight) {
+                log(`healer touch - increase counter`)
+                increaseDroppedCounter()
+            } else if (!touched && weight < 0) {
+                log(`killer missed - do nothing`)
+            } else if (!touched && weight) {
+                log(`healer missed - decrease energy`)
+                energyService.addEnergy(0 - weight)
+            }
+        } else {
+            if (touched && weight < 0) {
+                log(`killer touch - decrease energy`)
+                energyService.addEnergy(weight)
+            } else if (touched && weight) {
+                log(`healer touch - increase energy`)
+                energyService.addEnergy(weight)
+            } else if (!touched && weight < 0) {
+                log(`killer missed - increase counter`)
+                increaseDroppedCounter()
+            } else if (!touched && weight) {
+                log(`healer missed - do nothing`)
+            }
         }
-    } else {
-        // => allowDrop && !collect
-        // => survival mode (player on the ground)
-        if (touched && weight < 0) {
-            log(`killer touch - decrease energy`)
-            energyService.addEnergy(weight)
-        } else if (touched && weight) {
-            log(`healer touch - increase energy`)
-            energyService.addEnergy(weight)
-        } else if (!touched && weight < 0) {
-            log(`killer missed - increase counter`)
-            increaseDroppedCounter()
-        } else if (!touched && weight) {
-            log(`healer missed - do nothing`)
-        }
-    }
-} else { // !allowDrop
-    if (collect) {
-        // => !allowDrop && collect 
-        // => 4-points collector mode, aka standard 'Wolf and Eggs'
-        if (touched && weight < 0) {
-            log(`killer touch - decrease energy`)
-            energyService.addEnergy(weight)
-        } else if (touched && weight) {
-            log(`healer touch - increase counter`)
-            increaseDroppedCounter()
-        } else if (!touched && weight < 0) {
-            log(`killer missed - do nothing`)
-        } else if (!touched && weight) {
-            log(`healer missed - decrease energy`)
-            energyService.addEnergy(0 - weight)
-        }
-    } else {
-        // => !allowDrop && !collect
-        // FUCK, what's the hell is going on?))
-        log(`Are you sure you need this mode?`)
-        if (touched && weight < 0) {
-            log(`killer touch - decrease energy`)
-            energyService.addEnergy(weight)
-        } else if (touched && weight) {
-            log(`healer touch - increase energy`)
-            energyService.addEnergy(weight)
-        } else if (!touched && weight < 0) {
-            log(`killer missed - increase counter`)
-            increaseDroppedCounter()
-        } else if (!touched && weight) {
-            log(`healer missed - do nothing`)
-        }
-    }
-}
-
-        /* old logic */
-
-        // if (touched) {
-        //     energyService.addEnergy(weight)
-
-        //     if (!energyService.isAlive()) {
-        //         log('YOU DIED!')
-        //         go = false
-        //         clearTimerInterval()
-        //     }
-        // }
 
         if (!energyService.isAlive()) {
             log('YOU DIED!')
