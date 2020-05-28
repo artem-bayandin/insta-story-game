@@ -17,7 +17,7 @@ export const Egg = (id, obj) => {
     let callback = null
     let gMode = null
 
-    const start = ({route, eggCallback, objectConfig, newMaterial, gameMode}) => {
+    const start = ({ route, eggCallback, objectConfig, newMaterial, gameMode }) => {
         callback = eggCallback
         gMode = gameMode
 

@@ -72,6 +72,22 @@ export const findMaterial = (identifier) => {
     return new Promise((res, rej) => Materials.findFirst(identifier).then(mat => { res(mat) }))
 }
 
+export const setupUiElement = (element, config, material = null) => {
+    if (material) {
+        element.material = material
+    }
+
+    if (config.SCALE_X !== undefined && config.SCALE_Y !== undefined && config.SCALE_X !== null && config.SCALE_Y !== null) {
+        element.transform.scaleX = config.SCALE_X
+        element.transform.scaleY = config.SCALE_Y
+    }
+
+    if (config.X !== undefined && config.Y !== undefined && config.X !== null && config.Y !== null) {
+        element.transform.x = config.X
+        element.transform.y = config.Y
+    }
+}
+
 /*
  * NEXT CODE SHOULD BE REVIEWED AND REFACTORED
  */

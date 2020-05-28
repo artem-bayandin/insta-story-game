@@ -3,7 +3,7 @@ import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 import materialService from './materialService'
 import { SIDE } from './commonConstants'
-import uiBinderService from './uiBinderService'
+import uiService from './uiService'
 
 const timeDriverMove = () => timeDriver(PLAYER_POSITION_DEFAULTS.TRANSITION_SPEED)
 const moveType = MOVE_TYPES.EASE_OUT_BACK
@@ -16,8 +16,8 @@ let player = null
 let playerConfig = PLAYER_TRACTOR
 let gMode = null
 
-const init = ({playerOptions, gameMode}) => {
-    playerConfig = playerOptions.playerConfig || playerConfig
+const init = ({screenOptions, gameMode}) => {
+    playerConfig = screenOptions.playerConfig || playerConfig
     const identifier = playerConfig.PLAYER_OBJECT_ID
     gMode = gameMode
 
@@ -37,9 +37,9 @@ const init = ({playerOptions, gameMode}) => {
                 player = new Player(identifier, item)
 
                 // subscribe to move
-                uiBinderService.subscribeToPlayerMovements({moveLeft, moveRight})
+                uiService.subscribeToPlayerMovements({moveLeft, moveRight})
                 if (!gMode.allowDrop) {
-                    uiBinderService.subscribeToPlayerMovements({moveTop, moveBottom})
+                    uiService.subscribeToPlayerMovements({moveTop, moveBottom})
                 }
                 res(player)
             })

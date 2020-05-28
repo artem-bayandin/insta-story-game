@@ -4,30 +4,42 @@ const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
     textService.setText(level, eggsDropped, livesLeft)
 }
 
-const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode}) => {
+const Game = ({ services, exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     const { playerService, energyService, eggService, textService } = services
-    const { initialGameSpeed, gameSpeedStep, maxGameSpeed, initialStageCapacity } = gameSpeedOptions
+    const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions
     const { increaseWhenDropped } = energyOptions
     const { allowDrop, collect } = gameMode
+    
     
     let ticksCounter = 0
     let droppedCounter = 0
     let level = 0
 
     let stageCapacity = initialStageCapacity
+    let gameSpeedSettings = gameSpeeds.shift()
+    let gameSpeedStep = gameSpeedSettings.step
+    let gameSpeedDelimiter = gameSpeedSettings.delimiter
     let gameSpeed = initialGameSpeed
     let go = true
 
     let timeCounter = 0
     let timeInterval = null
-    let timeIntervalDuration = 100
+    let timeIntervalDuration = 1000
 
     let playing = false
+
+    let timestamp = null
 
     const increaseTickCounter = () => {
         ticksCounter++
         if (ticksCounter % stageCapacity === 0) {
             if (gameSpeed > maxGameSpeed) {
+                // update gameSpeedStep
+                if (gameSpeed <= gameSpeedDelimiter && gameSpeeds.length) {
+                    gameSpeedSettings = gameSpeeds.shift()
+                    gameSpeedStep = gameSpeedSettings.step
+                    gameSpeedDelimiter = gameSpeedSettings.delimiter
+                }
                 gameSpeed -= gameSpeedStep
                 if (gameSpeed < maxGameSpeed) {
                     gameSpeed = maxGameSpeed
@@ -115,7 +127,8 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode
     }
 
     const exit = () => {
-        exitCallback({eggs: droppedCounter, time: timeCounter - timeIntervalDuration})
+        textService.setTime(timeCounter + timeIntervalDuration)
+        exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp})
     }
 
     const setTimerInterval = () => {
@@ -124,8 +137,8 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode
             timeInterval = null
         }
         timeInterval = setInterval(() => {
-            textService.setTime(timeCounter)
             timeCounter += timeIntervalDuration
+            textService.setTime(timeCounter)
         }, timeIntervalDuration)
     }
 
@@ -138,12 +151,15 @@ const Game = ({services, exitCallback, gameSpeedOptions, energyOptions, gameMode
 
     const play = () => {
         setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
+        textService.setTime(timeCounter)
         playing = true
+        timestamp = new Date().getTime()
         tick()
         setTimerInterval()
     }
 
     const togglePlay = () => {
+        // TODO: refactor to properly set 'timestamp'
         if (playing) {
             // pause
             playing = false

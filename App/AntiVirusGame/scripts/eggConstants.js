@@ -2,7 +2,7 @@
  *  EGG CONSTANTS
  */
 
-import { SIDE } from "./commonConstants"
+import { SIDE, MATERIALS } from "./commonConstants"
 
 const yTopRow          = 170
 const yBottomRow       = 20
@@ -27,8 +27,13 @@ export const EGG_VIRUS_RED = (weight = 0) => {
         SCALE_Y: 650,
         WEIGHT: weight,
         MATERIAL: {
-            LEFT: 'virus-red-left',
-            RIGHT: 'virus-red-right'
+            LEFT: MATERIALS.VIRUS_RED_LEFT,
+            RIGHT: MATERIALS.VIRUS_RED_RIGHT
+        },
+        STAT_ICON: {
+            SCALE_X: 408,
+            SCALE_Y: 382,
+            MATERIAL: MATERIALS.VIRUS_RED_LEFT
         }
     }
 }
@@ -40,8 +45,13 @@ export const EGG_VIRUS_BLUE = (weight = 0) => {
         SCALE_Y: 650,
         WEIGHT: weight,
         MATERIAL: {
-            LEFT: 'virus-blue-left',
-            RIGHT: 'virus-blue-right'
+            LEFT: MATERIALS.VIRUS_BLUE_LEFT,
+            RIGHT: MATERIALS.VIRUS_BLUE_RIGHT
+        },
+        STAT_ICON: {
+            SCALE_X: 408,
+            SCALE_Y: 382,
+            MATERIAL: MATERIALS.VIRUS_BLUE_LEFT
         }
     }
 }
@@ -53,8 +63,13 @@ export const EGG_MASK_GREEN = (weight = 0) => {
         SCALE_Y: 500,
         WEIGHT: weight,
         MATERIAL: {
-            LEFT: 'mask-green',
-            RIGHT: 'mask-green'
+            LEFT: MATERIALS.MASK_GREEN,
+            RIGHT: MATERIALS.MASK_GREEN
+        },
+        STAT_ICON: {
+            SCALE_X: 437,
+            SCALE_Y: 316,
+            MATERIAL: MATERIALS.MASK_GREEN
         }
     }
 }

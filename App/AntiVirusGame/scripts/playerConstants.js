@@ -1,3 +1,5 @@
+import { OBJECT_ID, MATERIALS } from './commonConstants'
+
 /*
  *  PLAYER CONSTANTS
  */
@@ -22,12 +24,10 @@ export const PLAYER_POSITION_DEFAULTS = {
     TRANSITION_SPEED
 }
 
-const PLAYER_OBJECT_ID = 'player'
-
 export const PLAYER_TRACTOR = {
     ID: 'PLAYER_TRACTOR',
-    PLAYER_OBJECT_ID,
-    MATERIAL: 'belarus-1',
+    PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
+    MATERIAL: MATERIALS.TRACTOR,
     SCALE_X: 1000,
     SCALE_Y: 780,
     POSITION_DETECTOR: {
@@ -40,8 +40,8 @@ export const PLAYER_TRACTOR = {
 
 export const PLAYER_FACE = {
     ID: 'PLAYER_FACE',
-    PLAYER_OBJECT_ID,
-    MATERIAL: 'face-2',
+    PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
+    MATERIAL: MATERIALS.FACE_WITH_MASK,
     SCALE_X: 700,
     SCALE_Y: 750,
     POSITION_DETECTOR: {

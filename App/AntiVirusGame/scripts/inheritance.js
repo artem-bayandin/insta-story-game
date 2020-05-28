@@ -136,7 +136,8 @@ export const createTextWithPostfix = (obj, postfix) => {
 export const createTextTimer = (obj) => {
     let base = createTextScore(obj)
 
-    const setText = (text) => base.setText(((+text)/1000).toFixed(1).replace('.', ':'))
+    // const setText = (text) => base.setText(((+text)/1000).toFixed(1).replace('.', ':'))
+    const setText = (text) => base.setText(((+text)/1000).toFixed(0))
 
     return {
         ...base,

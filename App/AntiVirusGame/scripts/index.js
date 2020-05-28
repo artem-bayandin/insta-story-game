@@ -6,11 +6,12 @@ import playerService from './playerService'
 import textService from './textService'
 import materialService from './materialService'
 import gamepadService from './gamepadService'
-import uiBinderService from './uiBinderService'
+import uiService from './uiService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
+import { LEVEL, STOPWATCH } from './commonConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
@@ -18,7 +19,7 @@ const startTheGame = () => {
 }
 
 const exitCallback = ({eggs, time}) => {
-    log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${((+time)/1000).toFixed(1)} seconds - -- ---`)
+    log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 
 const tractorOptions = {
@@ -26,16 +27,20 @@ const tractorOptions = {
         allowDrop: true,
         collect: false
     },
-    playerOptions: {
-        playerConfig: PLAYER_TRACTOR
+    screenOptions: {
+        playerConfig: PLAYER_TRACTOR,
+        eggCounterIconConfig: EGG_VIRUS_RED(0).STAT_ICON,
+        liveCounterIconConfig: EGG_MASK_GREEN(0).STAT_ICON,
+        levelCounterIconConfig: LEVEL.STAT_ICON,
+        stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
     },
     eggOptions: {
         // if (collect)     then killers::healers should be 1:4
         // if (!colelct)    then killers::healers should be 4:1
         probability: [
-            [ EGG_VIRUS_RED(-1), 4 ]
-            , [ EGG_VIRUS_BLUE(-1), 3 ]
-            , [ EGG_MASK_GREEN(1), 1 ]
+            [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
+            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
+            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
         ]
     }
 }
@@ -46,18 +51,32 @@ const gameOptions = {
         energyService,
         eggService,
         textService,
-        uiBinderService
+        uiService
     },
     // callback to run when game is over
     exitCallback,
     gameSpeedOptions: {
         initialGameSpeed: 1350,
-        gameSpeedStep: 150,
-        maxGameSpeed: 400,
+        maxGameSpeed: 333,
+        gameSpeeds: [ {
+            delimiter: 1000,
+            step: 150
+        }, {
+            delimiter: 700,
+            step: 100
+        }, {
+            delimiter: 400,
+            step: 75
+        }, {
+            delimiter: 0,
+            step: 15
+        } ],
         // how frequently do we speed up the game
         initialStageCapacity: 6
     },
     energyOptions: {
+        // initial number of lives
+        initial: 7,
         // if X items are dropped - add 1 live
         increaseWhenDropped: 10
     },
@@ -89,11 +108,16 @@ const gameOptions = {
         playerCoordMaxTop: 160,
         playerCoordMaxBottom: -170
     },
-    playerOptions: {
-        // id of item in SparkAR
-        identifier: 'player',
+    // this should be totally rewritten with 'current game settings'
+    screenOptions: {
         // this is to set up player image and parameters
-        playerConfig: PLAYER_TRACTOR
+        playerConfig: PLAYER_TRACTOR,
+
+        // icons for top row with stats
+        eggCounterIconConfig: EGG_VIRUS_RED(0).STAT_ICON,
+        liveCounterIconConfig: EGG_MASK_GREEN(0).STAT_ICON,
+        levelCounterIconConfig: LEVEL.STAT_ICON,
+        stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
     },
 }
 
@@ -106,16 +130,7 @@ const game = new Game(gameAndPlayerOptions)
 
 const servicesOptions = {
     ...gameAndPlayerOptions,
-    energyServiceOptions: {
-        // initial number of lives
-        initial: 7        
-    },
-    textServiceOptions: {
-        txtLevelId: 'txtLevel',
-        txtEggsId: 'txtEggs',
-        txtLivesId: 'txtLives',
-        txtTimerId: 'txtTimer'
-    },
+    
     gamepadServiceOptions: {
         // play / pause the Game
         togglePlay: () => game.togglePlay()
@@ -129,7 +144,7 @@ Promise.all([
     textService.init(servicesOptions),
     materialService.init(servicesOptions),
     gamepadService.init(servicesOptions),
-    uiBinderService.init(servicesOptions),
+    uiService.init(servicesOptions),
 ])
 .then(() => {
     // this line is left to easy test
