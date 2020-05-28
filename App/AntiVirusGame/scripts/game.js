@@ -1,15 +1,17 @@
 import { log, setTimeout, setInterval, clearInterval } from './utils'
+import playerService from './playerService'
+import energyService from './energyService'
+import eggService from './eggService'
+import textService from './textService'
 
 const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
     textService.setText(level, eggsDropped, livesLeft)
 }
 
-const Game = ({ services, exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
-    const { playerService, energyService, eggService, textService } = services
+const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions
     const { increaseWhenDropped } = energyOptions
     const { allowDrop, collect } = gameMode
-    
     
     let ticksCounter = 0
     let droppedCounter = 0
@@ -60,7 +62,7 @@ const Game = ({ services, exitCallback, gameSpeedOptions, energyOptions, gameMod
     const eggDroppedCallback = ({sides, weight}) => {
         const [ eggSideX, eggSideY ] = sides
         const [ playerSideX, playerSideY ] = playerService.getSides()
-        log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
+        // log(`EGG = ${eggSideX}:${eggSideY}, PLAYER = ${playerSideX}:${playerSideY}`)
                         
         const touched = 
             // 2 positions: X must coinside
@@ -71,29 +73,29 @@ const Game = ({ services, exitCallback, gameSpeedOptions, energyOptions, gameMod
         // it happened so, that score logic does not depend on allowDrop
         if (collect) {
             if (touched && weight < 0) {
-                log(`killer touch - decrease energy`)
+                // log(`killer touch - decrease energy`)
                 energyService.addEnergy(weight)
             } else if (touched && weight) {
-                log(`healer touch - increase counter`)
+                // log(`healer touch - increase counter`)
                 increaseDroppedCounter()
             } else if (!touched && weight < 0) {
-                log(`killer missed - do nothing`)
+                // log(`killer missed - do nothing`)
             } else if (!touched && weight) {
-                log(`healer missed - decrease energy`)
+                // log(`healer missed - decrease energy`)
                 energyService.addEnergy(0 - weight)
             }
         } else {
             if (touched && weight < 0) {
-                log(`killer touch - decrease energy`)
+                // log(`killer touch - decrease energy`)
                 energyService.addEnergy(weight)
             } else if (touched && weight) {
-                log(`healer touch - increase energy`)
+                // log(`healer touch - increase energy`)
                 energyService.addEnergy(weight)
             } else if (!touched && weight < 0) {
-                log(`killer missed - increase counter`)
+                // log(`killer missed - increase counter`)
                 increaseDroppedCounter()
             } else if (!touched && weight) {
-                log(`healer missed - do nothing`)
+                // log(`healer missed - do nothing`)
             }
         }
 

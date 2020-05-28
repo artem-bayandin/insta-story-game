@@ -3,17 +3,30 @@ import { MATERIALS } from './commonConstants'
 
 let materials = {}
 
-const init = ({}) => {
+const initMaterial = (id) => {
+    return new Promise((res, rej) => {
+        findMaterial(id).then(mat => {
+            res(materials[id] = mat) 
+        } )
+    } )
+}
+
+const init = () => {
     // materials for eggs
-    var promise1 = new Promise((res, rej) => findMaterial(MATERIALS.VIRUS_RED_LEFT).then(mat => res(materials[MATERIALS.VIRUS_RED_LEFT] = mat) ) )
-    var promise2 = new Promise((res, rej) => findMaterial(MATERIALS.VIRUS_RED_RIGHT).then(mat => res(materials[MATERIALS.VIRUS_RED_RIGHT] = mat) ) )
-    var promise3 = new Promise((res, rej) => findMaterial(MATERIALS.VIRUS_BLUE_LEFT).then(mat => res(materials[MATERIALS.VIRUS_BLUE_LEFT] = mat) ) )
-    var promise4 = new Promise((res, rej) => findMaterial(MATERIALS.VIRUS_BLUE_RIGHT).then(mat => res(materials[MATERIALS.VIRUS_BLUE_RIGHT] = mat) ) )
-    // materials for player
-    var promise5 = new Promise((res, rej) => findMaterial(MATERIALS.FACE_WITH_MASK).then(mat => res(materials[MATERIALS.FACE_WITH_MASK] = mat) ) )
-    var promise6 = new Promise((res, rej) => findMaterial(MATERIALS.TRACTOR).then(mat => res(materials[MATERIALS.TRACTOR] = mat) ) )
+    var promise1 = initMaterial(MATERIALS.VIRUS_RED_LEFT)
+    var promise2 = initMaterial(MATERIALS.VIRUS_RED_RIGHT)
+    var promise3 = initMaterial(MATERIALS.VIRUS_BLUE_LEFT)
+    var promise4 = initMaterial(MATERIALS.VIRUS_BLUE_RIGHT)
     // green mask material
-    var promise5 = new Promise((res, rej) => findMaterial(MATERIALS.MASK_GREEN).then(mat => res(materials[MATERIALS.MASK_GREEN] = mat) ) )
+    var promise7 = initMaterial(MATERIALS.MASK_GREEN)
+    // materials for player
+    var promise6 = initMaterial(MATERIALS.TRACTOR)
+    var promise5 = initMaterial(MATERIALS.FACE_WITH_MASK)
+    // other
+    var promise8 = initMaterial(MATERIALS.STOPWATCH)
+    var promise9 = initMaterial(MATERIALS.LEVEL)
+    var promise10 = initMaterial(MATERIALS.LINE_DEFAULT)
+    var promise11 = initMaterial(MATERIALS.STATS_LINE_BG)
 
     return Promise.all([
         promise1
@@ -22,6 +35,11 @@ const init = ({}) => {
         , promise4
         , promise5
         , promise6
+        , promise7
+        , promise8
+        , promise9
+        , promise10
+        , promise11
     ])
 }
 

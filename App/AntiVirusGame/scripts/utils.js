@@ -19,6 +19,7 @@ export const watch = (tag, signal) => Diagnostics.watch(tag, signal)
 
 export const subscribeToPatchPulse = (identifier, func) => { return Patches.outputs.getPulse(identifier).then(pulse => pulse.subscribe(func)) }
 export const sendScalarToPatch = (identifier, value) => Patches.inputs.setScalar(identifier, +value)
+export const getScalar = (identifier) => new Promise((res,rej) => { Patches.outputs.getScalar(identifier).then(scalar => res(scalar)) })
 
 /*
  * RANDOMIZER

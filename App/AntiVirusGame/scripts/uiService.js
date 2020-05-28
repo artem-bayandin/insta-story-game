@@ -1,10 +1,10 @@
 import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
-import { PATCHES, OBJECT_ID } from './commonConstants'
+import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES } from './commonConstants'
 import materialService from './materialService'
 
 const setupElement = (id, config) => {
     const material = materialService.get(config.MATERIAL)
-    findMe(id).then(item => setupUiElement(item, config.STAT_ICON, material))
+    findMe(id).then(item => setupUiElement(item, config, material))
 }
 
 const init = ({UI, screenOptions}) => {
@@ -20,6 +20,12 @@ const init = ({UI, screenOptions}) => {
     setupElement(OBJECT_ID.ICONS.LEVEL, levelCounterIconConfig)
     setupElement(OBJECT_ID.ICONS.EGG, eggCounterIconConfig)
     setupElement(OBJECT_ID.ICONS.LIVES, liveCounterIconConfig)
+    setupElement(OBJECT_ID.ICONS.STATS_LINE_BG, STATS_LINE_BG)
+
+    setupElement(OBJECT_ID.LINES.LEFT_TOP, LINES.LEFT_TOP)
+    setupElement(OBJECT_ID.LINES.RIGHT_TOP, LINES.RIGHT_TOP)
+    setupElement(OBJECT_ID.LINES.LEFT_BOTTOM, LINES.LEFT_BOTTOM)
+    setupElement(OBJECT_ID.LINES.RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
 }
 
 const subscribeToPlayerMovements = ({moveLeft = null, moveRight = null, moveTop = null, moveBottom = null}) => {

@@ -7,6 +7,7 @@ import textService from './textService'
 import materialService from './materialService'
 import gamepadService from './gamepadService'
 import uiService from './uiService'
+import deviceService from './deviceService'
 import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
@@ -46,13 +47,6 @@ const tractorOptions = {
 }
 
 const gameOptions = {
-    services: {
-        playerService,
-        energyService,
-        eggService,
-        textService,
-        uiService
-    },
     // callback to run when game is over
     exitCallback,
     gameSpeedOptions: {
@@ -138,26 +132,16 @@ const servicesOptions = {
 }
 
 Promise.all([
-    energyService.init(servicesOptions),
-    eggService.init(servicesOptions),
-    playerService.init(servicesOptions),
-    textService.init(servicesOptions),
-    materialService.init(servicesOptions),
-    gamepadService.init(servicesOptions),
-    uiService.init(servicesOptions),
-])
-.then(() => {
-    // this line is left to easy test
-    setTimeout(() => { startTheGame() }, 1000)
-
-    // this is to test screen size, as I'd like elements to be relatively positioned, not static
-    findMe('game-canvas')
-        .then(item => {
-            const width = item.width.pinLastValue()
-            const height = item.height.pinLastValue()
-            log(`Game canvas = width: ${width}, height: ${height}`)
-        })
-        .catch(err => {
-            log(`Error when looking for game-canvas: ${err}`)
-        })
+    materialService.init(),
+    deviceService.init()
+]).then(() => {
+    return Promise.all([
+        energyService.init(servicesOptions),
+        eggService.init(servicesOptions),
+        playerService.init(servicesOptions),
+        textService.init(),
+        gamepadService.init(servicesOptions),
+        uiService.init(servicesOptions),
+    ])
 })
+.then(startTheGame)

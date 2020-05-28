@@ -30,6 +30,7 @@ export const OBJECT_ID = {
         LEVEL: 'levelStatIcon',
         EGG: 'eggStatIcon',
         LIVES: 'livesStatIcon',
+        STATS_LINE_BG: 'statsLineBackground'
     },
     LINES: {
         LEFT_TOP: 'left-top',
@@ -49,7 +50,8 @@ export const MATERIALS = {
     FACE_WITH_MASK: 'face-2',
     STOPWATCH: 'stopwatch-1',
     LEVEL: 'speed-1',
-    LINE_DEFAULT: 'mat-line'
+    LINE_DEFAULT: 'mat-line',
+    STATS_LINE_BG: 'statsLineMaterial',
 }
 
 export const PATCHES = {
@@ -67,6 +69,13 @@ export const PATCHES = {
             RIGHT: 'movePlayerRight',
             TOP: 'movePlayerTop',
             BOTTOM: 'movePlayerBottom'
+        },
+        DEVICE: {
+            SCREEN_SIZE: {
+                X: 'deviceScreenSizeX',
+                Y: 'deviceScreenSizeY'
+            },
+            SCREEN_SCALE: 'deviceScreenScale'
         }
     }
 }
@@ -91,13 +100,39 @@ export const LEVEL = {
     }
 }
 
+export const STATS_LINE_BG = {
+    X: 0,
+    Y: 282,
+    SCALE_X: 4000,
+    SCALE_Y: 500,
+    MATERIAL: MATERIALS.STATS_LINE_BG
+}
+
 export const LINES = {
-    LEFT: {
+    LEFT_TOP: {
+        X: -150,
+        Y: 170,
         SCALE_X: 1200,
         SCALE_Y: 500,
         MATERIAL: MATERIALS.LINE_DEFAULT
     },
-    RIGHT: {
+    RIGHT_TOP: {
+        X: 150,
+        Y: 170,
+        SCALE_X: 1200,
+        SCALE_Y: 500,
+        MATERIAL: MATERIALS.LINE_DEFAULT
+    },
+    LEFT_BOTTOM: {
+        X: -150,
+        Y: 20,
+        SCALE_X: 1200,
+        SCALE_Y: 500,
+        MATERIAL: MATERIALS.LINE_DEFAULT
+    },
+    RIGHT_BOTTOM: {
+        X: 150,
+        Y: 20,
         SCALE_X: 1200,
         SCALE_Y: 500,
         MATERIAL: MATERIALS.LINE_DEFAULT
