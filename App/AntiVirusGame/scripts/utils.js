@@ -73,20 +73,30 @@ export const findMaterial = (identifier) => {
     return new Promise((res, rej) => Materials.findFirst(identifier).then(mat => { res(mat) }))
 }
 
-export const setupUiElement = (element, config, material = null) => {
+export const setMaterial = (element, material) => {
     if (material) {
         element.material = material
     }
+}
 
-    if (config.SCALE_X !== undefined && config.SCALE_Y !== undefined && config.SCALE_X !== null && config.SCALE_Y !== null) {
-        element.transform.scaleX = config.SCALE_X
-        element.transform.scaleY = config.SCALE_Y
+export const setPosition = (element, x, y) => {
+    if (x !== undefined && y !== undefined && x !== null && y !== null) {
+        element.transform.x = x
+        element.transform.y = y
     }
+}
 
-    if (config.X !== undefined && config.Y !== undefined && config.X !== null && config.Y !== null) {
-        element.transform.x = config.X
-        element.transform.y = config.Y
+export const setScale = (element, scaleX, scaleY) => {
+    if (scaleX !== undefined && scaleY !== undefined && scaleX !== null && scaleY !== null) {
+        element.transform.scaleX = scaleX
+        element.transform.scaleY = scaleY
     }
+}
+
+export const setupUiElement = (element, config, material = null) => {
+    setMaterial(element, material)
+    setScale(element, config.SCALE_X, config.SCALE_Y)
+    setPosition(element, config.X, config.Y)
 }
 
 /*
