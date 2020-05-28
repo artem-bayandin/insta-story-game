@@ -74,22 +74,28 @@ export const findMaterial = (identifier) => {
 }
 
 export const setMaterial = (element, material) => {
+    // log('try to setMaterial')
     if (material) {
         element.material = material
+        // log('setMaterial was successfuly set up!')
     }
 }
 
 export const setPosition = (element, x, y) => {
+    // log('try to setPosition')
     if (x !== undefined && y !== undefined && x !== null && y !== null) {
         element.transform.x = x
         element.transform.y = y
+        // log('setPosition was successfuly set up!')
     }
 }
 
 export const setScale = (element, scaleX, scaleY) => {
+    // log('try to setScale')
     if (scaleX !== undefined && scaleY !== undefined && scaleX !== null && scaleY !== null) {
         element.transform.scaleX = scaleX
         element.transform.scaleY = scaleY
+        // log('setScale was successfuly set up!')
     }
 }
 
@@ -144,15 +150,15 @@ const samplerFabric = (type, from, to) => {
 }
 
 export const animateMove = (obj, driver, to, type = MOVE_TYPES.LINEAR) => {
-    if(typeof(to.x) !== 'undefined') {
+    if(to.x !== undefined) {
         const currentX = obj.transform.x.pinLastValue()
         obj.transform.x = Animation.animate(driver, samplerFabric(type, currentX, to.x))
     }
-    if(typeof(to.y) !== 'undefined') {
+    if(to.y !== undefined) {
         const currentY = obj.transform.y.pinLastValue()
         obj.transform.y = Animation.animate(driver, samplerFabric(type, currentY, to.y))
     }
-    if(typeof(to.z) !== 'undefined') {
+    if(to.z !== undefined) {
         const currentZ = obj.transform.z.pinLastValue()
         obj.transform.z = Animation.animate(driver, samplerFabric(type, currentZ, to.z))
     }

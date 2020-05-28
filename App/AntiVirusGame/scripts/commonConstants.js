@@ -86,6 +86,8 @@ export const PATCHES = {
 
 export const STOPWATCH = {
     STAT_ICON: {
+        X: -160,
+        Y: 283,
         SCALE_X: 315,
         SCALE_Y: 350,
         MATERIAL: MATERIALS.STOPWATCH
@@ -94,6 +96,8 @@ export const STOPWATCH = {
 
 export const LEVEL = {
     STAT_ICON: {
+        X: -30,
+        Y: 281,
         SCALE_X: 400,
         SCALE_Y: 400,
         MATERIAL: MATERIALS.LEVEL
@@ -136,5 +140,24 @@ export const LINES = {
         SCALE_X: 1200,
         SCALE_Y: 500,
         MATERIAL: MATERIALS.LINE_DEFAULT
+    }
+}
+
+export const STAT_TXT = {
+    TIMER: {
+        X: -120,
+        Y: 280
+    },
+    LEVEL: {
+        X: 4,
+        Y: 280
+    },
+    EGGS: {
+        X: 84,
+        Y: 280
+    },
+    LIVES: {
+        X: 167,
+        Y: 280
     }
 }

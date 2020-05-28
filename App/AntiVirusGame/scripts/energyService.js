@@ -12,7 +12,10 @@ const init = ({ energyOptions }) => {
     return 1
 }
 
-const addEnergy = (amount) => capacity += amount
+const addEnergy = (amount) => {
+    const newCapacity = capacity + amount
+    capacity = newCapacity > 0 ? newCapacity : 0
+}
 
 const increase = () => {
     capacity++

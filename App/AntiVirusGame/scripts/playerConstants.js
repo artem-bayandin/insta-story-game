@@ -4,13 +4,13 @@ import { OBJECT_ID, MATERIALS } from './commonConstants'
  *  PLAYER CONSTANTS
  */
 
-const X_LEFT = -50
-const X_RIGHT = 50
+const X_LEFT = -55
+const X_RIGHT = 55
 const X_DEFAULT = X_LEFT
 const Y_TOP = 160
 const Y_BOTTOM = 0
 const Y_DEFAULT = 0
-const Y_ONLY_X = -170
+const Y_ONLY_X = -160
 const TRANSITION_SPEED = 175
 
 export const PLAYER_POSITION_DEFAULTS = {
@@ -28,8 +28,8 @@ export const PLAYER_TRACTOR = {
     ID: 'PLAYER_TRACTOR',
     PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
     MATERIAL: MATERIALS.TRACTOR,
-    SCALE_X: 1000,
-    SCALE_Y: 780,
+    SCALE_X: 1200,
+    SCALE_Y: 950,
     POSITION_DETECTOR: {
         LEFT:   -40,
         RIGHT:  40,
@@ -42,8 +42,8 @@ export const PLAYER_FACE = {
     ID: 'PLAYER_FACE',
     PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
     MATERIAL: MATERIALS.FACE_WITH_MASK,
-    SCALE_X: 700,
-    SCALE_Y: 750,
+    SCALE_X: 900,
+    SCALE_Y: 950,
     POSITION_DETECTOR: {
         LEFT:   -40,
         RIGHT:  40,

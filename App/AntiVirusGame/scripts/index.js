@@ -137,12 +137,6 @@ Promise.all([
 ]).then(() => {
     // Xiaomi: 1080 : 2260 : 2.75
     log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)
-    const fatBoyPosition = {
-        x: deviceService.settings.x / 10,
-        y: deviceService.settings.y / 10
-    }
-    log(`FAT BOY POSITION: ${JSON.stringify(fatBoyPosition)}`)
-    findMe('fatBoy').then(item => setPosition(item, fatBoyPosition.x, fatBoyPosition.y))
     return Promise.all([
         energyService.init(servicesOptions),
         eggService.init(servicesOptions),

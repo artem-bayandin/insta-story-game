@@ -4,11 +4,7 @@ import { MATERIALS } from './commonConstants'
 let materials = {}
 
 const initMaterial = (id) => {
-    return new Promise((res, rej) => {
-        findMaterial(id).then(mat => {
-            res(materials[id] = mat) 
-        } )
-    } )
+    return new Promise((res, rej) => findMaterial(id).then(mat => res(materials[id] = mat)))
 }
 
 const init = () => {

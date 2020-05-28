@@ -1,5 +1,5 @@
 import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
-import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES } from './commonConstants'
+import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES, STAT_TXT } from './commonConstants'
 import materialService from './materialService'
 
 const setupElement = (id, config) => {
@@ -26,6 +26,11 @@ const init = ({UI, screenOptions}) => {
     setupElement(OBJECT_ID.LINES.RIGHT_TOP, LINES.RIGHT_TOP)
     setupElement(OBJECT_ID.LINES.LEFT_BOTTOM, LINES.LEFT_BOTTOM)
     setupElement(OBJECT_ID.LINES.RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
+    
+    setupElement(OBJECT_ID.TXT.TIMER, STAT_TXT.TIMER)
+    setupElement(OBJECT_ID.TXT.LEVEL, STAT_TXT.LEVEL)
+    setupElement(OBJECT_ID.TXT.EGGS, STAT_TXT.EGGS)
+    setupElement(OBJECT_ID.TXT.LIVES, STAT_TXT.LIVES)
 }
 
 const subscribeToPlayerMovements = ({moveLeft = null, moveRight = null, moveTop = null, moveBottom = null}) => {
