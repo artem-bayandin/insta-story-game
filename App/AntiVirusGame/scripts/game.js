@@ -135,6 +135,7 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
 
     const setTimerInterval = () => {
         if (timeInterval) {
+            log(`this should not happen`)
             clearInterval(timeInterval)
             timeInterval = null
         }

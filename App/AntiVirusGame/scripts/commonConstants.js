@@ -52,6 +52,7 @@ export const MATERIALS = {
     LEVEL: 'speed-1',
     LINE_DEFAULT: 'mat-line',
     STATS_LINE_BG: 'statsLineMaterial',
+    LINE_GRAD: 'line-grad'
 }
 
 export const PATCHES = {
@@ -112,34 +113,40 @@ export const STATS_LINE_BG = {
     MATERIAL: MATERIALS.STATS_LINE_BG
 }
 
+const LINE_SCALE_X = 1280
+const LINE_SCALE_Y = 160
+const LINE_X = 150
+const LINE_Y_TOP = 175
+const LINE_Y_BOTTOM = 25
+
 export const LINES = {
     LEFT_TOP: {
-        X: -150,
-        Y: 170,
-        SCALE_X: 1200,
-        SCALE_Y: 500,
-        MATERIAL: MATERIALS.LINE_DEFAULT
+        X: 0 - LINE_X,
+        Y: LINE_Y_TOP,
+        SCALE_X: LINE_SCALE_X,
+        SCALE_Y: LINE_SCALE_Y,
+        MATERIAL: MATERIALS.LINE_GRAD
     },
     RIGHT_TOP: {
-        X: 150,
-        Y: 170,
-        SCALE_X: 1200,
-        SCALE_Y: 500,
-        MATERIAL: MATERIALS.LINE_DEFAULT
+        X: LINE_X,
+        Y: LINE_Y_TOP,
+        SCALE_X: LINE_SCALE_X,
+        SCALE_Y: LINE_SCALE_Y,
+        MATERIAL: MATERIALS.LINE_GRAD
     },
     LEFT_BOTTOM: {
-        X: -150,
-        Y: 20,
-        SCALE_X: 1200,
-        SCALE_Y: 500,
-        MATERIAL: MATERIALS.LINE_DEFAULT
+        X: 0 - LINE_X,
+        Y: LINE_Y_BOTTOM,
+        SCALE_X: LINE_SCALE_X,
+        SCALE_Y: LINE_SCALE_Y,
+        MATERIAL: MATERIALS.LINE_GRAD
     },
     RIGHT_BOTTOM: {
-        X: 150,
-        Y: 20,
-        SCALE_X: 1200,
-        SCALE_Y: 500,
-        MATERIAL: MATERIALS.LINE_DEFAULT
+        X: LINE_X,
+        Y: LINE_Y_BOTTOM,
+        SCALE_X: LINE_SCALE_X,
+        SCALE_Y: LINE_SCALE_Y,
+        MATERIAL: MATERIALS.LINE_GRAD
     }
 }
 

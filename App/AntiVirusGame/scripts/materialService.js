@@ -23,6 +23,7 @@ const init = () => {
     var promise9 = initMaterial(MATERIALS.LEVEL)
     var promise10 = initMaterial(MATERIALS.LINE_DEFAULT)
     var promise11 = initMaterial(MATERIALS.STATS_LINE_BG)
+    var promise12 = initMaterial(MATERIALS.LINE_GRAD)
 
     return Promise.all([
         promise1
@@ -36,6 +37,7 @@ const init = () => {
         , promise9
         , promise10
         , promise11
+        , promise12
     ])
 }
 
