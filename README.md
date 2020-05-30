@@ -13,7 +13,11 @@ Time Logs
 On May, 28th I've decided to know how much time I've spent on this code, so have written down all the commit times (you will find it below). It is needed just to know past time, for my next commits I will log start/end time manually every day.
 As for the stats below, these are separated by periods, plus I've added 30 min to each (I do not commit at the time when I've just opened my notebook, so let's say, I used to spend about half an hour befor first commit in a row).
 
-### Total time spent before May, 28th, 1:30AM: 35 hours (including 13x0.5h)
+### Total time spent before May, 30th, 7:20PM : 47.75 hours
+
+Additional time from the previous milestone: 12.75h
+
+### Total time spent before May, 28th, 1:30AM : 35 hours (including 13x0.5h)
 
 13 10:58
 14 0:40
