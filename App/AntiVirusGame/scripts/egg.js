@@ -68,6 +68,9 @@ export const Egg = (id, obj) => {
                     // TODO: get face position
                     // if Face.Position == Egg.Position => callback
                     // else => dropEgg()
+                    log(`TODO: get face position
+                    if Face.Position == Egg.Position => callback
+                    else => dropEgg()`)
                     callback({sides: [ sideX, sideY ], weight: config.WEIGHT})
                     hideAndResetPosition()
                 }
