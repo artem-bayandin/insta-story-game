@@ -1,22 +1,22 @@
+import { SIDE, MATERIALS, LINES_Y_DIFFERENCE } from "./commonConstants"
+
 /*
  *  EGG CONSTANTS
  */
 
-import { SIDE, MATERIALS } from "./commonConstants"
-
-const dropY            = -125
-const dropLeft         = { x: -50, y: dropY }
-const dropRight        = { x:  50, y: dropY }
-
 const startTopY        = 210
-const startBottomY     = 60
-const stepY            = 15
+const startBottomY     = startTopY - LINES_Y_DIFFERENCE
+const stepY            = 18
 const endTopY          = startTopY - (stepY * 3)
 const endBottomY       = startBottomY - (stepY * 3)
 
 const startX           = 155
-const stepX            = 35
+const stepX            = 38
 const endX             = startX - (stepX * 3)
+
+const dropY            = -125
+const dropLeft         = { x: -endX, y: dropY }
+const dropRight        = { x:  endX, y: dropY }
 
 const topLeftSteps     = { linePoints: [{x: -startX, y: startTopY   }, {x: -(startX - stepX), y: startTopY - stepY   }, {x: -(startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x: -endX, y: endTopY   }, dropLeft]  , side: SIDE.LEFT }
 const bottomLeftSteps  = { linePoints: [{x: -startX, y: startBottomY}, {x: -(startX - stepX), y: startBottomY - stepY}, {x: -(startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x: -endX, y: endBottomY}, dropLeft]  , side: SIDE.LEFT }

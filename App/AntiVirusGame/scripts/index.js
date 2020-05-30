@@ -12,15 +12,21 @@ import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
-import { LEVEL, STOPWATCH, PATCHES } from './commonConstants'
+import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     game.play()
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
+    // setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, true)
 }
 
-const exitCallback = ({eggs, time}) => {
+const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
+    setTimeout(() => {
+        const winnerResult = winner ? INTERACTION_RESULTS.WIN : INTERACTION_RESULTS.GAME_OVER
+        textService.setInteractionResult(winnerResult)
+    }, pauseBeforeInteractionResult)
+    setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, false)
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 

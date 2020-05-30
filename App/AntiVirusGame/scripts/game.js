@@ -63,8 +63,12 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
         }
     }
 
+    const maxInteractionPause = 200
+    const minInteractionPause = 150
+    const interactionDuration = () => gameSpeed > 1000 ? gameSpeed - maxInteractionPause : gameSpeed - minInteractionPause
+
     const informAboutInteraction = (text) => {
-        textService.setInteractionResult(text, gameSpeed - 150)
+        textService.setInteractionResult(text, interactionDuration())
     }
 
     const eggDroppedCallback = ({sides, weight}) => {
@@ -148,7 +152,7 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
 
     const exit = () => {
         textService.setTime(timeCounter + timeIntervalDuration)
-        exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp})
+        exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp, winner: false}) // , pauseBeforeInteractionResult: maxInteractionPause})
     }
 
     const setTimerInterval = () => {

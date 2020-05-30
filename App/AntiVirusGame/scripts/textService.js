@@ -1,6 +1,6 @@
-import { findMe, log, setTimeout, setBooleanToPatch } from './utils'
+import { findMe, log, setTimeout } from './utils'
 import { TxtScore, TxtTimer } from './text'
-import { OBJECT_ID, PATCHES } from './commonConstants'
+import { OBJECT_ID } from './commonConstants'
 
 /*
  *  TEXT SERVICE 
@@ -62,14 +62,13 @@ const setTime = (ms) => {
     txtTimer.setText(ms)
 }
 
-const setInteractionResult = (text, duration) => {
+const setInteractionResult = (text, duration = 0) => {
     txtInteraction.setText(text)
-    txtInteraction.color = "green"
-    setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, true)
-    setTimeout(() => {
-        txtInteraction.clearText()
-        setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, false)
-    }, duration)
+    if (duration && +duration > 0) {
+        setTimeout(() => {
+            txtInteraction.clearText()
+        }, duration)
+    }
 }
 
 const textService = {

@@ -4,9 +4,9 @@ import { OBJECT_ID, MATERIALS } from './commonConstants'
  *  PLAYER CONSTANTS
  */
 
-const X_LEFT = -55
-const X_RIGHT = 55
-const X_DEFAULT = X_LEFT
+const X_DEFAULT = 45
+const X_LEFT = -X_DEFAULT
+const X_RIGHT = X_DEFAULT
 const Y_TOP = 160
 const Y_BOTTOM = 0
 const Y_DEFAULT = 0
