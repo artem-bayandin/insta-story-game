@@ -16,6 +16,8 @@ import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstant
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
+    textService.setText(0, 0, energyService.capacityLeft())
+    textService.setTime(0)
     return
     game.play()
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
