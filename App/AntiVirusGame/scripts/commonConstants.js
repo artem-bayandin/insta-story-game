@@ -120,7 +120,7 @@ export const STATS_LINE_BG = {
 }
 
 export const LINES_Y_DIFFERENCE = 150
-const LINE_SCALE_X = 1280
+const LINE_SCALE_X = 1350
 const LINE_SCALE_Y = 160
 const LINE_X = 140
 const LINE_Y_TOP = 165

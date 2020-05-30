@@ -33,7 +33,7 @@ export const Egg = (id, obj) => {
 
     const step = (speed) => {
         const innerSpeed = speed / 2
-        const dropSpeed = innerSpeed / 2
+        const dropSpeed = innerSpeed - 100
 
         if (!base.isVisible()) return
 
@@ -63,7 +63,7 @@ export const Egg = (id, obj) => {
                     
                     setTimeout(() => {
                         callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT})
-                    }, dropSpeed / 2)
+                    }, dropSpeed - 100)
                 } else {
                     // TODO: get face position
                     // if Face.Position == Egg.Position => callback

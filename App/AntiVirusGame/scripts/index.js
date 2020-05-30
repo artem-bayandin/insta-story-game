@@ -14,12 +14,14 @@ import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
 import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstants'
 
-const startTheGame = () => {
+const showMenu = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     textService.setText(0, 0, energyService.capacityLeft())
     textService.setTime(0)
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
-    // game.play()
+    
+    log(`remove the next line in production`)
+    startPlaying() // TODO: remove this in production
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
@@ -31,13 +33,21 @@ const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) 
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 
+const startPlaying = () => {
+    game.play()
+    setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
+}
+
+const stopPlaying = () => {
+    game.stop()
+}
+
 subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
     if (game.isOver()) return
     if (options.newValue) {
-        game.play()
-        setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
+        startPlaying()
     } else if (options.oldValue !== undefined) {
-        game.stop()
+        stopPlaying()
     }
 })
 
@@ -164,4 +174,4 @@ Promise.all([
         uiService.init(servicesOptions),
     ])
 })
-.then(startTheGame)
+.then(showMenu)
