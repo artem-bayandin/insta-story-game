@@ -1,4 +1,4 @@
-import { log, setTimeout, findMe, setPosition, setBooleanToPatch, subscribeToPatchBoolean } from './utils'
+import { log, setTimeout, setBooleanToPatch, subscribeToPatchBoolean } from './utils'
 
 import energyService from './energyService'
 import eggService from './eggService'
@@ -10,9 +10,11 @@ import uiService from './uiService'
 import deviceService from './deviceService'
 import Game from './game'
 
-import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
+import { PLAYER_TRACTOR } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
 import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstants'
+
+import { tractorOptions } from './playerSettings'
 
 const showMenu = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
@@ -20,8 +22,8 @@ const showMenu = () => {
     textService.setTime(0)
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
     
-    log(`remove the next line in production`)
-    startPlaying() // TODO: remove this in production
+    // log(`remove the next line in production`)
+    // startPlaying() // TODO: remove this in production
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
@@ -51,29 +53,6 @@ subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
     }
 })
 
-const tractorOptions = {
-    gameMode: {
-        allowDrop: true,
-        collect: false
-    },
-    screenOptions: {
-        playerConfig: PLAYER_TRACTOR,
-        eggCounterIconConfig: EGG_VIRUS_RED(0).STAT_ICON,
-        liveCounterIconConfig: EGG_MASK_GREEN(0).STAT_ICON,
-        levelCounterIconConfig: LEVEL.STAT_ICON,
-        stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
-    },
-    eggOptions: {
-        // if (collect)     then killers::healers should be 1:4
-        // if (!colelct)    then killers::healers should be 4:1
-        probability: [
-            [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
-            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
-            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
-        ]
-    }
-}
-
 const gameOptions = {
     // callback to run when game is over
     exitCallback,
@@ -102,6 +81,13 @@ const gameOptions = {
         // if X items are dropped - add 1 live
         increaseWhenDropped: 10
     },
+    UI: {
+        playerCoordMaxLeft: -50,
+        playerCoordMaxRight: 50,
+        playerCoordMaxTop: 160,
+        playerCoordMaxBottom: -170
+    },
+    // this is overwritten in player settings
     gameMode: {
         // => allowDrop && collect 
         // => collector mode (player on the ground)
@@ -124,13 +110,7 @@ const gameOptions = {
         // set to FALSE to your Player has to avoid contacts with eggs
         collect: false
     },
-    UI: {
-        playerCoordMaxLeft: -50,
-        playerCoordMaxRight: 50,
-        playerCoordMaxTop: 160,
-        playerCoordMaxBottom: -170
-    },
-    // this should be totally rewritten with 'current game settings'
+    // this is overwritten in player settings
     screenOptions: {
         // this is to set up player image and parameters
         playerConfig: PLAYER_TRACTOR,
@@ -141,6 +121,16 @@ const gameOptions = {
         levelCounterIconConfig: LEVEL.STAT_ICON,
         stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
     },
+    // this is overwritten in player settings
+    eggOptions: {
+        // if (collect)     then killers::healers should be 1:4
+        // if (!colelct)    then killers::healers should be 4:1
+        probability: [
+            [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
+            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
+            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
+        ]
+    }
 }
 
 const gameAndPlayerOptions = {
