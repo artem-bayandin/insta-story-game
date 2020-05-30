@@ -21,7 +21,6 @@ const startTheGame = () => {
     return
     game.play()
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
-    // setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, true)
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
@@ -30,6 +29,7 @@ const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) 
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, false)
+    setBooleanToPatch(PATCHES.INPUTS.GAME_FINISHED, true)
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 

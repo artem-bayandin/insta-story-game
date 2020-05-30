@@ -67,7 +67,7 @@ export const PATCHES = {
         ROAD: {
             MOVE: 'moveTheRoad'
         },
-        INTERACTION_VISIBLE: 'interactionVisible'
+        GAME_FINISHED: 'gameFinished'
     },
     OUTPUTS: {
         MOVE_PLAYER: {
