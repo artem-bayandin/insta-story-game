@@ -1,4 +1,4 @@
-import { log, setTimeout, findMe, setPosition, setBooleanToPatch } from './utils'
+import { log, setTimeout, findMe, setPosition, setBooleanToPatch, subscribeToPatchBoolean } from './utils'
 
 import energyService from './energyService'
 import eggService from './eggService'
@@ -16,6 +16,7 @@ import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstant
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
+    return
     game.play()
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
     // setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, true)
@@ -29,6 +30,10 @@ const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) 
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, false)
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
+
+subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
+    log(`VIDEO_RECORDING :: ${options.newValue} :: ${options.oldValue} :: ${JSON.stringify(options)}`)
+})
 
 const tractorOptions = {
     gameMode: {

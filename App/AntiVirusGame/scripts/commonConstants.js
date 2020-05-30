@@ -51,7 +51,7 @@ export const MATERIALS = {
     FACE_WITH_MASK: 'face-2',
     STOPWATCH: 'stopwatch-1',
     LEVEL: 'speed-1',
-    LINE_DEFAULT: 'mat-line',
+    LINE_DEFAULT: 'line-grad',
     STATS_LINE_BG: 'statsLineMaterial',
     LINE_GRAD: 'line-grad'
 }
@@ -82,7 +82,8 @@ export const PATCHES = {
                 Y: 'deviceScreenSizeY'
             },
             SCREEN_SCALE: 'deviceScreenScale'
-        }
+        },
+        VIDEO_RECORDING: 'videoRecording'
     }
 }
 
