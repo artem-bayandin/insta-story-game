@@ -33,6 +33,8 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
 
     let timestamp = null
 
+    let gameOver = false
+
     const increaseTickCounter = () => {
         ticksCounter++
         if (ticksCounter % stageCapacity === 0) {
@@ -151,6 +153,7 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     }
 
     const exit = () => {
+        gameOver = true
         textService.setTime(timeCounter + timeIntervalDuration)
         exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp, winner: false}) // , pauseBeforeInteractionResult: maxInteractionPause})
     }
@@ -183,6 +186,19 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
         setTimerInterval()
     }
 
+    const pause = () => {
+        if (playing) {
+            // pause
+            playing = false
+            clearTimerInterval()
+        }
+    }
+
+    const stop = () => {
+        go = false
+        exit()
+    }
+
     const togglePlay = () => {
         // TODO: refactor to properly set 'timestamp'
         if (playing) {
@@ -198,9 +214,14 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
         }
     }
 
+    const isOver = () => gameOver
+
     return {
         play,
-        togglePlay
+        pause,
+        stop,
+        togglePlay,
+        isOver
     }
 }
 

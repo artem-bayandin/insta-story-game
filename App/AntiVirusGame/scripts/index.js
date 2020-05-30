@@ -18,9 +18,8 @@ const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     textService.setText(0, 0, energyService.capacityLeft())
     textService.setTime(0)
-    return
-    game.play()
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
+    // game.play()
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
@@ -29,12 +28,17 @@ const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) 
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, false)
-    setBooleanToPatch(PATCHES.INPUTS.GAME_FINISHED, true)
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 
 subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
-    log(`VIDEO_RECORDING :: ${options.newValue} :: ${options.oldValue} :: ${JSON.stringify(options)}`)
+    if (game.isOver()) return
+    if (options.newValue) {
+        game.play()
+        setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
+    } else if (options.oldValue !== undefined) {
+        game.stop()
+    }
 })
 
 const tractorOptions = {
