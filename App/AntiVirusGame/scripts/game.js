@@ -155,6 +155,7 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     const exit = () => {
         gameOver = true
         textService.setTime(timeCounter + timeIntervalDuration)
+        clearTimerInterval()
         exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp, winner: false}) // , pauseBeforeInteractionResult: maxInteractionPause})
     }
 
