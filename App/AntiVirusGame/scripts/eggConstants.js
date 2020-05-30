@@ -41,7 +41,7 @@ export const EGG_VIRUS_RED = (weight = 0) => {
             RIGHT: MATERIALS.VIRUS_RED_RIGHT
         },
         STAT_ICON: {
-            X: 50,
+            X: 45,
             Y: 282,
             SCALE_X: 408,
             SCALE_Y: 382,
@@ -61,7 +61,7 @@ export const EGG_VIRUS_BLUE = (weight = 0) => {
             RIGHT: MATERIALS.VIRUS_BLUE_RIGHT
         },
         STAT_ICON: {
-            X: 50,
+            X: 45,
             Y: 282,
             SCALE_X: 408,
             SCALE_Y: 382,
@@ -81,7 +81,7 @@ export const EGG_MASK_GREEN = (weight = 0) => {
             RIGHT: MATERIALS.MASK_GREEN
         },
         STAT_ICON: {
-            X: 133,
+            X: 128,
             Y: 282,
             SCALE_X: 437,
             SCALE_Y: 316,

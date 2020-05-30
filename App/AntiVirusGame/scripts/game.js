@@ -64,7 +64,7 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     }
 
     const informAboutInteraction = (text) => {
-        textService.setInteractionResult(text, gameSpeed - 100)
+        textService.setInteractionResult(text, gameSpeed - 150)
     }
 
     const eggDroppedCallback = ({sides, weight}) => {

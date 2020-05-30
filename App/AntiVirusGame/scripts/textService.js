@@ -1,6 +1,6 @@
-import { findMe, log } from './utils'
+import { findMe, log, setTimeout, setBooleanToPatch } from './utils'
 import { TxtScore, TxtTimer } from './text'
-import { OBJECT_ID } from './commonConstants'
+import { OBJECT_ID, PATCHES } from './commonConstants'
 
 /*
  *  TEXT SERVICE 
@@ -10,38 +10,46 @@ let txtLevel = null
 let txtEggs = null
 let txtLives = null
 let txtTimer = null
+let txtInteraction = null
 
 const init = () => {
     const txtLevelPromise = new Promise((res, rej) => {
-        const txtLevelId = OBJECT_ID.TXT.LEVEL
-        findMe(txtLevelId).then(item => {
-            txtLevel = new TxtScore(txtLevelId, item)
+        const id = OBJECT_ID.TXT.LEVEL
+        findMe(id).then(item => {
+            txtLevel = new TxtScore(id, item)
             res(txtLevel)
         })
     })
     const txtEggsPromise = new Promise((res, rej) => {
-        const txtEggsId = OBJECT_ID.TXT.EGGS
-        findMe(txtEggsId).then(item => {
-            txtEggs = new TxtScore(txtEggsId, item)
+        const id = OBJECT_ID.TXT.EGGS
+        findMe(id).then(item => {
+            txtEggs = new TxtScore(id, item)
             res(txtEggs)
         })
     })
     const txtLivesPromise = new Promise((res, rej) => {
-        const txtLivesId = OBJECT_ID.TXT.LIVES
-        findMe(txtLivesId).then(item => {
-            txtLives = new TxtScore(txtLivesId, item)
+        const id = OBJECT_ID.TXT.LIVES
+        findMe(id).then(item => {
+            txtLives = new TxtScore(id, item)
             res(txtLives)
         })
     })
     const txtTimerPromise = new Promise((res, rej) => {
-        const txtTimerId = OBJECT_ID.TXT.TIMER
-        findMe(txtTimerId).then(item => {
-            txtTimer = new TxtTimer(txtTimerId, item)
+        const id = OBJECT_ID.TXT.TIMER
+        findMe(id).then(item => {
+            txtTimer = new TxtTimer(id, item)
             res(txtTimer)
         })
     })
+    const txtInteractionPromise = new Promise((res, rej) => {
+        const id = OBJECT_ID.TXT.INTERACTION
+        findMe(id).then(item => {
+            txtInteraction = new TxtScore(id, item)
+            res(txtInteraction)
+        })
+    })
 
-    return Promise.all([txtLevelPromise, txtEggsPromise, txtLivesPromise, txtTimerPromise])
+    return Promise.all([txtLevelPromise, txtEggsPromise, txtLivesPromise, txtTimerPromise, txtInteractionPromise])
 }
 
 const setText = (level, eggsDropped, livesLeft) => {
@@ -55,7 +63,13 @@ const setTime = (ms) => {
 }
 
 const setInteractionResult = (text, duration) => {
-    log(`${text} : ${duration}`)
+    txtInteraction.setText(text)
+    txtInteraction.color = "green"
+    setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, true)
+    setTimeout(() => {
+        txtInteraction.clearText()
+        setBooleanToPatch(PATCHES.INPUTS.INTERACTION_VISIBLE, false)
+    }, duration)
 }
 
 const textService = {

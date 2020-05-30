@@ -23,7 +23,8 @@ export const OBJECT_ID = {
         LEVEL: 'txtLevel',
         EGGS: 'txtEggs',
         LIVES: 'txtLives',
-        TIMER: 'txtTimer'
+        TIMER: 'txtTimer',
+        INTERACTION: 'txtInteraction'
     },
     ICONS: {
         STOPWATCH: 'timerStatIcon',
@@ -65,7 +66,8 @@ export const PATCHES = {
         },
         ROAD: {
             MOVE: 'moveTheRoad'
-        }
+        },
+        INTERACTION_VISIBLE: 'interactionVisible'
     },
     OUTPUTS: {
         MOVE_PLAYER: {
@@ -100,7 +102,7 @@ export const STOPWATCH = {
 
 export const LEVEL = {
     STAT_ICON: {
-        X: -30,
+        X: -35,
         Y: 281,
         SCALE_X: 400,
         SCALE_Y: 400,
@@ -155,7 +157,7 @@ export const LINES = {
 
 export const STAT_TXT = {
     TIMER: {
-        X: -120,
+        X: -125,
         Y: 280
     },
     LEVEL: {

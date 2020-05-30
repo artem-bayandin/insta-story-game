@@ -34,11 +34,11 @@ export const randomItem = (arrayOfElements) => arrayOfElements[randomInt(1, arra
  * SHOW / HIDE USING OBJECT PROPERTY SETTER
  */
 
-export const toggleHidden = (element, isHidden) => (element.hidden = isHidden)
-export const hide = (element) => { if (!element.hidden) toggleHidden(element, true) }
-export const hideAll = (arrayOfElements) => { arrayOfElements.forEach(hide) }
-export const show = (element) => { if (element.hidden) toggleHidden(element, false) }
-export const showAll = (arrayOfElements) => { arrayOfElements.forEach(show) }
+// export const toggleVisible = (element, visible) => (element.visible = visible)
+// export const hide = (element) => { if (element.visible) toggleVisible(element, false) }
+// export const hideAll = (arrayOfElements) => { arrayOfElements.forEach(hide) }
+// export const show = (element) => { if (!element.visible) toggleVisible(element, true) }
+// export const showAll = (arrayOfElements) => { arrayOfElements.forEach(show) }
 
 /*
  * TEXT
@@ -120,7 +120,7 @@ export const MOVE_TYPES = {
     EASE_OUT_BACK: 'EASE_OUT_BACK',
 }
 
-export const animateVisibility = (obj, driver, samplerX, samplerY) => {
+export const animateScale = (obj, driver, samplerX, samplerY) => {
     if (!samplerY) {
         samplerY = samplerX
     }

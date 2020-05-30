@@ -1,4 +1,4 @@
-import { linearSamplerFromTo, animateVisibility, animateMove, timeDriver, MOVE_TYPES, randomInt, setTimeout, log } from './utils'
+import { linearSamplerFromTo, animateScale, animateMove, timeDriver, MOVE_TYPES, randomInt, setTimeout, log } from './utils'
 
 /*
  *  GENERAL CREATORS
@@ -48,7 +48,7 @@ export const createWithShowHide = (obj, speed = 0, scaleX = 0, scaleY = 0) => {
     const show = ({speed = 0, scaleX = 0, scaleY = 0} = {speed: 0, scaleX: 0, scaleY: 0}) => {
         const [ s, x, y ] = [ speed || _speed, scaleX || _scaleX, scaleY || _scaleY ]
         if (isVisible() || !(s > 0 && x > 0 && y > 0)) return
-        animateVisibility(obj
+        animateScale(obj
             , timeDriver(s)
             , linearSamplerFromTo(0, x)
             , linearSamplerFromTo(0, y)
@@ -59,7 +59,7 @@ export const createWithShowHide = (obj, speed = 0, scaleX = 0, scaleY = 0) => {
     const hide = ({speed = 1} = {speed: 1}) => {
         const s = speed || _speed
         if (!isVisible()) return
-        animateVisibility(obj
+        animateScale(obj
             , timeDriver(s)
             , linearSamplerFromTo(obj.transform.scaleX.pinLastValue(), 0)
             , linearSamplerFromTo(obj.transform.scaleY.pinLastValue(), 0)
