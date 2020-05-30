@@ -1,4 +1,4 @@
-import { findMe } from './utils'
+import { findMe, log } from './utils'
 import { TxtScore, TxtTimer } from './text'
 import { OBJECT_ID } from './commonConstants'
 
@@ -54,10 +54,15 @@ const setTime = (ms) => {
     txtTimer.setText(ms)
 }
 
+const setInteractionResult = (text, duration) => {
+    log(`${text} : ${duration}`)
+}
+
 const textService = {
     init,
     setText,
-    setTime
+    setTime,
+    setInteractionResult
 }
 
 export default textService

@@ -10,7 +10,7 @@ const X_DEFAULT = X_LEFT
 const Y_TOP = 160
 const Y_BOTTOM = 0
 const Y_DEFAULT = 0
-const Y_ONLY_X = -160
+const Y_ONLY_X = -130
 const TRANSITION_SPEED = 175
 
 export const PLAYER_POSITION_DEFAULTS = {

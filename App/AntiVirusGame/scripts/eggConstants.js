@@ -4,20 +4,30 @@
 
 import { SIDE, MATERIALS } from "./commonConstants"
 
-const yTopRow          = 170
-const yBottomRow       = 20
-const dropLeft         = { x: -50, y: -155 }
-const dropRight        = { x:  50, y: -155 }
-const topLeftSteps     = { linePoints: [{ x: -155, y: 215 }, { x: -120, y: 200 }, { x: -85, y: 185 }, { x: -50, y: yTopRow    }, dropLeft]  , side: SIDE.LEFT }
-const bottomLeftSteps  = { linePoints: [{ x: -155, y:  65 }, { x: -120, y:  50 }, { x: -85, y:  35 }, { x: -50, y: yBottomRow }, dropLeft]  , side: SIDE.LEFT }
-const topRightSteps    = { linePoints: [{ x:  155, y: 215 }, { x:  120, y: 200 }, { x:  85, y: 185 }, { x:  50, y: yTopRow    }, dropRight] , side: SIDE.RIGHT }
-const bottomRightSteps = { linePoints: [{ x:  155, y:  65 }, { x:  120, y:  50 }, { x:  85, y:  35 }, { x:  50, y: yBottomRow }, dropRight] , side: SIDE.RIGHT }
+const dropY            = -125
+const dropLeft         = { x: -50, y: dropY }
+const dropRight        = { x:  50, y: dropY }
+
+const startTopY        = 210
+const startBottomY     = 60
+const stepY            = 15
+const endTopY          = startTopY - (stepY * 3)
+const endBottomY       = startBottomY - (stepY * 3)
+
+const startX           = 155
+const stepX            = 35
+const endX             = startX - (stepX * 3)
+
+const topLeftSteps     = { linePoints: [{x: -startX, y: startTopY   }, {x: -(startX - stepX), y: startTopY - stepY   }, {x: -(startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x: -endX, y: endTopY   }, dropLeft]  , side: SIDE.LEFT }
+const bottomLeftSteps  = { linePoints: [{x: -startX, y: startBottomY}, {x: -(startX - stepX), y: startBottomY - stepY}, {x: -(startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x: -endX, y: endBottomY}, dropLeft]  , side: SIDE.LEFT }
+const topRightSteps    = { linePoints: [{x:  startX, y: startTopY   }, {x:  (startX - stepX), y: startTopY - stepY   }, {x:  (startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x:  endX, y: endTopY   }, dropRight] , side: SIDE.RIGHT }
+const bottomRightSteps = { linePoints: [{x:  startX, y: startBottomY}, {x:  (startX - stepX), y: startBottomY - stepY}, {x:  (startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x:  endX, y: endBottomY}, dropRight] , side: SIDE.RIGHT }
 const globalRoutes     = [ topLeftSteps, topRightSteps, bottomLeftSteps, bottomRightSteps ]
 
 export const EGG_COORDINATES = {
     GLOBAL_ROUTES: globalRoutes,
-    Y_TOP_ROW: yTopRow,
-    Y_BOTTOM_ROW: yBottomRow
+    Y_TOP_ROW: endTopY,
+    Y_BOTTOM_ROW: endBottomY
 }
 
 export const EGG_VIRUS_RED = (weight = 0) => {
@@ -77,5 +87,19 @@ export const EGG_MASK_GREEN = (weight = 0) => {
             SCALE_Y: 316,
             MATERIAL: MATERIALS.MASK_GREEN
         }
+    }
+}
+
+export const TZAR_EGG_WEIGHT = 777
+
+export const TZAR_EGG_1 = {
+    ID: 'TZAR_EGG_1',
+    SCALE_X: 1000,
+    SCALE_Y: 1000,
+    WEIGHT: TZAR_EGG_WEIGHT,
+    MATERIAL: {
+        DEFAULT: MATERIALS.MASK_GREEN,
+        LEFT: MATERIALS.MASK_GREEN,
+        RIGHT: MATERIALS.MASK_GREEN
     }
 }

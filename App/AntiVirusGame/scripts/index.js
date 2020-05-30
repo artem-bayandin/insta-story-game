@@ -1,4 +1,4 @@
-import { log, setTimeout, findMe, setPosition } from './utils'
+import { log, setTimeout, findMe, setPosition, setBooleanToPatch } from './utils'
 
 import energyService from './energyService'
 import eggService from './eggService'
@@ -12,11 +12,12 @@ import Game from './game'
 
 import { PLAYER_TRACTOR, PLAYER_FACE } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
-import { LEVEL, STOPWATCH } from './commonConstants'
+import { LEVEL, STOPWATCH, PATCHES } from './commonConstants'
 
 const startTheGame = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     game.play()
+    setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
 }
 
 const exitCallback = ({eggs, time}) => {

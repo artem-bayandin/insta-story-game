@@ -3,6 +3,7 @@ import playerService from './playerService'
 import energyService from './energyService'
 import eggService from './eggService'
 import textService from './textService'
+import { INTERACTION_RESULTS } from './commonConstants'
 
 const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
     textService.setText(level, eggsDropped, livesLeft)
@@ -56,7 +57,14 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
         droppedCounter++
         if (droppedCounter % increaseWhenDropped == 0) {
             energyService.increase()
+            informAboutInteraction(INTERACTION_RESULTS.EXTRA_LIFE)
+        } else {
+            informAboutInteraction(INTERACTION_RESULTS.GOOD)
         }
+    }
+
+    const informAboutInteraction = (text) => {
+        textService.setInteractionResult(text, gameSpeed - 100)
     }
 
     const eggDroppedCallback = ({sides, weight}) => {
@@ -75,27 +83,37 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
             if (touched && weight < 0) {
                 // log(`killer touch - decrease energy`)
                 energyService.addEnergy(weight)
+                informAboutInteraction(INTERACTION_RESULTS.OUCH)
             } else if (touched && weight) {
                 // log(`healer touch - increase counter`)
                 increaseDroppedCounter()
+                // interaction is included in increaseDroppedCounter()
+                // informAboutInteraction(INTERACTION_RESULTS.GOOD)
             } else if (!touched && weight < 0) {
                 // log(`killer missed - do nothing`)
+                informAboutInteraction(INTERACTION_RESULTS.GOOD)
             } else if (!touched && weight) {
                 // log(`healer missed - decrease energy`)
                 energyService.addEnergy(0 - weight)
+                informAboutInteraction(INTERACTION_RESULTS.OUCH)
             }
         } else {
             if (touched && weight < 0) {
                 // log(`killer touch - decrease energy`)
                 energyService.addEnergy(weight)
+                informAboutInteraction(INTERACTION_RESULTS.OUCH)
             } else if (touched && weight) {
                 // log(`healer touch - increase energy`)
                 energyService.addEnergy(weight)
+                informAboutInteraction(INTERACTION_RESULTS.EXTRA_LIFE)
             } else if (!touched && weight < 0) {
                 // log(`killer missed - increase counter`)
                 increaseDroppedCounter()
+                // interaction is included in increaseDroppedCounter()
+                // informAboutInteraction(INTERACTION_RESULTS.GOOD)
             } else if (!touched && weight) {
                 // log(`healer missed - do nothing`)
+                informAboutInteraction(INTERACTION_RESULTS.OUCH)
             }
         }
 

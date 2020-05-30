@@ -62,6 +62,9 @@ export const PATCHES = {
             MAX_RIGHT: 'playerCoordMaxRight',
             MAX_TOP: 'playerCoordMaxTop',
             MAX_BOTTOM: 'playerCoordMaxBottom'
+        },
+        ROAD: {
+            MOVE: 'moveTheRoad'
         }
     },
     OUTPUTS: {
@@ -116,8 +119,8 @@ export const STATS_LINE_BG = {
 const LINE_SCALE_X = 1280
 const LINE_SCALE_Y = 160
 const LINE_X = 150
-const LINE_Y_TOP = 175
-const LINE_Y_BOTTOM = 25
+const LINE_Y_TOP = 170
+const LINE_Y_BOTTOM = 20
 
 export const LINES = {
     LEFT_TOP: {
@@ -167,4 +170,12 @@ export const STAT_TXT = {
         X: 167,
         Y: 280
     }
+}
+
+export const INTERACTION_RESULTS = {
+    OUCH: 'OOUCH :(',
+    EXTRA_LIFE: '+ EXTRA LIFE',
+    GOOD: 'GOOD',
+    GREAT: 'GREAT!',
+    PERFECT: 'PERFECT!!!'
 }
