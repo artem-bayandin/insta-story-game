@@ -33,8 +33,8 @@ const showMenu = () => {
     textService.setTime(0)
     setRoadSpeed(0)
     moveRoad(true)
-    // log(`remove the next line in production`)
-    // startPlaying() // TODO: remove this in production
+    log(`remove the next line in production`)
+    startPlaying() // TODO: remove this in production
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {

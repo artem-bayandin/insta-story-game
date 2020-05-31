@@ -4,9 +4,9 @@ import { SIDE, MATERIALS, LINES_Y_DIFFERENCE } from "./commonConstants"
  *  EGG CONSTANTS
  */
 
-const startTopY        = 210
+const startTopY        = 218
 const startBottomY     = startTopY - LINES_Y_DIFFERENCE
-const stepY            = 18
+const stepY            = 21
 const endTopY          = startTopY - (stepY * 3)
 const endBottomY       = startBottomY - (stepY * 3)
 
@@ -33,8 +33,8 @@ export const EGG_COORDINATES = {
 export const EGG_VIRUS_RED = (weight = 0) => {
     return {
         ID: 'EGG_VIRUS_RED',
-        SCALE_X: 650,
-        SCALE_Y: 650,
+        SCALE_X: 640,
+        SCALE_Y: 640,
         WEIGHT: weight,
         MATERIAL: {
             LEFT: MATERIALS.VIRUS_RED_LEFT,
@@ -53,8 +53,8 @@ export const EGG_VIRUS_RED = (weight = 0) => {
 export const EGG_VIRUS_BLUE = (weight = 0) => {
     return {
         ID: 'EGG_VIRUS_BLUE',
-        SCALE_X: 650,
-        SCALE_Y: 650,
+        SCALE_X: 640,
+        SCALE_Y: 640,
         WEIGHT: weight,
         MATERIAL: {
             LEFT: MATERIALS.VIRUS_BLUE_LEFT,
