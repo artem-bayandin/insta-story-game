@@ -22,8 +22,8 @@ const showMenu = () => {
     textService.setTime(0)
     setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
     
-    // log(`remove the next line in production`)
-    // startPlaying() // TODO: remove this in production
+    log(`remove the next line in production`)
+    startPlaying() // TODO: remove this in production
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {

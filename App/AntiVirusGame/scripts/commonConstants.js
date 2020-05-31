@@ -12,8 +12,8 @@ export const OBJECT_ID = {
     EGG2: 'egg2',
     EGG3: 'egg3',
     EGG4: 'egg4',
-    GAMEPAD: {
-        LEFT_TOP: 'btn-left-top',
+    GAMEPAD: {                              // currently removed buttons from UI
+        LEFT_TOP: 'btn-left-top',           // when adding buttons you may use these ids
         RIGHT_TOP: 'btn-right-top',
         LEFT_BOTTOM: 'btn-left-bottom',
         RIGHT_BOTTOM: 'btn-right-bottom',
