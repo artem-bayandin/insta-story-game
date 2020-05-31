@@ -10,8 +10,8 @@ const stepY            = 18
 const endTopY          = startTopY - (stepY * 3)
 const endBottomY       = startBottomY - (stepY * 3)
 
-const startX           = 176
-const stepX            = 45
+const startX           = 179
+const stepX            = 46
 const endX             = startX - (stepX * 3)
 
 const dropY            = -125
