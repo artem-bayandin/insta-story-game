@@ -27,6 +27,12 @@ const init = () => {
     // new players and eggs
     var promise12 = initMaterial(MATERIALS.MUSHROOMS)
     var promise12 = initMaterial(MATERIALS.A4)
+    var promise12 = initMaterial(MATERIALS.POTATO_LEFT)
+    var promise12 = initMaterial(MATERIALS.POTATO_RIGHT)
+    var promise12 = initMaterial(MATERIALS.DOLLAR)
+    var promise12 = initMaterial(MATERIALS.FIRE)
+    var promise12 = initMaterial(MATERIALS.POTATO_LEFT)
+    var promise12 = initMaterial(MATERIALS.POTATO_RIGHT)
 
     return Promise.all([
         promise1

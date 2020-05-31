@@ -55,7 +55,13 @@ export const MATERIALS = {
     STATS_LINE_BG: 'statsLineMaterial',
     LINE_GRAD: 'line-grad',
     MUSHROOMS: 'mushrooms',
-    A4: 'a4'
+    A4: 'a4',
+    POTATO_LEFT: 'potato_left',
+    POTATO_RIGHT: 'potato_right',
+    DOLLAR: 'dollar',
+    FIRE: 'fire',
+    PAPER_LEFT: 'paper-left',
+    PAPER_RIGHT: 'paper-right'
 }
 
 export const PATCHES = {
