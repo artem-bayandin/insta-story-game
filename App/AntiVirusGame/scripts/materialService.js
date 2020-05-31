@@ -24,6 +24,9 @@ const init = () => {
     var promise10 = initMaterial(MATERIALS.LINE_DEFAULT)
     var promise11 = initMaterial(MATERIALS.STATS_LINE_BG)
     var promise12 = initMaterial(MATERIALS.LINE_GRAD)
+    // new players and eggs
+    var promise12 = initMaterial(MATERIALS.MUSHROOMS)
+    var promise12 = initMaterial(MATERIALS.A4)
 
     return Promise.all([
         promise1

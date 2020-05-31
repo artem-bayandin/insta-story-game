@@ -14,7 +14,7 @@ import { PLAYER_TRACTOR } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
 import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstants'
 
-import { tractorOptions } from './playerSettings'
+import { faceOptions, tractorOptions, mushroomsOptions, bumagaOptions } from './playerSettings'
 
 const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
 
@@ -147,7 +147,7 @@ const gameOptions = {
 
 const gameAndPlayerOptions = {
     ...gameOptions,
-    ...tractorOptions
+    ...bumagaOptions
 }
 
 const game = new Game(gameAndPlayerOptions)

@@ -24,18 +24,20 @@ export const PLAYER_POSITION_DEFAULTS = {
     TRANSITION_SPEED
 }
 
+const POSITION_DETECTOR = {
+    LEFT:   -30,
+    RIGHT:  30,
+    TOP:    100,
+    BOTTOM: 60
+}
+
 export const PLAYER_TRACTOR = {
     ID: 'PLAYER_TRACTOR',
     PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
     MATERIAL: MATERIALS.TRACTOR,
     SCALE_X: 1200,
     SCALE_Y: 950,
-    POSITION_DETECTOR: {
-        LEFT:   -30,
-        RIGHT:  30,
-        TOP:    100,
-        BOTTOM: 60
-    }
+    POSITION_DETECTOR
 }
 
 export const PLAYER_FACE = {
@@ -44,10 +46,23 @@ export const PLAYER_FACE = {
     MATERIAL: MATERIALS.FACE_WITH_MASK,
     SCALE_X: 900,
     SCALE_Y: 950,
-    POSITION_DETECTOR: {
-        LEFT:   -30,
-        RIGHT:  30,
-        TOP:    100,
-        BOTTOM: 60
-    }
+    POSITION_DETECTOR
+}
+
+export const PLAYER_MUSH = {
+    ID: 'PLAYER_MUSH',
+    PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
+    MATERIAL: MATERIALS.MUSHROOMS,
+    SCALE_X: 1000,
+    SCALE_Y: 800,
+    POSITION_DETECTOR
+}
+
+export const PLAYER_A4 = {
+    ID: 'PLAYER_A4',
+    PLAYER_OBJECT_ID: OBJECT_ID.PLAYER,
+    MATERIAL: MATERIALS.A4,
+    SCALE_X: 800,
+    SCALE_Y: 950,
+    POSITION_DETECTOR
 }

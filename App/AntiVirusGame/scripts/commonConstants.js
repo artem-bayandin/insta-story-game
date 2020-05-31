@@ -53,7 +53,9 @@ export const MATERIALS = {
     LEVEL: 'speed-1',
     LINE_DEFAULT: 'line-grad',
     STATS_LINE_BG: 'statsLineMaterial',
-    LINE_GRAD: 'line-grad'
+    LINE_GRAD: 'line-grad',
+    MUSHROOMS: 'mushrooms',
+    A4: 'a4'
 }
 
 export const PATCHES = {
