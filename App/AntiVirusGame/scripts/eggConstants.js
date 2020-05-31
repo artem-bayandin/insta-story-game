@@ -30,7 +30,7 @@ export const EGG_COORDINATES = {
     Y_BOTTOM_ROW: endBottomY
 }
 
-export const EGG_VIRUS_RED = (weight = 0) => {
+export const EGG_VIRUS_RED = (weight = 0) => { // KILLER
     return {
         ID: 'EGG_VIRUS_RED',
         SCALE_X: 640,
@@ -50,7 +50,7 @@ export const EGG_VIRUS_RED = (weight = 0) => {
     }
 }
 
-export const EGG_VIRUS_BLUE = (weight = 0) => {
+export const EGG_VIRUS_BLUE = (weight = 0) => { // KILLER
     return {
         ID: 'EGG_VIRUS_BLUE',
         SCALE_X: 640,
@@ -70,7 +70,7 @@ export const EGG_VIRUS_BLUE = (weight = 0) => {
     }
 }
 
-export const EGG_MASK_GREEN = (weight = 0) => {
+export const EGG_MASK_GREEN = (weight = 0) => { // HEALER
     return {
         ID: 'EGG_VIRUS_MASK',
         SCALE_X: 700,
@@ -101,5 +101,85 @@ export const TZAR_EGG_1 = {
         DEFAULT: MATERIALS.MASK_GREEN,
         LEFT: MATERIALS.MASK_GREEN,
         RIGHT: MATERIALS.MASK_GREEN
+    }
+}
+
+export const EGG_POTATO = (weight = 0) => { // HEALER
+    return {
+        ID: 'EGG_POTATO',
+        SCALE_X: 560,
+        SCALE_Y: 640,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: MATERIALS.POTATO_LEFT,
+            RIGHT: MATERIALS.POTATO_RIGHT
+        },
+        STAT_ICON: {
+            X: 128,
+            Y: 282,
+            SCALE_X: 350,
+            SCALE_Y: 400,
+            MATERIAL: MATERIALS.POTATO_LEFT
+        }
+    }
+}
+
+export const EGG_DOLLAR = (weight = 0) => { // KILLER
+    return {
+        ID: 'EGG_DOLLAR',
+        SCALE_X: 440,
+        SCALE_Y: 640,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: MATERIALS.DOLLAR,
+            RIGHT: MATERIALS.DOLLAR
+        },
+        STAT_ICON: {
+            X: 45,
+            Y: 282,
+            SCALE_X: 275,
+            SCALE_Y: 400,
+            MATERIAL: MATERIALS.DOLLAR
+        }
+    }
+}
+
+export const EGG_FIRE = (weight = 0) => { // KILLER
+    return {
+        ID: 'EGG_FIRE',
+        SCALE_X: 480,
+        SCALE_Y: 640,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: MATERIALS.FIRE,
+            RIGHT: MATERIALS.FIRE
+        },
+        STAT_ICON: {
+            X: 45,
+            Y: 282,
+            SCALE_X: 300,
+            SCALE_Y: 400,
+            MATERIAL: MATERIALS.FIRE
+        }
+    }
+}
+
+export const EGG_PAPER = (weight = 0) => { // HEALER
+    return {
+        ID: 'EGG_PAPER',
+        SCALE_X: 560,
+        SCALE_Y: 640,
+        WEIGHT: weight,
+        MATERIAL: {
+            LEFT: MATERIALS.PAPER_LEFT,
+            RIGHT: MATERIALS.PAPER_RIGHT
+        },
+        STAT_ICON: {
+            X: 128,
+            Y: 282,
+            SCALE_X: 350,
+            SCALE_Y: 400,
+            MATERIAL: MATERIALS.PAPER_LEFT
+        }
     }
 }

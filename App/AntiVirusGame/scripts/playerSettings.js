@@ -1,5 +1,6 @@
-import { PLAYER_FACE, PLAYER_TRACTOR, PLAYER_MUSH, PLAYER_A4 } from './playerConstants'
+import { PLAYER_FACE, PLAYER_TRACTOR, PLAYER_MUSTACHE, PLAYER_A4 } from './playerConstants'
 import { EGG_VIRUS_RED, EGG_VIRUS_BLUE, EGG_MASK_GREEN } from './eggConstants'
+import { EGG_POTATO, EGG_DOLLAR, EGG_FIRE, EGG_PAPER } from './eggConstants'
 import { LEVEL, STOPWATCH } from './commonConstants'
 
 /*
@@ -23,8 +24,8 @@ export const faceOptions = {
         // if (!colelct)    then killers::healers should be 4:1
         probability: [
             [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
-            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
-            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
+            , [ EGG_VIRUS_BLUE(-1), 5 ]     // -1   3
+            , [ EGG_MASK_GREEN(1), 2 ]      //  1   1   this config is comfortable
         ]
     }
 }
@@ -37,7 +38,7 @@ export const tractorOptions = {
     screenOptions: {
         playerConfig: PLAYER_TRACTOR,
         eggCounterIconConfig: EGG_VIRUS_RED(0).STAT_ICON,
-        liveCounterIconConfig: EGG_MASK_GREEN(0).STAT_ICON,
+        liveCounterIconConfig: EGG_POTATO(0).STAT_ICON,
         levelCounterIconConfig: LEVEL.STAT_ICON,
         stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
     },
@@ -45,22 +46,22 @@ export const tractorOptions = {
         // if (collect)     then killers::healers should be 1:4
         // if (!colelct)    then killers::healers should be 4:1
         probability: [
-            [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
-            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
-            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
+            [ EGG_VIRUS_RED(-1), 6 ]
+            , [ EGG_FIRE(-1), 5 ]
+            , [ EGG_POTATO(1), 2 ]
         ]
     }
 }
 
-export const mushroomsOptions = {
+export const mustacheOptions = {
     gameMode: {
         allowDrop: true,
         collect: false
     },
     screenOptions: {
-        playerConfig: PLAYER_MUSH,
+        playerConfig: PLAYER_MUSTACHE,
         eggCounterIconConfig: EGG_VIRUS_RED(0).STAT_ICON,
-        liveCounterIconConfig: EGG_MASK_GREEN(0).STAT_ICON,
+        liveCounterIconConfig: EGG_POTATO(0).STAT_ICON,
         levelCounterIconConfig: LEVEL.STAT_ICON,
         stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
     },
@@ -68,9 +69,9 @@ export const mushroomsOptions = {
         // if (collect)     then killers::healers should be 1:4
         // if (!colelct)    then killers::healers should be 4:1
         probability: [
-            [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
-            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
-            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
+            [ EGG_VIRUS_RED(-1), 6 ]
+            , [ EGG_DOLLAR(-1), 5 ]
+            , [ EGG_POTATO(1), 2 ]
         ]
     }
 }
@@ -83,7 +84,7 @@ export const bumagaOptions = {
     screenOptions: {
         playerConfig: PLAYER_A4,
         eggCounterIconConfig: EGG_VIRUS_RED(0).STAT_ICON,
-        liveCounterIconConfig: EGG_MASK_GREEN(0).STAT_ICON,
+        liveCounterIconConfig: EGG_PAPER(0).STAT_ICON,
         levelCounterIconConfig: LEVEL.STAT_ICON,
         stopwatchCounterIconConfig: STOPWATCH.STAT_ICON
     },
@@ -91,9 +92,9 @@ export const bumagaOptions = {
         // if (collect)     then killers::healers should be 1:4
         // if (!colelct)    then killers::healers should be 4:1
         probability: [
-            [ EGG_VIRUS_RED(-1), 6 ]        // -1   4
-            , [ EGG_VIRUS_BLUE(-2), 1 ]     // -1   3
-            , [ EGG_MASK_GREEN(1), 1 ]      //  1   1   this config is comfortable
+            [ EGG_VIRUS_RED(-1), 6 ]
+            , [ EGG_FIRE(-1), 5 ]
+            , [ EGG_PAPER(1), 2 ]
         ]
     }
 }

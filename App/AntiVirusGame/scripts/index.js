@@ -14,7 +14,9 @@ import { PLAYER_TRACTOR } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
 import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstants'
 
-import { faceOptions, tractorOptions, mushroomsOptions, bumagaOptions } from './playerSettings'
+import { faceOptions, tractorOptions, mustacheOptions, bumagaOptions } from './playerSettings'
+
+const currentPlayerOptions = tractorOptions
 
 const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
 
@@ -33,8 +35,8 @@ const showMenu = () => {
     textService.setTime(0)
     setRoadSpeed(0)
     moveRoad(true)
-    log(`remove the next line in production`)
-    startPlaying() // TODO: remove this in production
+    // log(`remove the next line in production`)
+    // startPlaying() // TODO: remove this in production
 }
 
 const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
@@ -147,7 +149,7 @@ const gameOptions = {
 
 const gameAndPlayerOptions = {
     ...gameOptions,
-    ...bumagaOptions
+    ...currentPlayerOptions
 }
 
 const game = new Game(gameAndPlayerOptions)
@@ -177,3 +179,4 @@ Promise.all([
     ])
 })
 .then(showMenu)
+.catch(err => log(`ERROR: ${err}`))
