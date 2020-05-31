@@ -65,7 +65,8 @@ export const PATCHES = {
             MAX_BOTTOM: 'playerCoordMaxBottom'
         },
         ROAD: {
-            MOVE: 'moveTheRoad'
+            MOVE: 'moveTheRoad',
+            DURATION: 'roadDuration'
         },
         GAME_STARTED: 'gameStarted'
     },

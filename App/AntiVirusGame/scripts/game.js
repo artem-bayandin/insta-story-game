@@ -9,7 +9,7 @@ const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
     textService.setText(level, eggsDropped, livesLeft)
 }
 
-const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
+const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions
     const { increaseWhenDropped } = energyOptions
     const { allowDrop, collect } = gameMode
@@ -51,6 +51,7 @@ const Game = ({ exitCallback, gameSpeedOptions, energyOptions, gameMode }) => {
                 }
             }
             level++
+            levelUpCallback(level)
             log(`Game Speed Up. Level: ${level}, speed: ${gameSpeed}, ticks: ${ticksCounter}, dropped: ${droppedCounter}, energy: ${energyService.capacityLeft()}`)
         }
     }

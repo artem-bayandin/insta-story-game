@@ -1,4 +1,4 @@
-import { log, setTimeout, setBooleanToPatch, subscribeToPatchBoolean } from './utils'
+import { log, setTimeout, setBooleanToPatch, sendScalarToPatch, subscribeToPatchBoolean } from './utils'
 
 import energyService from './energyService'
 import eggService from './eggService'
@@ -16,12 +16,23 @@ import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstant
 
 import { tractorOptions } from './playerSettings'
 
+const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
+
+const minRoadSpeed = 5
+const maxRoadSpeed = 1
+const roadSpeedStep = 0.5
+const setRoadSpeed = (level) => {
+    if (level > (minRoadSpeed - maxRoadSpeed) /roadSpeedStep) return // have reached max speed already - no need to signal anything
+    const newSpeed = minRoadSpeed - (level * roadSpeedStep)
+    sendScalarToPatch(PATCHES.INPUTS.ROAD.DURATION, newSpeed)
+}
+
 const showMenu = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     textService.setText(0, 0, energyService.capacityLeft())
     textService.setTime(0)
-    setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, true)
-    
+    setRoadSpeed(0)
+    moveRoad(true)
     // log(`remove the next line in production`)
     // startPlaying() // TODO: remove this in production
 }
@@ -31,7 +42,7 @@ const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) 
         const winnerResult = winner ? INTERACTION_RESULTS.WIN : INTERACTION_RESULTS.GAME_OVER
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
-    setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, false)
+    moveRoad(false)
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 
@@ -56,6 +67,7 @@ subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
 const gameOptions = {
     // callback to run when game is over
     exitCallback,
+    levelUpCallback: setRoadSpeed,
     gameSpeedOptions: {
         initialGameSpeed: 1350,
         maxGameSpeed: 333,
