@@ -39,13 +39,13 @@ const showMenu = () => {
     // startPlaying() // TODO: remove this in production
 }
 
-const exitCallback = ({eggs, time, winner, pauseBeforeInteractionResult = 500}) => {
+const exitCallback = ({eggs, time, energyUsed, winner, pauseBeforeInteractionResult = 500}) => {
     setTimeout(() => {
         const winnerResult = winner ? INTERACTION_RESULTS.WIN : INTERACTION_RESULTS.GAME_OVER
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
     moveRoad(false)
-    log(`--- -- - game finised - -- - total score: ${eggs} eggs, time: ${Math.floor(time/1000)} seconds - -- ---`)
+    log(`--- -- - game finised - -- - total score: ${eggs} eggs, ${energyUsed} energy used, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 
 const startPlaying = () => {

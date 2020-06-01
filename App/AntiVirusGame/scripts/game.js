@@ -59,7 +59,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
     const increaseDroppedCounter = () => {
         droppedCounter++
         if (droppedCounter % increaseWhenDropped == 0) {
-            energyService.increase()
+            energyService.addEnergy(1)
             informAboutInteraction(INTERACTION_RESULTS.EXTRA_LIFE)
         } else {
             informAboutInteraction(INTERACTION_RESULTS.GOOD)
@@ -157,7 +157,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         gameOver = true
         textService.setTime(timeCounter + timeIntervalDuration)
         clearTimerInterval()
-        exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp, winner: false}) // , pauseBeforeInteractionResult: maxInteractionPause})
+        exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp, winner: false, energyUsed: energyService.energyUsed()}) // , pauseBeforeInteractionResult: maxInteractionPause})
     }
 
     const setTimerInterval = () => {
