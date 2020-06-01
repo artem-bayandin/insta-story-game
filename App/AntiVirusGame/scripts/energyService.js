@@ -17,7 +17,6 @@ const addEnergy = (amount) => {
     const newCapacity = capacity + amount
     capacity = newCapacity > 0 ? newCapacity : 0
     if (amount > 0) {
-        log(`${amount} energy added`)
         capacityAdded += amount
     }
 }

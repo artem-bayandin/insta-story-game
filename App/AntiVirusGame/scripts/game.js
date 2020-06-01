@@ -10,9 +10,13 @@ const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
 }
 
 const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, gameMode }) => {
-    const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions
-    const { increaseWhenDropped } = energyOptions
+    const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions    
     const { allowDrop, collect } = gameMode
+
+    // some fields for energy Up
+    let initialIncreaseWhenDropped = energyOptions.increaseWhenDropped
+    let initialAdditionalStep = 2
+    let increaseWhenDropped = initialIncreaseWhenDropped
     
     let ticksCounter = 0
     let droppedCounter = 0
@@ -60,6 +64,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         droppedCounter++
         if (droppedCounter % increaseWhenDropped == 0) {
             energyService.addEnergy(1)
+            increaseWhenDropped = increaseWhenDropped + initialIncreaseWhenDropped + (initialAdditionalStep = initialAdditionalStep * 2)
             informAboutInteraction(INTERACTION_RESULTS.EXTRA_LIFE)
         } else {
             informAboutInteraction(INTERACTION_RESULTS.GOOD)
