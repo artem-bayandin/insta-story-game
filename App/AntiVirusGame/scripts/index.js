@@ -20,9 +20,9 @@ const currentPlayerOptions = tractorOptions
 
 const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
 
-const minRoadSpeed = 5
+const minRoadSpeed = 7
 const maxRoadSpeed = 1
-const roadSpeedStep = 0.5
+const roadSpeedStep = 0.4
 const setRoadSpeed = (level) => {
     if (level > (minRoadSpeed - maxRoadSpeed) /roadSpeedStep) return // have reached max speed already - no need to signal anything
     const newSpeed = minRoadSpeed - (level * roadSpeedStep)
@@ -31,10 +31,10 @@ const setRoadSpeed = (level) => {
 
 const showMenu = () => {
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
-    textService.setText(0, 0, energyService.capacityLeft())
-    textService.setTime(0)
+    textService.clearAll()
     setRoadSpeed(0)
     moveRoad(true)
+    uiService.initAvoidCollect()
     // log(`remove the next line in production`)
     // startPlaying() // TODO: remove this in production
 }
@@ -49,6 +49,9 @@ const exitCallback = ({eggs, time, energyUsed, winner, pauseBeforeInteractionRes
 }
 
 const startPlaying = () => {
+    textService.setText(0, 0, energyService.capacityLeft())
+    textService.setTime(0)
+    setTimeout(uiService.initTopRowIcons, 1)
     game.play()
     setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
 }

@@ -100,6 +100,16 @@ export const PATCHES = {
  * OTHER ICONS THAT ARE NEITHER EGGS NOR MASKS NOR PLAYER
  */
 
+export const OUT_OF_THE_SCREEN = {
+    STAT_ICON: {
+        X: 400,
+        Y: 800,
+        SCALE_X: 10,
+        SCALE_Y: 10,
+        MATERIAL: MATERIALS.STOPWATCH
+    }
+}
+
 export const STOPWATCH = {
     STAT_ICON: {
         X: -160,
@@ -193,4 +203,27 @@ export const INTERACTION_RESULTS = {
     PERFECT: 'PERFECT!!!',
     GAME_OVER: 'GAME OVER.',
     WIN: 'WINNER!'
+}
+
+export const AVOID_COLLECT_POSITION = {
+    AVOID: {
+        START: {
+            X: -28,
+            Y: 0
+        },
+        STEP: {
+            X: 40,
+            Y: 0
+        }
+    },
+    COLLECT: {
+        START: {
+            X: -9,
+            Y: -30
+        },
+        STEP: {
+            X: 40,
+            Y: 0
+        }
+    }
 }

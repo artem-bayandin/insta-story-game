@@ -46,6 +46,10 @@ export const EGG_VIRUS_RED = (weight = 0) => { // KILLER
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.VIRUS_RED_LEFT
+        },
+        AC_ICON: {
+            SCALE_X: 300,
+            SCALE_Y: 300,
         }
     }
 }
@@ -66,6 +70,10 @@ export const EGG_VIRUS_BLUE = (weight = 0) => { // KILLER
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.VIRUS_BLUE_LEFT
+        },
+        AC_ICON: {
+            SCALE_X: 300,
+            SCALE_Y: 300,
         }
     }
 }
@@ -86,6 +94,10 @@ export const EGG_MASK_GREEN = (weight = 0) => { // HEALER
             SCALE_X: 437,
             SCALE_Y: 316,
             MATERIAL: MATERIALS.MASK_GREEN
+        },
+        AC_ICON: {
+            SCALE_X: 400,
+            SCALE_Y: 300,
         }
     }
 }
@@ -120,6 +132,10 @@ export const EGG_POTATO = (weight = 0) => { // HEALER
             SCALE_X: 350,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.POTATO_LEFT
+        },
+        AC_ICON: {
+            SCALE_X: 262,
+            SCALE_Y: 300,
         }
     }
 }
@@ -140,6 +156,10 @@ export const EGG_DOLLAR = (weight = 0) => { // KILLER
             SCALE_X: 275,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.DOLLAR
+        },
+        AC_ICON: {
+            SCALE_X: 206,
+            SCALE_Y: 300,
         }
     }
 }
@@ -160,6 +180,10 @@ export const EGG_FIRE = (weight = 0) => { // KILLER
             SCALE_X: 300,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.FIRE
+        },
+        AC_ICON: {
+            SCALE_X: 225,
+            SCALE_Y: 300,
         }
     }
 }
@@ -180,6 +204,10 @@ export const EGG_PAPER = (weight = 0) => { // HEALER
             SCALE_X: 350,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.PAPER_LEFT
+        },
+        AC_ICON: {
+            SCALE_X: 262,
+            SCALE_Y: 300,
         }
     }
 }

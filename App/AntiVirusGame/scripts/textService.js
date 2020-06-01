@@ -71,11 +71,19 @@ const setInteractionResult = (text, duration = 0) => {
     }
 }
 
+const clearAll = () => {
+    txtLevel.clearText()
+    txtEggs.clearText()
+    txtLives.clearText()
+    txtTimer.clearText()
+}
+
 const textService = {
     init,
     setText,
     setTime,
-    setInteractionResult
+    setInteractionResult,
+    clearAll
 }
 
 export default textService
