@@ -39,9 +39,14 @@ const showMenu = () => {
     // startPlaying() // TODO: remove this in production
 }
 
-const exitCallback = ({eggs, time, energyUsed, winner, pauseBeforeInteractionResult = 500}) => {
+const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
     setTimeout(() => {
         const winnerResult = winner ? INTERACTION_RESULTS.WIN : INTERACTION_RESULTS.GAME_OVER
+        setBooleanToPatch(PATCHES.INPUTS.GAME_OVER, true)
+        eggService.hideAll()
+        uiService.moveToStats()
+        textService.setText(level, eggs, energyUsed)
+        textService.moveToStats()
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
     moveRoad(false)
@@ -94,7 +99,7 @@ const gameOptions = {
     },
     energyOptions: {
         // initial number of lives
-        initial: 7,
+        initial: 3,
         // if X items are dropped - add 1 live
         increaseWhenDropped: 10
     },

@@ -162,7 +162,13 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         gameOver = true
         textService.setTime(timeCounter + timeIntervalDuration)
         clearTimerInterval()
-        exitCallback({eggs: droppedCounter, time: new Date().getTime() - timestamp, winner: false, energyUsed: energyService.energyUsed()}) // , pauseBeforeInteractionResult: maxInteractionPause})
+        exitCallback({
+            eggs: droppedCounter, 
+            time: new Date().getTime() - timestamp, 
+            winner: false, 
+            energyUsed: energyService.energyUsed(),
+            level
+        }) // , pauseBeforeInteractionResult: maxInteractionPause})
     }
 
     const setTimerInterval = () => {

@@ -1,4 +1,4 @@
-import { createTextScore, createTextTimer, createBase } from './inheritance'
+import { createTextScore, createTextTimer, createBase, createWithMove } from './inheritance'
 import { log } from './utils'
 
 /*
@@ -6,9 +6,10 @@ import { log } from './utils'
  */
 
 export const TxtScore = (id, obj) => {
-const object = {
+    const object = {
         ...createBase(id, obj),
         ...createTextScore(obj),
+        ...createWithMove(obj)
     }
     object.clearText()
     return object

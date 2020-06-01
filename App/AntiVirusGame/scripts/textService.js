@@ -1,15 +1,15 @@
-import { findMe, log, setTimeout } from './utils'
+import { findMe, log, setTimeout, setupUiElement } from './utils'
 import { TxtScore, TxtTimer } from './text'
-import { OBJECT_ID } from './commonConstants'
+import { OBJECT_ID, INTERACTION_POSITION, FINAL_STATS_POSITION } from './commonConstants'
 
 /*
  *  TEXT SERVICE 
  */
 
+let txtTimer = null
 let txtLevel = null
 let txtEggs = null
 let txtLives = null
-let txtTimer = null
 let txtInteraction = null
 
 const init = () => {
@@ -45,6 +45,7 @@ const init = () => {
         const id = OBJECT_ID.TXT.INTERACTION
         findMe(id).then(item => {
             txtInteraction = new TxtScore(id, item)
+            txtInteraction.moveTo(INTERACTION_POSITION.INITIAL.X, INTERACTION_POSITION.INITIAL.Y, INTERACTION_POSITION.SPEED)
             res(txtInteraction)
         })
     })
@@ -72,10 +73,18 @@ const setInteractionResult = (text, duration = 0) => {
 }
 
 const clearAll = () => {
+    txtTimer.clearText()
     txtLevel.clearText()
     txtEggs.clearText()
     txtLives.clearText()
-    txtTimer.clearText()
+}
+
+const moveToStats = () => {
+    txtInteraction.moveTo(INTERACTION_POSITION.FINAL.X, INTERACTION_POSITION.FINAL.Y, INTERACTION_POSITION.SPEED)
+    setupUiElement(txtTimer.getObj(), FINAL_STATS_POSITION.TIMER.TEXT)
+    setupUiElement(txtLevel.getObj(), FINAL_STATS_POSITION.LEVEL.TEXT)
+    setupUiElement(txtEggs.getObj(), FINAL_STATS_POSITION.EGGS.TEXT)
+    setupUiElement(txtLives.getObj(), FINAL_STATS_POSITION.LIVES.TEXT)
 }
 
 const textService = {
@@ -83,7 +92,8 @@ const textService = {
     setText,
     setTime,
     setInteractionResult,
-    clearAll
+    clearAll,
+    moveToStats
 }
 
 export default textService

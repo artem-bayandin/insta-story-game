@@ -81,9 +81,17 @@ const tick = (gameSpeed, eggCallback) => {
     }
 }
 
+const hideAll = () => {
+    egg1.hide()
+    egg2.hide()
+    egg3.hide()
+    egg4.hide()
+}
+
 const eggService = {
     init,
-    tick
+    tick,
+    hideAll
 } 
 
 export default eggService

@@ -76,7 +76,8 @@ export const PATCHES = {
             MOVE: 'moveTheRoad',
             DURATION: 'roadDuration'
         },
-        GAME_STARTED: 'gameStarted'
+        GAME_STARTED: 'gameStarted',
+        GAME_OVER: 'gameOver'
     },
     OUTPUTS: {
         MOVE_PLAYER: {
@@ -224,6 +225,66 @@ export const AVOID_COLLECT_POSITION = {
         STEP: {
             X: 40,
             Y: 0
+        }
+    }
+}
+
+export const INTERACTION_POSITION = {
+    INITIAL: {
+        X: 0,
+        Y: 228
+    },
+    FINAL: {
+        X: 0,
+        Y: 200
+    },
+    SPEED: 5
+}
+
+const finalStatsTextX = 25
+const finalStatsIconX = -finalStatsTextX
+const finalStatsTopY = 145
+const finslStatsStepY = 50
+
+export const FINAL_STATS_POSITION = {
+    TIMER: {
+        ICON: {
+            X: finalStatsIconX,
+            Y: finalStatsTopY
+        },
+        TEXT: {
+            X: finalStatsTextX,
+            Y: finalStatsTopY
+        }
+    },
+    LEVEL: {
+        ICON: {
+            X: finalStatsIconX,
+            Y: finalStatsTopY - finslStatsStepY
+        },
+        TEXT: {
+            X: finalStatsTextX,
+            Y: finalStatsTopY - finslStatsStepY
+        }
+    },
+    EGGS: {
+        ICON: {
+            X: finalStatsIconX,
+            Y: finalStatsTopY - finslStatsStepY * 2
+        },
+        TEXT: {
+            X: finalStatsTextX,
+            Y: finalStatsTopY - finslStatsStepY * 2
+        }
+    },
+    LIVES: {
+        ICON: {
+            X: finalStatsIconX,
+            Y: finalStatsTopY - finslStatsStepY * 3
+        },
+        TEXT: {
+            X: finalStatsTextX,
+            Y: finalStatsTopY - finslStatsStepY * 3
         }
     }
 }

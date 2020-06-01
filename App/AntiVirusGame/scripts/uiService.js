@@ -1,5 +1,5 @@
 import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
-import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION } from './commonConstants'
+import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION } from './commonConstants'
 import materialService from './materialService'
 
 const setupElement = (id, config) => {
@@ -34,7 +34,7 @@ const init = ({UI, screenOptions, eggOptions}) => {
 }
 
 const initTopRowIcons = () => {
-        const { eggCounterIconConfig, liveCounterIconConfig, levelCounterIconConfig, stopwatchCounterIconConfig } = options
+    const { eggCounterIconConfig, liveCounterIconConfig, levelCounterIconConfig, stopwatchCounterIconConfig } = options
     setupElement(OBJECT_ID.ICONS.STOPWATCH, stopwatchCounterIconConfig)
     setupElement(OBJECT_ID.ICONS.LEVEL, levelCounterIconConfig)
     setupElement(OBJECT_ID.ICONS.EGG, eggCounterIconConfig)
@@ -86,11 +86,19 @@ const subscribeToPlayerMovements = ({moveLeft = null, moveRight = null, moveTop 
     if (moveBottom && typeof(moveBottom) === 'function') subscribeToPatchPulse(PATCHES.OUTPUTS.MOVE_PLAYER.BOTTOM, moveBottom)
 }
 
+const moveToStats = () => {
+    setupElement(OBJECT_ID.ICONS.STOPWATCH, FINAL_STATS_POSITION.TIMER.ICON)
+    setupElement(OBJECT_ID.ICONS.LEVEL, FINAL_STATS_POSITION.LEVEL.ICON)
+    setupElement(OBJECT_ID.ICONS.EGG, FINAL_STATS_POSITION.EGGS.ICON)
+    setupElement(OBJECT_ID.ICONS.LIVES, FINAL_STATS_POSITION.LIVES.ICON)
+}
+
 const uiService = {
     init,
     subscribeToPlayerMovements,
     initTopRowIcons,
-    initAvoidCollect
+    initAvoidCollect,
+    moveToStats
 }
 
 export default uiService
