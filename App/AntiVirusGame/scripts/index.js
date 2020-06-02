@@ -14,9 +14,9 @@ import { PLAYER_TRACTOR } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
 import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstants'
 
-import { faceOptions, tractorOptions, mustacheOptions, bumagaOptions } from './playerSettings'
+import { faceOptions, tractorOptions, mustacheOptions, bumagaOptions, rickOptions, mortyOptions } from './playerSettings'
 
-const currentPlayerOptions = tractorOptions
+const currentPlayerOptions = rickOptions
 
 const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
 

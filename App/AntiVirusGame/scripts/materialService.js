@@ -33,6 +33,15 @@ const init = () => {
     var promise18 = initMaterial(MATERIALS.FIRE)
     var promise19 = initMaterial(MATERIALS.PAPER_LEFT)
     var promise20 = initMaterial(MATERIALS.PAPER_RIGHT)
+    // rick and morty
+    var promise21 = initMaterial(MATERIALS.RICK)
+    var promise22 = initMaterial(MATERIALS.MORTY)
+    var promise23 = initMaterial(MATERIALS.SUN_LEFT)
+    var promise24 = initMaterial(MATERIALS.SUN_RIGHT)
+    var promise25 = initMaterial(MATERIALS.CUCU_LEFT)
+    var promise26 = initMaterial(MATERIALS.CUCU_RIGHT)
+    var promise27 = initMaterial(MATERIALS.PINK_LEFT)
+    var promise28 = initMaterial(MATERIALS.PINK_RIGHT)
 
     return Promise.all([
         promise1
@@ -55,6 +64,14 @@ const init = () => {
         , promise18
         , promise19
         , promise20
+        , promise21
+        , promise22
+        , promise23
+        , promise24
+        , promise25
+        , promise26
+        , promise27
+        , promise28
     ])
 }
 

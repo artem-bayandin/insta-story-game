@@ -61,7 +61,15 @@ export const MATERIALS = {
     DOLLAR: 'dollar',
     FIRE: 'fire',
     PAPER_LEFT: 'paper-left',
-    PAPER_RIGHT: 'paper-right'
+    PAPER_RIGHT: 'paper-right',
+    RICK: 'rick',
+    MORTY: 'morty',
+    SUN_LEFT: 'sun-left',
+    SUN_RIGHT: 'sun-right',
+    CUCU_LEFT: 'cucu-left',
+    CUCU_RIGHT: 'cucu-right',
+    PINK_LEFT: 'pink-left',
+    PINK_RIGHT: 'pink-right'
 }
 
 export const PATCHES = {

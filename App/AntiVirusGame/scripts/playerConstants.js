@@ -24,7 +24,7 @@ export const PLAYER_POSITION_DEFAULTS = {
     TRANSITION_SPEED
 }
 
-const POSITION_DETECTOR = {
+export const POSITION_DETECTOR = {
     LEFT:   -30,
     RIGHT:  30,
     TOP:    100,
