@@ -1,4 +1,4 @@
-import { SIDE, MATERIALS, LINES_Y_DIFFERENCE } from "./commonConstants"
+import { SIDE, MATERIALS, LINES_Y_DIFFERENCE } from './commonConstants'
 
 /*
  *  EGG CONSTANTS
@@ -41,8 +41,6 @@ export const EGG_VIRUS_RED = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.VIRUS_RED_RIGHT
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.VIRUS_RED_LEFT
@@ -65,8 +63,6 @@ export const EGG_VIRUS_BLUE = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.VIRUS_BLUE_RIGHT
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.VIRUS_BLUE_LEFT
@@ -89,8 +85,6 @@ export const EGG_MASK_GREEN = (weight = 0) => { // HEALER
             RIGHT: MATERIALS.MASK_GREEN
         },
         STAT_ICON: {
-            X: 128,
-            Y: 282,
             SCALE_X: 437,
             SCALE_Y: 316,
             MATERIAL: MATERIALS.MASK_GREEN
@@ -127,8 +121,6 @@ export const EGG_POTATO = (weight = 0) => { // HEALER
             RIGHT: MATERIALS.POTATO_RIGHT
         },
         STAT_ICON: {
-            X: 128,
-            Y: 282,
             SCALE_X: 350,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.POTATO_LEFT
@@ -151,8 +143,6 @@ export const EGG_DOLLAR = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.DOLLAR
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 275,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.DOLLAR
@@ -175,8 +165,6 @@ export const EGG_FIRE = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.FIRE
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 300,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.FIRE
@@ -199,8 +187,6 @@ export const EGG_PAPER = (weight = 0) => { // HEALER
             RIGHT: MATERIALS.PAPER_RIGHT
         },
         STAT_ICON: {
-            X: 128,
-            Y: 282,
             SCALE_X: 350,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.PAPER_LEFT

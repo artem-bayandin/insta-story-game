@@ -1,5 +1,5 @@
 import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
-import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION } from './commonConstants'
+import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION, TOPROW_EGG_COORDINATES, TOPROW_LIFE_COORDINATES, TOPROW_ICON_COORDINATES } from './commonConstants'
 import materialService from './materialService'
 
 const setupElement = (id, config) => {
@@ -35,10 +35,10 @@ const init = ({UI, screenOptions, eggOptions}) => {
 
 const initTopRowIcons = () => {
     const { eggCounterIconConfig, liveCounterIconConfig, levelCounterIconConfig, stopwatchCounterIconConfig } = options
-    setupElement(OBJECT_ID.ICONS.STOPWATCH, stopwatchCounterIconConfig)
-    setupElement(OBJECT_ID.ICONS.LEVEL, levelCounterIconConfig)
-    setupElement(OBJECT_ID.ICONS.EGG, eggCounterIconConfig)
-    setupElement(OBJECT_ID.ICONS.LIVES, liveCounterIconConfig)
+    setupElement(OBJECT_ID.ICONS.STOPWATCH, {...stopwatchCounterIconConfig, ...TOPROW_ICON_COORDINATES.STOPWATCH})
+    setupElement(OBJECT_ID.ICONS.LEVEL, {...levelCounterIconConfig, ...TOPROW_ICON_COORDINATES.LEVEL})
+    setupElement(OBJECT_ID.ICONS.EGG, {...eggCounterIconConfig, ...TOPROW_ICON_COORDINATES.EGG})
+    setupElement(OBJECT_ID.ICONS.LIVES, {...liveCounterIconConfig, ...TOPROW_ICON_COORDINATES.LIVES})
 }
 
 const initAvoidCollect = () => {

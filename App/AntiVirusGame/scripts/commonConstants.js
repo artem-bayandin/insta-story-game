@@ -1,3 +1,5 @@
+import { log } from "./utils"
+
 export const SIDE = {
     LEFT: 'LEFT',
     RIGHT: 'RIGHT',
@@ -119,10 +121,27 @@ export const OUT_OF_THE_SCREEN = {
     }
 }
 
+export const TOPROW_ICON_COORDINATES = {
+    STOPWATCH: {
+        X: -160,
+        Y: 283
+    },
+    LEVEL: {
+        X: -35,
+        Y: 281
+    },
+    EGG: {
+        X: 45,
+        Y: 282
+    },
+    LIVES: {
+        X: 128,
+        Y: 282
+    }
+}
+
 export const STOPWATCH = {
     STAT_ICON: {
-        X: -160,
-        Y: 283,
         SCALE_X: 315,
         SCALE_Y: 350,
         MATERIAL: MATERIALS.STOPWATCH
@@ -131,8 +150,6 @@ export const STOPWATCH = {
 
 export const LEVEL = {
     STAT_ICON: {
-        X: -35,
-        Y: 281,
         SCALE_X: 400,
         SCALE_Y: 400,
         MATERIAL: MATERIALS.LEVEL

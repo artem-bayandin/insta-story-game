@@ -1,5 +1,6 @@
 import { OBJECT_ID, MATERIALS } from './commonConstants'
 import { POSITION_DETECTOR } from './playerConstants'
+import { log } from './utils'
 
 /* 
  * PLAYERS
@@ -38,8 +39,6 @@ export const EGG_RICK = (weight = 0) => { // HEALER
             RIGHT: MATERIALS.RICK
         },
         STAT_ICON: {
-            X: 128,
-            Y: 282,
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.RICK
@@ -62,8 +61,6 @@ export const EGG_MORTY = (weight = 0) => { // HEALER
             RIGHT: MATERIALS.MORTY
         },
         STAT_ICON: {
-            X: 128,
-            Y: 282,
             SCALE_X: 350,
             SCALE_Y: 350,
             MATERIAL: MATERIALS.MORTY
@@ -86,8 +83,6 @@ export const EGG_SUN = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.SUN_RIGHT
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.SUN_LEFT
@@ -110,8 +105,6 @@ export const EGG_CUCU = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.CUCU_RIGHT
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.CUCU_LEFT
@@ -134,8 +127,6 @@ export const EGG_PINK = (weight = 0) => { // KILLER
             RIGHT: MATERIALS.PINK_RIGHT
         },
         STAT_ICON: {
-            X: 45,
-            Y: 282,
             SCALE_X: 400,
             SCALE_Y: 400,
             MATERIAL: MATERIALS.PINK_LEFT
