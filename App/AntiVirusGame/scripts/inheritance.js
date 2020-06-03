@@ -1,4 +1,4 @@
-import { linearSamplerFromTo, animateScale, animateMove, timeDriver, MOVE_TYPES, randomInt, setTimeout, log } from './utils'
+import { linearSamplerFromTo, animateScale, animateMove, timeDriver, MOVE_TYPES, log } from './utils'
 
 /*
  *  GENERAL CREATORS

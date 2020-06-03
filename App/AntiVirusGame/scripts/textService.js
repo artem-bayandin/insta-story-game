@@ -39,11 +39,12 @@ const setTime = (ms) => {
 
 const setInteractionResult = (text, duration = 0) => {
     txtInteraction.setText(text)
-    if (+duration > 0) {
-        setTimeout(() => {
-            txtInteraction.clearText()
-        }, duration)
-    }
+    // todo: what if avoid this somehow? switch to sending a signal to UI to start showing animation
+    // if (+duration > 0) {
+    //     setTimeout(() => {
+    //         txtInteraction.clearText()
+    //     }, duration)
+    // }
 }
 
 const clearAll = () => {
