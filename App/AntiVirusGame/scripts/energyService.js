@@ -11,6 +11,7 @@ let capacityAdded = 0
 const init = ({ energyOptions }) => {
     initialEnergy = energyOptions.initial
     capacity = initialEnergy
+    log(`[energyService] initialized`)
 }
 
 const addEnergy = (amount) => {

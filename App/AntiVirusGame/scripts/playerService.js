@@ -1,8 +1,9 @@
-import { log, findMe, animateMove, timeDriver, MOVE_TYPES, subscribeToPatchPulse } from './utils'
+import { log, findMe, animateMove, timeDriver, MOVE_TYPES } from './utils'
 import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
-import materialService from './materialService'
 import { SIDE } from './commonConstants'
+
+import materialService from './materialService'
 import uiService from './uiService'
 
 const timeDriverMove = () => timeDriver(PLAYER_POSITION_DEFAULTS.TRANSITION_SPEED)
@@ -45,7 +46,7 @@ const init = ({screenOptions, gameMode}) => {
             })
     })
 
-    return Promise.all([promise1])
+    return Promise.all([promise1]).then(() => log(`[playerService] initialized`))
 }
 
 // return -1 if on the left, 1 if on the right, 0 if undefined state

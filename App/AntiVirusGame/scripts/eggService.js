@@ -43,11 +43,11 @@ const init = ({ eggOptions, gameMode }) => {
         , promise3
         , promise4
     ]).then(() => {
-        egg1.hide({})
+        egg1.hide()
         egg2.hide()
         egg3.hide()
         egg4.hide()
-    })
+    }).then(() => log(`[eggService] initialized`))
 }
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped

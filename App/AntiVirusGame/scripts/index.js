@@ -35,8 +35,8 @@ const showMenu = () => {
     setRoadSpeed(0)
     moveRoad(true)
     uiService.initAvoidCollect()
-    // log(`remove the next line in production`)
-    // startPlaying() // TODO: remove this in production
+    log(`remove the next line in production`)
+    startPlaying() // TODO: remove this in production
 }
 
 const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
@@ -173,18 +173,18 @@ const servicesOptions = {
 
 Promise.all([
     materialService.init(),
-    deviceService.init()
+    deviceService.init(),
+    energyService.init(servicesOptions),
+    eggService.init(servicesOptions),
+    textService.init(),
 ]).then(() => {
     // Xiaomi: 1080 : 2260 : 2.75
     log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)
     return Promise.all([
-        energyService.init(servicesOptions),
-        eggService.init(servicesOptions),
-        playerService.init(servicesOptions),
-        textService.init(),
-        gamepadService.init(servicesOptions),
+        // gamepadService.init(servicesOptions),
         uiService.init(servicesOptions),
     ])
 })
-.then(showMenu)
+.then(() => Promise.all([playerService.init(servicesOptions)]))
+.then(() => showMenu())
 .catch(err => log(`ERROR: ${err}`))

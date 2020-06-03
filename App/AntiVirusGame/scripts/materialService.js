@@ -72,7 +72,7 @@ const init = () => {
         , promise26
         , promise27
         , promise28
-    ])
+    ]).then(() => log(`[materialService] initialized`))
 }
 
 const get = (name) => materials[name]

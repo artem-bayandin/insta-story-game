@@ -1,6 +1,7 @@
 import { log, findMe, registerTap } from './utils'
-import playerService from './playerService'
 import { OBJECT_ID } from './commonConstants'
+
+import playerService from './playerService'
 
 let btnLeftTop = null
 let btnRightTop = null
@@ -20,7 +21,7 @@ const init = ({gamepadServiceOptions}) => {
     const { togglePlay } = gamepadServiceOptions
 
     const promiseWithNoAction = new Promise((res, rej) => res("GamePad is currently removed from UI, but the logic left in code. Be careful when switching this logic on."))
-    return promiseWithNoAction
+    return promiseWithNoAction.then(() => log(`[gamepadService] initialized`))
 
     // var promise1 = new Promise((res, rej) => initButton(OBJECT_ID.GAMEPAD.LEFT_TOP).then(obj => res(btnLeftTop = obj)))
     // var promise2 = new Promise((res, rej) => initButton(OBJECT_ID.GAMEPAD.RIGHT_TOP).then(obj => res(btnRightTop = obj)))

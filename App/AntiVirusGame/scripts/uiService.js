@@ -4,7 +4,7 @@ import materialService from './materialService'
 
 const setupElement = (id, config) => {
     const material = materialService.get(config.MATERIAL)
-    findMe(id).then(item => setupUiElement(item, config, material))
+    return findMe(id).then(item => setupUiElement(item, config, material))
 }
 
 let options = null
@@ -20,17 +20,19 @@ const init = ({UI, screenOptions, eggOptions}) => {
     if (playerCoordMaxTop !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_TOP, playerCoordMaxTop)
     if (playerCoordMaxBottom !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_BOTTOM, playerCoordMaxBottom)
 
+    return Promise.all([
     setupElement(OBJECT_ID.ICONS.STATS_LINE_BG, STATS_LINE_BG)
 
-    setupElement(OBJECT_ID.LINES.LEFT_TOP, LINES.LEFT_TOP)
-    setupElement(OBJECT_ID.LINES.RIGHT_TOP, LINES.RIGHT_TOP)
-    setupElement(OBJECT_ID.LINES.LEFT_BOTTOM, LINES.LEFT_BOTTOM)
-    setupElement(OBJECT_ID.LINES.RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
+    , setupElement(OBJECT_ID.LINES.LEFT_TOP, LINES.LEFT_TOP)
+    , setupElement(OBJECT_ID.LINES.RIGHT_TOP, LINES.RIGHT_TOP)
+    , setupElement(OBJECT_ID.LINES.LEFT_BOTTOM, LINES.LEFT_BOTTOM)
+    , setupElement(OBJECT_ID.LINES.RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
     
-    setupElement(OBJECT_ID.TXT.TIMER, STAT_TXT.TIMER)
-    setupElement(OBJECT_ID.TXT.LEVEL, STAT_TXT.LEVEL)
-    setupElement(OBJECT_ID.TXT.EGGS, STAT_TXT.EGGS)
-    setupElement(OBJECT_ID.TXT.LIVES, STAT_TXT.LIVES)
+    , setupElement(OBJECT_ID.TXT.TIMER, STAT_TXT.TIMER)
+    , setupElement(OBJECT_ID.TXT.LEVEL, STAT_TXT.LEVEL)
+    , setupElement(OBJECT_ID.TXT.EGGS, STAT_TXT.EGGS)
+    , setupElement(OBJECT_ID.TXT.LIVES, STAT_TXT.LIVES)
+    ]).then(() => log(`[uiService] initialized`))
 }
 
 const initTopRowIcons = () => {

@@ -12,7 +12,7 @@ const init = () => {
         getScalar(PATCHES.OUTPUTS.DEVICE.SCREEN_SIZE.X).then(scalar => settings.x = scalar.pinLastValue()),
         getScalar(PATCHES.OUTPUTS.DEVICE.SCREEN_SIZE.Y).then(scalar => settings.y = scalar.pinLastValue()),
         getScalar(PATCHES.OUTPUTS.DEVICE.SCREEN_SCALE).then(scalar => settings.scale = scalar.pinLastValue())
-    ])
+    ]).then(() => log(`[deviceService] initialized`))
 }
 
 const deviceService = {

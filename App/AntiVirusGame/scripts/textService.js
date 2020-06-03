@@ -50,7 +50,9 @@ const init = () => {
         })
     })
 
-    return Promise.all([txtLevelPromise, txtEggsPromise, txtLivesPromise, txtTimerPromise, txtInteractionPromise])
+    return Promise
+        .all([txtLevelPromise, txtEggsPromise, txtLivesPromise, txtTimerPromise, txtInteractionPromise])
+        .then(() => log(`[textService] initialized`))
 }
 
 const setText = (level, eggsDropped, livesLeft) => {
