@@ -67,37 +67,27 @@ export const unregisterTap = (tapSubscription) => tapSubscription.unsubscribe()
  * WRAPPERS
  */
 
-export const findMe = (identifier) => {
-    return new Promise((res, rej) => Scene.root.findFirst(identifier).then(item => { res(item) }))
-}
+export const findMe = (identifier) => Scene.root.findFirst(identifier)
 
-export const findMaterial = (identifier) => {
-    return new Promise((res, rej) => Materials.findFirst(identifier).then(mat => { res(mat) }))
-}
+export const findMaterial = (identifier) => Materials.findFirst(identifier)
 
 export const setMaterial = (element, material) => {
-    // log('try to setMaterial')
     if (material) {
         element.material = material
-        // log('setMaterial was successfuly set up!')
     }
 }
 
 export const setPosition = (element, x, y) => {
-    // log('try to setPosition')
     if (x !== undefined && y !== undefined && x !== null && y !== null) {
         element.transform.x = x
         element.transform.y = y
-        // log('setPosition was successfuly set up!')
     }
 }
 
 export const setScale = (element, scaleX, scaleY) => {
-    // log('try to setScale')
     if (scaleX !== undefined && scaleY !== undefined && scaleX !== null && scaleY !== null) {
         element.transform.scaleX = scaleX
         element.transform.scaleY = scaleY
-        // log('setScale was successfuly set up!')
     }
 }
 

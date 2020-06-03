@@ -35,8 +35,10 @@ const showMenu = () => {
     setRoadSpeed(0)
     moveRoad(true)
     uiService.initAvoidCollect()
-    log(`remove the next line in production`)
-    startPlaying() // TODO: remove this in production
+    // setTimeout(() => {
+    //     log(`remove the next line in production`)
+    //     startPlaying() // TODO: remove this in production
+    // }, 1000)
 }
 
 const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
@@ -56,9 +58,10 @@ const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInterac
 const startPlaying = () => {
     textService.setText(0, 0, energyService.capacityLeft())
     textService.setTime(0)
-    setTimeout(uiService.initTopRowIcons, 1)
-    game.play()
-    setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
+    uiService.initTopRowIcons().then(() => {
+        game.play()
+        setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
+    })
 }
 
 const stopPlaying = () => {

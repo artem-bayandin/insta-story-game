@@ -32,8 +32,10 @@ export const Egg = (id, obj) => {
     }
 
     const step = (speed) => {
-        const innerSpeed = speed / 2
-        const dropSpeed = innerSpeed - 100
+        const halfSpeed = speed / 2
+        const quaterSpeed = speed / 4                               // max gameSpeed = 333
+        const innerSpeed = halfSpeed < 200 ? 200 : halfSpeed        // speed = gameSpeed, so max innerSpeed = 200
+        const dropSpeed = quaterSpeed < 100 ? 100 : quaterSpeed     // max dropSpeed = 100
 
         if (!base.isVisible()) return
 

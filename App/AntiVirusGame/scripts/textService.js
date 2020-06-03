@@ -13,41 +13,13 @@ let txtLives = null
 let txtInteraction = null
 
 const init = () => {
-    const txtLevelPromise = new Promise((res, rej) => {
-        const id = OBJECT_ID.TXT.LEVEL
-        findMe(id).then(item => {
-            txtLevel = new TxtScore(id, item)
-            res(txtLevel)
-        })
-    })
-    const txtEggsPromise = new Promise((res, rej) => {
-        const id = OBJECT_ID.TXT.EGGS
-        findMe(id).then(item => {
-            txtEggs = new TxtScore(id, item)
-            res(txtEggs)
-        })
-    })
-    const txtLivesPromise = new Promise((res, rej) => {
-        const id = OBJECT_ID.TXT.LIVES
-        findMe(id).then(item => {
-            txtLives = new TxtScore(id, item)
-            res(txtLives)
-        })
-    })
-    const txtTimerPromise = new Promise((res, rej) => {
-        const id = OBJECT_ID.TXT.TIMER
-        findMe(id).then(item => {
-            txtTimer = new TxtTimer(id, item)
-            res(txtTimer)
-        })
-    })
-    const txtInteractionPromise = new Promise((res, rej) => {
-        const id = OBJECT_ID.TXT.INTERACTION
-        findMe(id).then(item => {
-            txtInteraction = new TxtScore(id, item)
-            txtInteraction.moveTo(INTERACTION_POSITION.INITIAL.X, INTERACTION_POSITION.INITIAL.Y, INTERACTION_POSITION.SPEED)
-            res(txtInteraction)
-        })
+    const txtLevelPromise = findMe(OBJECT_ID.TXT.LEVEL).then(item => txtLevel = new TxtScore(OBJECT_ID.TXT.LEVEL, item))
+    const txtEggsPromise = findMe(OBJECT_ID.TXT.EGGS).then(item => txtEggs = new TxtScore(OBJECT_ID.TXT.EGGS, item))
+    const txtLivesPromise = findMe(OBJECT_ID.TXT.LIVES).then(item => txtLives = new TxtScore(OBJECT_ID.TXT.LIVES, item))
+    const txtTimerPromise = findMe(OBJECT_ID.TXT.TIMER).then(item => txtTimer = new TxtTimer(OBJECT_ID.TXT.TIMER, item))
+    const txtInteractionPromise = findMe(OBJECT_ID.TXT.INTERACTION).then(item => {
+        txtInteraction = new TxtScore(OBJECT_ID.TXT.INTERACTION, item)
+        txtInteraction.moveTo(INTERACTION_POSITION.INITIAL.X, INTERACTION_POSITION.INITIAL.Y, INTERACTION_POSITION.SPEED)
     })
 
     return Promise
@@ -67,7 +39,7 @@ const setTime = (ms) => {
 
 const setInteractionResult = (text, duration = 0) => {
     txtInteraction.setText(text)
-    if (duration && +duration > 0) {
+    if (+duration > 0) {
         setTimeout(() => {
             txtInteraction.clearText()
         }, duration)

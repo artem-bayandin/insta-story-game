@@ -52,12 +52,10 @@ const init = ({ eggOptions, gameMode }) => {
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
 const tick = (gameSpeed, eggCallback) => {
-    const speed = Math.max(gameSpeed / 2, 350)
-
-    egg1.step(speed)
-    egg2.step(speed)
-    egg3.step(speed)
-    egg4.step(speed)
+    egg1.step(gameSpeed)
+    egg2.step(gameSpeed)
+    egg3.step(gameSpeed)
+    egg4.step(gameSpeed)
 
     const { linePoints, side } = randomItem(EGG_COORDINATES.GLOBAL_ROUTES)
     const config = randomItem(eggs)

@@ -22,31 +22,28 @@ const init = ({screenOptions, gameMode}) => {
     const identifier = playerConfig.PLAYER_OBJECT_ID
     gMode = gameMode
 
-    var promise1 = new Promise((res, rej) => {
-        findMe(identifier)
-            .then(item => {
-                // TODO: refactor this call of material service or prove that player material will always exist here
-                item.material = materialService.get(playerConfig.MATERIAL)
+    var promise1 = findMe(identifier)
+        .then(item => {
+            // TODO: refactor this call of material service or prove that player material will always exist here
+            item.material = materialService.get(playerConfig.MATERIAL)
 
-                // setup player scale and positioning
-                item.transform.scaleX = playerConfig.SCALE_X
-                item.transform.scaleY = playerConfig.SCALE_Y
+            // setup player scale and positioning
+            item.transform.scaleX = playerConfig.SCALE_X
+            item.transform.scaleY = playerConfig.SCALE_Y
 
-                item.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
-                item.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
+            item.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
+            item.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
 
-                player = new Player(identifier, item)
+            player = new Player(identifier, item)
 
-                // subscribe to move
-                uiService.subscribeToPlayerMovements({moveLeft, moveRight})
-                if (!gMode.allowDrop) {
-                    uiService.subscribeToPlayerMovements({moveTop, moveBottom})
-                }
-                res(player)
-            })
-    })
+            // subscribe to move
+            uiService.subscribeToPlayerMovements({moveLeft, moveRight})
+            if (!gMode.allowDrop) {
+                uiService.subscribeToPlayerMovements({moveTop, moveBottom})
+            }
+        })
 
-    return Promise.all([promise1]).then(() => log(`[playerService] initialized`))
+    return promise1.then(() => log(`[playerService] initialized`))
 }
 
 // return -1 if on the left, 1 if on the right, 0 if undefined state
