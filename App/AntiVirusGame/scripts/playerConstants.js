@@ -25,8 +25,8 @@ export const PLAYER_POSITION_DEFAULTS = {
 }
 
 export const POSITION_DETECTOR = {
-    LEFT:   -30,
-    RIGHT:  30,
+    LEFT:   -15,
+    RIGHT:  15,
     TOP:    100,
     BOTTOM: 60
 }

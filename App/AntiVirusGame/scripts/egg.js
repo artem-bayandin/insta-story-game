@@ -53,6 +53,9 @@ export const Egg = (id, obj) => {
             currentPosition++
 
             let hideAndResetPosition = () => {
+                // moved here to avoid setTimeout when dropping the egg
+                callback({sides: [ currentSides.x, SIDE.NEUTRAL ], weight: config.WEIGHT})
+
                 base.hide()
                 currentPosition = -1
             }
@@ -63,9 +66,9 @@ export const Egg = (id, obj) => {
                 if (gMode.allowDrop) {
                     dropEgg()
                     
-                    setTimeout(() => {
-                        callback({sides: [ currentSides.x, SIDE.NEUTRAL ], weight: config.WEIGHT})
-                    }, dropSpeed - 100)
+                    // setTimeout(() => {
+                    //     callback({sides: [ currentSides.x, SIDE.NEUTRAL ], weight: config.WEIGHT})
+                    // }, dropSpeed - 100)
                 } else {
                     // TODO: get face position
                     // if Face.Position == Egg.Position => callback
