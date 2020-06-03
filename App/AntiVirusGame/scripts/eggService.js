@@ -57,15 +57,16 @@ const tick = (gameSpeed, eggCallback) => {
     egg3.step(gameSpeed)
     egg4.step(gameSpeed)
 
-    const { linePoints, side } = randomItem(EGG_COORDINATES.GLOBAL_ROUTES)
+    const { linePoints, sides } = randomItem(EGG_COORDINATES.GLOBAL_ROUTES)
     const config = randomItem(eggs)
 
     const startConfig = {
         route: linePoints,
+        sides,
         gameMode: gMode,
         eggCallback,
         objectConfig: config,
-        newMaterial: side === SIDE.LEFT ? config.MATERIAL.LEFT : config.MATERIAL.RIGHT,
+        newMaterial: sides.x === SIDE.LEFT ? config.MATERIAL.LEFT : config.MATERIAL.RIGHT,
     }
 
     if (!egg1.isVisible()) {

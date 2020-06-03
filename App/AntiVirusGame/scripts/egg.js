@@ -12,12 +12,13 @@ const fastAnimationSpeed = 10
 
 export const Egg = (id, obj) => {
     let currentRoute = null
+    let currentSides = null
     let currentPosition = -1
     let config = EGG_VIRUS_RED(-1)
     let callback = null
     let gMode = null
 
-    const start = ({ route, eggCallback, objectConfig, newMaterial, gameMode }) => {
+    const start = ({ route, sides, eggCallback, objectConfig, newMaterial, gameMode }) => {
         callback = eggCallback
         gMode = gameMode
 
@@ -25,6 +26,8 @@ export const Egg = (id, obj) => {
         obj.material = materialService.get(newMaterial)
 
         currentRoute = route
+        currentSides = sides
+
         currentPosition = 0
         base.moveTo(currentRoute[0].x, currentRoute[0].y, fastAnimationSpeed)
 
@@ -49,9 +52,6 @@ export const Egg = (id, obj) => {
             // move to the end and drop
             currentPosition++
 
-            let sideX = currentRoute[currentPosition].x < 0 ? SIDE.LEFT : SIDE.RIGHT
-            let sideY = currentRoute[currentPosition].y == EGG_COORDINATES.Y_TOP_ROW ? SIDE.TOP : SIDE.BOTTOM
-
             let hideAndResetPosition = () => {
                 base.hide()
                 currentPosition = -1
@@ -64,7 +64,7 @@ export const Egg = (id, obj) => {
                     dropEgg()
                     
                     setTimeout(() => {
-                        callback({sides: [ sideX, SIDE.NEUTRAL ], weight: config.WEIGHT})
+                        callback({sides: [ currentSides.x, SIDE.NEUTRAL ], weight: config.WEIGHT})
                     }, dropSpeed - 100)
                 } else {
                     // TODO: get face position
@@ -73,7 +73,7 @@ export const Egg = (id, obj) => {
                     log(`TODO: get face position
                     if Face.Position == Egg.Position => callback
                     else => dropEgg()`)
-                    callback({sides: [ sideX, sideY ], weight: config.WEIGHT})
+                    callback({sides: [ currentSides.x, currentSides.y ], weight: config.WEIGHT})
                     hideAndResetPosition()
                 }
             }

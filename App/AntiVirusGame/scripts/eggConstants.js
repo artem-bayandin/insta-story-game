@@ -18,10 +18,10 @@ const dropY            = -125
 const dropLeft         = { x: -endX, y: dropY }
 const dropRight        = { x:  endX, y: dropY }
 
-const topLeftSteps     = { linePoints: [{x: -startX, y: startTopY   }, {x: -(startX - stepX), y: startTopY - stepY   }, {x: -(startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x: -endX, y: endTopY   }, dropLeft]  , side: SIDE.LEFT }
-const bottomLeftSteps  = { linePoints: [{x: -startX, y: startBottomY}, {x: -(startX - stepX), y: startBottomY - stepY}, {x: -(startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x: -endX, y: endBottomY}, dropLeft]  , side: SIDE.LEFT }
-const topRightSteps    = { linePoints: [{x:  startX, y: startTopY   }, {x:  (startX - stepX), y: startTopY - stepY   }, {x:  (startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x:  endX, y: endTopY   }, dropRight] , side: SIDE.RIGHT }
-const bottomRightSteps = { linePoints: [{x:  startX, y: startBottomY}, {x:  (startX - stepX), y: startBottomY - stepY}, {x:  (startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x:  endX, y: endBottomY}, dropRight] , side: SIDE.RIGHT }
+const topLeftSteps     = { linePoints: [{x: -startX, y: startTopY   }, {x: -(startX - stepX), y: startTopY - stepY   }, {x: -(startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x: -endX, y: endTopY   }, dropLeft]  , sides: {x: SIDE.LEFT, y: SIDE.TOP} }
+const bottomLeftSteps  = { linePoints: [{x: -startX, y: startBottomY}, {x: -(startX - stepX), y: startBottomY - stepY}, {x: -(startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x: -endX, y: endBottomY}, dropLeft]  , sides: {x: SIDE.LEFT, y: SIDE.BOTTOM} }
+const topRightSteps    = { linePoints: [{x:  startX, y: startTopY   }, {x:  (startX - stepX), y: startTopY - stepY   }, {x:  (startX - (stepX*2)), y: startTopY - (stepY*2)   }, {x:  endX, y: endTopY   }, dropRight] , sides: {x: SIDE.RIGHT, y: SIDE.TOP} }
+const bottomRightSteps = { linePoints: [{x:  startX, y: startBottomY}, {x:  (startX - stepX), y: startBottomY - stepY}, {x:  (startX - (stepX*2)), y: startBottomY - (stepY*2)}, {x:  endX, y: endBottomY}, dropRight] , sides: {x: SIDE.RIGHT, y: SIDE.BOTTOM} }
 const globalRoutes     = [ topLeftSteps, topRightSteps, bottomLeftSteps, bottomRightSteps ]
 
 export const EGG_COORDINATES = {
