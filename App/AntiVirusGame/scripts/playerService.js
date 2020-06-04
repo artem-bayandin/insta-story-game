@@ -21,8 +21,6 @@ const init = ({screenOptions, gameMode}) => {
 
     playerObject = objects.get(OBJECTS.PLAYER)
 
-    playerObject.material = materials.get(playerConfig.MATERIAL)
-
     // setup player scale and positioning
     playerObject.transform.scaleX = playerConfig.SCALE_X
     playerObject.transform.scaleY = playerConfig.SCALE_Y
@@ -31,6 +29,8 @@ const init = ({screenOptions, gameMode}) => {
     playerObject.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
 
     player = new Player(OBJECTS.PLAYER, playerObject)
+
+    player.setMaterial(materials.get(playerConfig.MATERIAL))
 
     // subscribe to move
     uiService.subscribeToPlayerMovements({moveLeft, moveRight})

@@ -23,7 +23,7 @@ export const Egg = (id, obj) => {
         gMode = gameMode
 
         config = objectConfig
-        obj.material = materials.get(newMaterial)
+        base.setMaterial(materials.get(newMaterial))
 
         currentRoute = route
         currentSides = sides

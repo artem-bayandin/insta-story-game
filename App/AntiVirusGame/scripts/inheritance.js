@@ -31,11 +31,27 @@ export const createWithObject = (obj) => {
     }
 }
 
+export const setMaterial = (obj) => {
+    let materialName = ''
+
+    const setMaterial = (material) => {
+        if (materialName !== material.name) {
+            obj.material = material
+            materialName = material.name
+        }
+    }
+
+    return {
+        setMaterial
+    }
+}
+
 export const createBase = (id, obj) => {
     return {
         ...createWithId(id),
         ...createWithCoordinates(obj),
-        ...createWithObject(obj)
+        ...createWithObject(obj),
+        ...setMaterial(obj)
     }
 }
 

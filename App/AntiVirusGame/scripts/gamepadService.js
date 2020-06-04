@@ -1,4 +1,4 @@
-// import { log, findMe, registerTap } from './utils'
+// import { log, registerTap } from './utils'
 // import { OBJECTS } from './objects'
 
 // import playerService from './playerService'
@@ -11,7 +11,7 @@
 // let btnPause = null
 
 // const initButton = (identifier) => {
-//     return new Promise((res, rej) => findMe(identifier).then(item => res(item)))
+//     return new Promise((res, rej) => __findMe(identifier).then(item => res(item)))
 // }
 
 // const leftClick = (gesture) => playerService.movePlayerObject(-1)

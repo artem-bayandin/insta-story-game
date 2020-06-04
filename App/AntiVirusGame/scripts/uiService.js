@@ -1,4 +1,4 @@
-import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
+import { subscribeToPatchPulse, sendScalarToPatch, setupUiElement, log } from './utils'
 import { PATCHES, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION, TOPROW_ICON_COORDINATES } from './commonConstants'
 
 import objects, { OBJECTS } from './objects'
