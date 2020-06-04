@@ -5,10 +5,6 @@ import eggService from './eggService'
 import textService from './textService'
 import { INTERACTION_RESULTS } from './commonConstants'
 
-const setNumberOfEggsDropped = (textService, level, eggsDropped, livesLeft) => {
-    textService.setText(level, eggsDropped, livesLeft)
-}
-
 const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions    
     const { allowDrop, collect } = gameMode
@@ -135,7 +131,11 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
             clearTimerInterval()
         }
 
-        setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
+        setNumberOfEggsDropped()
+    }
+
+    const setNumberOfEggsDropped = () => {
+        textService.setText(level, droppedCounter, energyService.capacityLeft())
     }
 
     const tick = () => {
@@ -191,7 +191,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
     }
 
     const play = () => {
-        setNumberOfEggsDropped(textService, level, droppedCounter, energyService.capacityLeft())
+        setNumberOfEggsDropped()
         textService.setTime(timeCounter)
         playing = true
         timestamp = new Date().getTime()

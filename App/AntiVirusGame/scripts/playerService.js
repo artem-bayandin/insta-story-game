@@ -1,14 +1,10 @@
-import { log, findMe, animateMove, timeDriver, MOVE_TYPES } from './utils'
+import { log } from './utils'
 import { Player} from './player'
-import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS, PLAYER_POSITION_DETECTOR } from './playerConstants'
-import { SIDE } from './commonConstants'
+import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 
 import uiService from './uiService'
 import materials from './materials'
 import objects, { OBJECTS } from './objects'
-
-const timeDriverMove = () => timeDriver(PLAYER_POSITION_DEFAULTS.TRANSITION_SPEED)
-const moveType = MOVE_TYPES.EASE_OUT_BACK
 
 /*
  *  PLAYER SERVICE 
@@ -45,23 +41,15 @@ const init = ({screenOptions, gameMode}) => {
     log(`[playerService] initialized`)
 }
 
-// return -1 if on the left, 1 if on the right, 0 if undefined state
-const getSides = () => {
-    // TODO: refactor this so that Player return [sides]
-    const [ x, y ] = player.getCoordinates()
-    // todo: move to Player objects 
-    const sideX = x >= PLAYER_POSITION_DETECTOR.RIGHT ? SIDE.RIGHT : x <= PLAYER_POSITION_DETECTOR.LEFT ? SIDE.LEFT : SIDE.NEUTRAL
-    const sideY = y >= PLAYER_POSITION_DETECTOR.TOP ? SIDE.TOP : y <= PLAYER_POSITION_DETECTOR.BOTTOM ? SIDE.BOTTOM : SIDE.NEUTRAL
-    return [ sideX, sideY ]
-}
+const getSides = () => player.getSides()
 
-const moveLeft = () => animateMove(playerObject, timeDriverMove(), { x: PLAYER_POSITION_DEFAULTS.X_LEFT }, moveType)
+const moveLeft = () => player.moveLeft()
 
-const moveRight = () => animateMove(playerObject, timeDriverMove(), { x: PLAYER_POSITION_DEFAULTS.X_RIGHT }, moveType)
+const moveRight = () => player.moveRight()
 
-const moveTop = () => animateMove(playerObject, timeDriverMove(), { y: PLAYER_POSITION_DEFAULTS.Y_TOP }, moveType)
+const moveTop = () => player.moveTop()
 
-const moveBottom = () => animateMove(playerObject, timeDriverMove(), { y: PLAYER_POSITION_DEFAULTS.Y_BOTTOM }, moveType)
+const moveBottom = () => player.moveBottom()
 
 
 const playerService = {

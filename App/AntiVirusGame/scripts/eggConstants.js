@@ -15,7 +15,7 @@ const startX           = 179
 const stepX            = 46
 const endX             = startX - (stepX * 3)
 
-const dropY            = -125
+const dropY            = -100
 const dropLeft         = { x: -endX, y: dropY }
 const dropRight        = { x:  endX, y: dropY }
 

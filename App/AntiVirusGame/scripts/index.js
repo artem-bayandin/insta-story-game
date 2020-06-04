@@ -1,13 +1,13 @@
 
 /*
  * TO REVIEW: 
- * eggs
- * eggService
+ * eggs             ?
+ * eggService       DONE
  * game
  * index
  * inheritance
- * player
- * playerService
+ * player           done
+ * playerService    done
  * 
  */
 
@@ -52,10 +52,10 @@ const showMenu = () => {
     setRoadSpeed(0)
     moveRoad(true)
     uiService.initAvoidCollect()
-    // setTimeout(() => {
-    //     log(`remove the next line in production`)
-    //     startPlaying() // TODO: remove this in production
-    // }, 1000)
+    setTimeout(() => {
+        log(`remove the next line in production`)
+        startPlaying() // TODO: remove this in production
+    }, 1000)
 }
 
 const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
@@ -99,20 +99,20 @@ const gameOptions = {
     exitCallback,
     levelUpCallback: setRoadSpeed,
     gameSpeedOptions: {
-        initialGameSpeed: 1350,
-        maxGameSpeed: 333,
+        initialGameSpeed: 1300,
+        maxGameSpeed: 325,
         gameSpeeds: [ {
-            delimiter: 1000,
-            step: 150
+            step: 150,
+            delimiter: 1000
         }, {
-            delimiter: 700,
-            step: 100
+            step: 125,
+            delimiter: 625
         }, {
-            delimiter: 400,
-            step: 75
+            step: 75,
+            delimiter: 400
         }, {
-            delimiter: 0,
-            step: 15
+            step: 25,
+            delimiter: 0
         } ],
         // how frequently do we speed up the game
         initialStageCapacity: 6

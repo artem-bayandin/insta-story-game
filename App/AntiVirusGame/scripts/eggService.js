@@ -1,9 +1,9 @@
-import { findMe, log, randomItem, randomInt } from './utils'
+import { log, randomInt } from './utils'
 import { Egg } from './egg' 
 import { EGG_COORDINATES } from './eggConstants'
 import { SIDE } from './commonConstants'
 
-import { OBJECTS } from './objects'
+import objects, { OBJECTS } from './objects'
 
 /*
  *  EGG SERVICE 
@@ -23,10 +23,6 @@ let currentEggIndex = 0
 let randomizedEggsIndeces = []
 let currentRouteIndex = 0
 let randomizedRoutesIndeces = []
-
-const initEgg = (identifier) => {
-    return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
-}
 
 const init = ({ eggOptions, gameMode }) => {
     gMode = gameMode
@@ -52,24 +48,15 @@ const init = ({ eggOptions, gameMode }) => {
         randomizedRoutesIndeces.push(randomInt(1, 4) - 1)
     }
 
-    const promise1 = new Promise((res, rej) => initEgg(OBJECTS.EGG1).then(obj => res(egg1 = obj)))
-    const promise2 = new Promise((res, rej) => initEgg(OBJECTS.EGG2).then(obj => res(egg2 = obj)))
-    const promise3 = new Promise((res, rej) => initEgg(OBJECTS.EGG3).then(obj => res(egg3 = obj)))
-    const promise4 = new Promise((res, rej) => initEgg(OBJECTS.EGG4).then(obj => res(egg4 = obj)))
-    return Promise.all([
-        promise1
-        , promise2
-        , promise3
-        , promise4
-    ]).then(() => {
-        egg1.hide()
-        egg2.hide()
-        egg3.hide()
-        egg4.hide()
-    }).then(() => log(`[eggService] initialized`))
-}
+    egg1 = new Egg(OBJECTS.EGG1, objects.get(OBJECTS.EGG1))
+    egg2 = new Egg(OBJECTS.EGG2, objects.get(OBJECTS.EGG2))
+    egg3 = new Egg(OBJECTS.EGG3, objects.get(OBJECTS.EGG3))
+    egg4 = new Egg(OBJECTS.EGG4, objects.get(OBJECTS.EGG4))
+    
+    hideAll()
 
-// return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
+    log(`[eggService] initialized`)
+}
 
 let currentGameSpeed = 0
 let halfSpeed = 0 // speed / 2
