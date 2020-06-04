@@ -52,10 +52,10 @@ const showMenu = () => {
     setRoadSpeed(0)
     moveRoad(true)
     uiService.initAvoidCollect()
-    setTimeout(() => {
-        log(`remove the next line in production`)
-        startPlaying() // TODO: remove this in production
-    }, 1000)
+    // setTimeout(() => {
+    //     log(`remove the next line in production`)
+    //     startPlaying() // TODO: remove this in production
+    // }, 1000)
 }
 
 const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
