@@ -4,11 +4,14 @@ import energyService from './energyService'
 import eggService from './eggService'
 import playerService from './playerService'
 import textService from './textService'
-import materialService from './materialService'
-import gamepadService from './gamepadService'
+// import gamepadService from './gamepadService'
 import uiService from './uiService'
 import deviceService from './deviceService'
 import Game from './game'
+
+// new services and so on
+import materials from './materials'
+import objects from './objects'
 
 import { PLAYER_TRACTOR } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
@@ -175,16 +178,16 @@ const servicesOptions = {
 }
 
 Promise.all([
-    materialService.init(),
     deviceService.init(),
     energyService.init(servicesOptions),
     eggService.init(servicesOptions),
     textService.init(),
+
+    materials.init(),
+    objects.init(),
 ]).then(() => {
-    // Xiaomi: 1080 : 2260 : 2.75
-    log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)
+    log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)   // Xiaomi: 1080 : 2260 : 2.75
     return Promise.all([
-        // gamepadService.init(servicesOptions),
         uiService.init(servicesOptions),
     ])
 })

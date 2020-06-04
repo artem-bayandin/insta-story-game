@@ -1,4 +1,5 @@
 import { log } from "./utils"
+import { MATERIALS } from './materials'
 
 export const SIDE = {
     LEFT: 'LEFT',
@@ -6,72 +7,6 @@ export const SIDE = {
     TOP: 'TOP',
     BOTTOM: 'BOTTOM',
     NEUTRAL: 'NEUTRAL'
-}
-
-export const OBJECT_ID = {
-    PLAYER: 'player',
-    EGG1: 'egg1',
-    EGG2: 'egg2',
-    EGG3: 'egg3',
-    EGG4: 'egg4',
-    GAMEPAD: {                              // currently removed buttons from UI
-        LEFT_TOP: 'btn-left-top',           // when adding buttons you may use these ids
-        RIGHT_TOP: 'btn-right-top',
-        LEFT_BOTTOM: 'btn-left-bottom',
-        RIGHT_BOTTOM: 'btn-right-bottom',
-        PAUSE: 'btn-pause'
-    },
-    TXT: {
-        LEVEL: 'txtLevel',
-        EGGS: 'txtEggs',
-        LIVES: 'txtLives',
-        TIMER: 'txtTimer',
-        INTERACTION: 'txtInteraction'
-    },
-    ICONS: {
-        STOPWATCH: 'timerStatIcon',
-        LEVEL: 'levelStatIcon',
-        EGG: 'eggStatIcon',
-        LIVES: 'livesStatIcon',
-        STATS_LINE_BG: 'statsLineBackground'
-    },
-    LINES: {
-        LEFT_TOP: 'left-top',
-        RIGHT_TOP: 'right-top',
-        LEFT_BOTTOM: 'left-bottom',
-        RIGHT_BOTTOM: 'right-bottom',
-    }
-}
-
-export const MATERIALS = {
-    VIRUS_RED_LEFT: 'virus-red-left',
-    VIRUS_RED_RIGHT: 'virus-red-right',
-    VIRUS_BLUE_LEFT: 'virus-blue-left',
-    VIRUS_BLUE_RIGHT: 'virus-blue-right',
-    MASK_GREEN: 'mask-green',
-    TRACTOR: 'belarus-1',
-    FACE_WITH_MASK: 'face-2',
-    STOPWATCH: 'stopwatch-1',
-    LEVEL: 'speed-1',
-    LINE_DEFAULT: 'line-grad',
-    STATS_LINE_BG: 'statsLineMaterial',
-    LINE_GRAD: 'line-grad',
-    MUSTACHE: 'mustache',
-    A4: 'a4',
-    POTATO_LEFT: 'potato-left',
-    POTATO_RIGHT: 'potato-right',
-    DOLLAR: 'dollar',
-    FIRE: 'fire',
-    PAPER_LEFT: 'paper-left',
-    PAPER_RIGHT: 'paper-right',
-    RICK: 'rick',
-    MORTY: 'morty',
-    SUN_LEFT: 'sun-left',
-    SUN_RIGHT: 'sun-right',
-    CUCU_LEFT: 'cucu-left',
-    CUCU_RIGHT: 'cucu-right',
-    PINK_LEFT: 'pink-left',
-    PINK_RIGHT: 'pink-right'
 }
 
 export const PATCHES = {

@@ -1,35 +1,61 @@
-/**
- * (c) Facebook, Inc. and its affiliates. Confidential and proprietary.
- */
+import { log, findMe } from './utils'
 
-//==============================================================================
-// Welcome to scripting in Spark AR Studio! Helpful links:
-//
-// Scripting Basics - https://fb.me/spark-scripting-basics
-// Reactive Programming - https://fb.me/spark-reactive-programming
-// Scripting Object Reference - https://fb.me/spark-scripting-reference
-// Changelogs - https://fb.me/spark-changelog
-//
-// For projects created with v87 onwards, JavaScript is always executed in strict mode.
-//==============================================================================
+export const OBJECTS = {
+    PLAYER: 'player',
 
-// How to load in modules
-const Scene = require('Scene');
+    EGG1: 'egg1',
+    EGG2: 'egg2',
+    EGG3: 'egg3',
+    EGG4: 'egg4',
 
-// Use export keyword to make a symbol available in scripting debug console
-export const Diagnostics = require('Diagnostics');
+    GAMEPAD_LEFT_TOP: 'btn-left-top',           // currently removed buttons from UI
+    GAMEPAD_RIGHT_TOP: 'btn-right-top',
+    GAMEPAD_LEFT_BOTTOM: 'btn-left-bottom',
+    GAMEPAD_RIGHT_BOTTOM: 'btn-right-bottom',
+    GAMEPAD_PAUSE: 'btn-pause',
 
-// To use variables and functions across files, use export/import keyword
-// export const animationDuration = 10;
+    TXT_LEVEL: 'txtLevel',
+    TXT_EGGS: 'txtEggs',
+    TXT_LIVES: 'txtLives',
+    TXT_TIMER: 'txtTimer',
+    TXT_INTERACTION: 'txtInteraction',
 
-// Use import keyword to import a symbol from another file
-// import { animationDuration } from './script.js'
+    ICON_STOPWATCH: 'timerStatIcon',
+    ICON_LEVEL: 'levelStatIcon',
+    ICON_EGG: 'eggStatIcon',
+    ICON_LIVES: 'livesStatIcon',
+    ICON_STATS_LINE_BG: 'statsLineBackground',
 
-// To access scene objects
-// const directionalLight = Scene.root.find('directionalLight0');
+    LINE_LEFT_TOP: 'left-top',
+    LINE_RIGHT_TOP: 'right-top',
+    LINE_LEFT_BOTTOM: 'left-bottom',
+    LINE_RIGHT_BOTTOM: 'right-bottom',
+}
 
-// To access class properties
-// const directionalLightIntensity = directionalLight.intensity;
+let array = {}
 
-// To log messages to the console
-// Diagnostics.log('Console message logged from the script.');
+const init = () => {
+    const promises = Object.keys(OBJECTS).map(id => {
+        try {
+            findMe(OBJECTS[id]).then(obj => array[OBJECTS[id]] = obj)
+        } catch (err) {
+            log(`[objects] init for '${id}' failed`)
+        }
+    })
+    return Promise.all(promises).then(() => log(`[objects] initialized`))
+}
+
+const get = (id) => {
+    try {
+        return array[id]
+    } catch (err) {
+        log(`[objects] get for '${id}' failed`)
+    }
+}
+
+const objects = {
+    init,
+    get
+} 
+
+export default objects

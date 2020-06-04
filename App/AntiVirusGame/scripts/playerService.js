@@ -3,8 +3,8 @@ import { Player} from './player'
 import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 import { SIDE } from './commonConstants'
 
-import materialService from './materialService'
 import uiService from './uiService'
+import materials from './materials'
 
 const timeDriverMove = () => timeDriver(PLAYER_POSITION_DEFAULTS.TRANSITION_SPEED)
 const moveType = MOVE_TYPES.EASE_OUT_BACK
@@ -25,7 +25,7 @@ const init = ({screenOptions, gameMode}) => {
     var promise1 = findMe(identifier)
         .then(item => {
             // TODO: refactor this call of material service or prove that player material will always exist here
-            item.material = materialService.get(playerConfig.MATERIAL)
+            item.material = materials.get(playerConfig.MATERIAL)
 
             // setup player scale and positioning
             item.transform.scaleX = playerConfig.SCALE_X

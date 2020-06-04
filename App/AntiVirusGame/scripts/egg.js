@@ -1,8 +1,8 @@
 import { log, setTimeout, MOVE_TYPES } from './utils'
 import { createWithShowHide, createWithMove, createBase } from './inheritance'
 import { EGG_COORDINATES, EGG_VIRUS_RED } from './eggConstants'
-import materialService from './materialService'
 import { SIDE } from './commonConstants'
+import materials from './materials'
 
 const fastAnimationSpeed = 10
 
@@ -23,7 +23,7 @@ export const Egg = (id, obj) => {
         gMode = gameMode
 
         config = objectConfig
-        obj.material = materialService.get(newMaterial)
+        obj.material = materials.get(newMaterial)
 
         currentRoute = route
         currentSides = sides

@@ -1,7 +1,9 @@
 import { findMe, log, randomItem } from './utils'
 import { Egg } from './egg' 
 import { EGG_COORDINATES } from './eggConstants'
-import { SIDE, OBJECT_ID } from './commonConstants'
+import { SIDE } from './commonConstants'
+
+import { OBJECTS } from './objects'
 
 /*
  *  EGG SERVICE 
@@ -33,10 +35,10 @@ const init = ({ eggOptions, gameMode }) => {
         });
     }
 
-    var promise1 = new Promise((res, rej) => initEgg(OBJECT_ID.EGG1).then(obj => res(egg1 = obj)))
-    var promise2 = new Promise((res, rej) => initEgg(OBJECT_ID.EGG2).then(obj => res(egg2 = obj)))
-    var promise3 = new Promise((res, rej) => initEgg(OBJECT_ID.EGG3).then(obj => res(egg3 = obj)))
-    var promise4 = new Promise((res, rej) => initEgg(OBJECT_ID.EGG4).then(obj => res(egg4 = obj)))
+    var promise1 = new Promise((res, rej) => initEgg(OBJECTS.EGG1).then(obj => res(egg1 = obj)))
+    var promise2 = new Promise((res, rej) => initEgg(OBJECTS.EGG2).then(obj => res(egg2 = obj)))
+    var promise3 = new Promise((res, rej) => initEgg(OBJECTS.EGG3).then(obj => res(egg3 = obj)))
+    var promise4 = new Promise((res, rej) => initEgg(OBJECTS.EGG4).then(obj => res(egg4 = obj)))
     return Promise.all([
         promise1
         , promise2

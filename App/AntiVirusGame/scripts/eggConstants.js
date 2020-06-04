@@ -1,4 +1,5 @@
-import { SIDE, MATERIALS, LINES_Y_DIFFERENCE } from './commonConstants'
+import { SIDE, LINES_Y_DIFFERENCE } from './commonConstants'
+import { MATERIALS } from './materials'
 
 /*
  *  EGG CONSTANTS

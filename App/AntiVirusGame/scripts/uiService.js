@@ -1,10 +1,10 @@
 import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
-import { PATCHES, OBJECT_ID, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION, TOPROW_ICON_COORDINATES } from './commonConstants'
-
-import materialService from './materialService'
+import { PATCHES, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION, TOPROW_ICON_COORDINATES } from './commonConstants'
+import { OBJECTS } from './objects'
+import materials from './materials'
 
 const setupElement = (id, config) => {
-    const material = materialService.get(config.MATERIAL)
+    const material = materials.get(config.MATERIAL)
     return findMe(id).then(item => setupUiElement(item, config, material))
 }
 
@@ -22,33 +22,33 @@ const init = ({UI, screenOptions, eggOptions}) => {
     if (playerCoordMaxBottom !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_BOTTOM, playerCoordMaxBottom)
 
     return Promise.all([
-    setupElement(OBJECT_ID.ICONS.STATS_LINE_BG, STATS_LINE_BG)
+    setupElement(OBJECTS.ICON_STATS_LINE_BG, STATS_LINE_BG)
 
-    , setupElement(OBJECT_ID.LINES.LEFT_TOP, LINES.LEFT_TOP)
-    , setupElement(OBJECT_ID.LINES.RIGHT_TOP, LINES.RIGHT_TOP)
-    , setupElement(OBJECT_ID.LINES.LEFT_BOTTOM, LINES.LEFT_BOTTOM)
-    , setupElement(OBJECT_ID.LINES.RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
+    , setupElement(OBJECTS.LINE_LEFT_TOP, LINES.LEFT_TOP)
+    , setupElement(OBJECTS.LINE_RIGHT_TOP, LINES.RIGHT_TOP)
+    , setupElement(OBJECTS.LINE_LEFT_BOTTOM, LINES.LEFT_BOTTOM)
+    , setupElement(OBJECTS.LINE_RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
     
-    , setupElement(OBJECT_ID.TXT.TIMER, STAT_TXT.TIMER)
-    , setupElement(OBJECT_ID.TXT.LEVEL, STAT_TXT.LEVEL)
-    , setupElement(OBJECT_ID.TXT.EGGS, STAT_TXT.EGGS)
-    , setupElement(OBJECT_ID.TXT.LIVES, STAT_TXT.LIVES)
+    , setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER)
+    , setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL)
+    , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
+    , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
     ]).then(() => log(`[uiService] initialized`))
 }
 
 const initTopRowIcons = () => {
     const { eggCounterIconConfig, liveCounterIconConfig, levelCounterIconConfig, stopwatchCounterIconConfig } = options
     return Promise.all([
-        setupElement(OBJECT_ID.ICONS.STOPWATCH, {...stopwatchCounterIconConfig, ...TOPROW_ICON_COORDINATES.STOPWATCH})
-        , setupElement(OBJECT_ID.ICONS.LEVEL, {...levelCounterIconConfig, ...TOPROW_ICON_COORDINATES.LEVEL})
-        , setupElement(OBJECT_ID.ICONS.EGG, {...eggCounterIconConfig, ...TOPROW_ICON_COORDINATES.EGG})
-        , setupElement(OBJECT_ID.ICONS.LIVES, {...liveCounterIconConfig, ...TOPROW_ICON_COORDINATES.LIVES})
+        setupElement(OBJECTS.ICON_STOPWATCH, {...stopwatchCounterIconConfig, ...TOPROW_ICON_COORDINATES.STOPWATCH})
+        , setupElement(OBJECTS.ICON_LEVEL, {...levelCounterIconConfig, ...TOPROW_ICON_COORDINATES.LEVEL})
+        , setupElement(OBJECTS.ICON_EGG, {...eggCounterIconConfig, ...TOPROW_ICON_COORDINATES.EGG})
+        , setupElement(OBJECTS.ICON_LIVES, {...liveCounterIconConfig, ...TOPROW_ICON_COORDINATES.LIVES})
     ])
 }
 
 const initAvoidCollect = () => {
-    if (eggProbability.length == 3) setupElement(OBJECT_ID.ICONS.LIVES, OUT_OF_THE_SCREEN.STAT_ICON)
-    else if (eggProbability.length == 2) setupElement(OBJECT_ID.ICONS.EGG, OUT_OF_THE_SCREEN.STAT_ICON)
+    if (eggProbability.length == 3) setupElement(OBJECTS.ICON_LIVES, OUT_OF_THE_SCREEN.STAT_ICON)
+    else if (eggProbability.length == 2) setupElement(OBJECTS.ICON_EGG, OUT_OF_THE_SCREEN.STAT_ICON)
     let killerEggs = eggProbability.filter(item => item[0].WEIGHT < 0)
     let healerEggs = eggProbability.filter(item => item[0].WEIGHT > 0)
     if (!killerEggs.length) {
@@ -65,7 +65,7 @@ const initAvoidCollect = () => {
         }
     }
 
-    const iconArray = [ OBJECT_ID.ICONS.STOPWATCH, OBJECT_ID.ICONS.LEVEL, OBJECT_ID.ICONS.EGG, OBJECT_ID.ICONS.LIVES]
+    const iconArray = [ OBJECTS.ICON_STOPWATCH, OBJECTS.ICON_LEVEL, OBJECTS.ICON_EGG, OBJECTS.ICON_LIVES]
 
     const avoid = AVOID_COLLECT_POSITION.AVOID
     for (var i = 0; i < killerEggs.length; i++) {
@@ -92,10 +92,10 @@ const subscribeToPlayerMovements = ({moveLeft = null, moveRight = null, moveTop 
 }
 
 const moveToStats = () => {
-    setupElement(OBJECT_ID.ICONS.STOPWATCH, FINAL_STATS_POSITION.TIMER.ICON)
-    setupElement(OBJECT_ID.ICONS.LEVEL, FINAL_STATS_POSITION.LEVEL.ICON)
-    setupElement(OBJECT_ID.ICONS.EGG, FINAL_STATS_POSITION.EGGS.ICON)
-    setupElement(OBJECT_ID.ICONS.LIVES, FINAL_STATS_POSITION.LIVES.ICON)
+    setupElement(OBJECTS.ICON_STOPWATCH, FINAL_STATS_POSITION.TIMER.ICON)
+    setupElement(OBJECTS.ICON_LEVEL, FINAL_STATS_POSITION.LEVEL.ICON)
+    setupElement(OBJECTS.ICON_EGG, FINAL_STATS_POSITION.EGGS.ICON)
+    setupElement(OBJECTS.ICON_LIVES, FINAL_STATS_POSITION.LIVES.ICON)
 }
 
 const uiService = {
