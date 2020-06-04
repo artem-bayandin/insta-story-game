@@ -37,7 +37,7 @@ let array = {}
 const init = () => {
     const promises = Object.keys(OBJECTS).map(id => {
         try {
-            findMe(OBJECTS[id]).then(obj => array[OBJECTS[id]] = obj)
+            return findMe(OBJECTS[id]).then(obj => array[OBJECTS[id]] = obj)
         } catch (err) {
             log(`[objects] init for '${id}' failed`)
         }

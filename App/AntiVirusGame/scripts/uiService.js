@@ -1,11 +1,13 @@
 import { subscribeToPatchPulse, sendScalarToPatch, findMe, setupUiElement, log } from './utils'
 import { PATCHES, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION, TOPROW_ICON_COORDINATES } from './commonConstants'
-import { OBJECTS } from './objects'
+
+import objects, { OBJECTS } from './objects'
 import materials from './materials'
 
 const setupElement = (id, config) => {
     const material = materials.get(config.MATERIAL)
-    return findMe(id).then(item => setupUiElement(item, config, material))
+    const obj = objects.get(id)
+    setupUiElement(obj, config, material)
 }
 
 let options = null
@@ -15,24 +17,23 @@ const init = ({UI, screenOptions, eggOptions}) => {
     options = screenOptions
     eggProbability = eggOptions.probability
 
-    const { playerCoordMaxLeft, playerCoordMaxRight, playerCoordMaxTop, playerCoordMaxBottom} = UI
-    if (playerCoordMaxLeft !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_LEFT, playerCoordMaxLeft)
-    if (playerCoordMaxRight !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_RIGHT, playerCoordMaxRight)
-    if (playerCoordMaxTop !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_TOP, playerCoordMaxTop)
-    if (playerCoordMaxBottom !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_BOTTOM, playerCoordMaxBottom)
+    // TODO: I don't use it
+    // const { playerCoordMaxLeft, playerCoordMaxRight, playerCoordMaxTop, playerCoordMaxBottom} = UI
+    // if (playerCoordMaxLeft !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_LEFT, playerCoordMaxLeft)
+    // if (playerCoordMaxRight !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_RIGHT, playerCoordMaxRight)
+    // if (playerCoordMaxTop !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_TOP, playerCoordMaxTop)
+    // if (playerCoordMaxBottom !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_BOTTOM, playerCoordMaxBottom)
 
     return Promise.all([
-    setupElement(OBJECTS.ICON_STATS_LINE_BG, STATS_LINE_BG)
-
-    , setupElement(OBJECTS.LINE_LEFT_TOP, LINES.LEFT_TOP)
-    , setupElement(OBJECTS.LINE_RIGHT_TOP, LINES.RIGHT_TOP)
-    , setupElement(OBJECTS.LINE_LEFT_BOTTOM, LINES.LEFT_BOTTOM)
-    , setupElement(OBJECTS.LINE_RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
-    
-    , setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER)
-    , setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL)
-    , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
-    , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
+          setupElement(OBJECTS.ICON_STATS_LINE_BG, STATS_LINE_BG)
+        , setupElement(OBJECTS.LINE_LEFT_TOP, LINES.LEFT_TOP)
+        , setupElement(OBJECTS.LINE_RIGHT_TOP, LINES.RIGHT_TOP)
+        , setupElement(OBJECTS.LINE_LEFT_BOTTOM, LINES.LEFT_BOTTOM)
+        , setupElement(OBJECTS.LINE_RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
+        , setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER)
+        , setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL)
+        , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
+        , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
     ]).then(() => log(`[uiService] initialized`))
 }
 

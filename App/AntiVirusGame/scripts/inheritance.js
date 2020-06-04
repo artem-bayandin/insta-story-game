@@ -98,49 +98,20 @@ export const createWithMove = (obj, type = MOVE_TYPES.LINEAR, maxDelay = 0) => {
  */
 
 export const createTextScore = (obj) => {
-    const setText = (text) => obj.text = text.toString()
-    const clearText = () => obj.text = ''
+    let currentText = ''
+    obj.text = currentText
+
+    const setTextWithValidation = (text) => {
+        if (currentText != text) {
+            obj.text = text
+        }
+    }
+
+    const setText = (text) => setTextWithValidation(text)
+    const clearText = () => setTextWithValidation('')
 
     return {
         setText,
         clearText
-    }
-}
-
-export const createTextWithPrefix = (obj, prefix) => {
-    let base = createTextScore(obj)
-
-    const setText = (text) => base.setText(`${prefix}: ${text}`)
-    const clearToPrefix = () => base.setText(prefix)
-
-    return {
-        ...base,
-        setText,
-        clearToPrefix
-    }
-}
-
-export const createTextWithPostfix = (obj, postfix) => {
-    let base = createTextScore(obj)
-
-    const setText = (text) => base.setText(`${text} ${postfix}`)
-    const clearToPostfix = () => base.setText(postfix)
-
-    return {
-        ...base,
-        setText,
-        clearToPostfix
-    }
-}
-
-export const createTextTimer = (obj) => {
-    let base = createTextScore(obj)
-
-    // const setText = (text) => base.setText(((+text)/1000).toFixed(1).replace('.', ':'))
-    const setText = (text) => base.setText(((+text)/1000).toFixed(0))
-
-    return {
-        ...base,
-        setText
     }
 }

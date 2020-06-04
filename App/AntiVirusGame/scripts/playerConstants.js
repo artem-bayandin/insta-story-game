@@ -1,5 +1,4 @@
-import { MATERIALS } from './materials'
-import { OBJECTS } from './objects'
+ import { MATERIALS } from './materials'
 
 /*
  *  PLAYER CONSTANTS
@@ -25,7 +24,7 @@ export const PLAYER_POSITION_DEFAULTS = {
     TRANSITION_SPEED
 }
 
-export const POSITION_DETECTOR = {
+export const PLAYER_POSITION_DETECTOR = {
     LEFT:   -15,
     RIGHT:  15,
     TOP:    100,
@@ -34,36 +33,28 @@ export const POSITION_DETECTOR = {
 
 export const PLAYER_TRACTOR = {
     ID: 'PLAYER_TRACTOR',
-    PLAYER_OBJECT_ID: OBJECTS.PLAYER,
     MATERIAL: MATERIALS.TRACTOR,
     SCALE_X: 1200,
-    SCALE_Y: 950,
-    POSITION_DETECTOR
+    SCALE_Y: 950
 }
 
 export const PLAYER_FACE = {
     ID: 'PLAYER_FACE',
-    PLAYER_OBJECT_ID: OBJECTS.PLAYER,
     MATERIAL: MATERIALS.FACE_WITH_MASK,
     SCALE_X: 900,
-    SCALE_Y: 950,
-    POSITION_DETECTOR
+    SCALE_Y: 950
 }
 
 export const PLAYER_MUSTACHE = {
     ID: 'PLAYER_MUSTACHE',
-    PLAYER_OBJECT_ID: OBJECTS.PLAYER,
     MATERIAL: MATERIALS.MUSTACHE,
     SCALE_X: 1000,
-    SCALE_Y: 800,
-    POSITION_DETECTOR
+    SCALE_Y: 800
 }
 
 export const PLAYER_A4 = {
     ID: 'PLAYER_A4',
-    PLAYER_OBJECT_ID: OBJECTS.PLAYER,
     MATERIAL: MATERIALS.A4,
     SCALE_X: 800,
-    SCALE_Y: 950,
-    POSITION_DETECTOR
+    SCALE_Y: 950
 }

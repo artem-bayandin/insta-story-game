@@ -36,7 +36,7 @@ let array = {}
 const init = () => {
     const promises = Object.keys(MATERIALS).map(id => {
         try {
-            findMaterial(MATERIALS[id]).then(mat => array[MATERIALS[id]] = mat)
+            return findMaterial(MATERIALS[id]).then(mat => array[MATERIALS[id]] = mat)
         } catch (err) {
             log(`[materials] init for '${id}' failed`)
         }

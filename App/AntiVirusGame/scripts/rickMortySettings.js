@@ -1,6 +1,4 @@
-import { POSITION_DETECTOR } from './playerConstants'
 import { MATERIALS } from './materials'
-import { OBJECTS } from './objects'
 import { log } from './utils'
 
 /* 
@@ -9,20 +7,16 @@ import { log } from './utils'
 
 export const PLAYER_RICK = {
     ID: 'PLAYER_RICK',
-    PLAYER_OBJECT_ID: OBJECTS.PLAYER,
     MATERIAL: MATERIALS.RICK,
     SCALE_X: 950,
-    SCALE_Y: 950,
-    POSITION_DETECTOR
+    SCALE_Y: 950
 }
 
 export const PLAYER_MORTY = {
     ID: 'PLAYER_MORTY',
-    PLAYER_OBJECT_ID: OBJECTS.PLAYER,
     MATERIAL: MATERIALS.MORTY,
     SCALE_X: 850,
-    SCALE_Y: 850,
-    POSITION_DETECTOR
+    SCALE_Y: 850
 }
 
 /*

@@ -1,3 +1,17 @@
+
+/*
+ * TO REVIEW: 
+ * eggs
+ * eggService
+ * game
+ * index
+ * inheritance
+ * player
+ * playerService
+ * 
+ */
+
+
 import { log, setTimeout, setBooleanToPatch, sendScalarToPatch, subscribeToPatchBoolean } from './utils'
 
 import energyService from './energyService'
@@ -178,14 +192,18 @@ const servicesOptions = {
 }
 
 Promise.all([
-    deviceService.init(),
-    energyService.init(servicesOptions),
-    eggService.init(servicesOptions),
-    textService.init(),
-
     materials.init(),
     objects.init(),
-]).then(() => {
+])
+.then(() => {
+    return Promise.all([
+        deviceService.init(),
+        energyService.init(servicesOptions),
+        eggService.init(servicesOptions),
+        textService.init(),
+    ])
+})
+.then(() => {
     log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)   // Xiaomi: 1080 : 2260 : 2.75
     return Promise.all([
         uiService.init(servicesOptions),
