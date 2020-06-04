@@ -119,7 +119,7 @@ const gameOptions = {
     },
     energyOptions: {
         // initial number of lives
-        initial: 3,
+        initial: 7,
         // if X items are dropped - add 1 live
         increaseWhenDropped: 10
     },

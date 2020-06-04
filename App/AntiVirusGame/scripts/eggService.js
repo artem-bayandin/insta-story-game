@@ -1,4 +1,4 @@
-import { findMe, log, randomItem } from './utils'
+import { findMe, log, randomItem, randomInt } from './utils'
 import { Egg } from './egg' 
 import { EGG_COORDINATES } from './eggConstants'
 import { SIDE } from './commonConstants'
@@ -18,6 +18,12 @@ let gMode = null
 
 let eggs = []
 
+let randomizedItemsCount = 100
+let currentEggIndex = 0
+let randomizedEggsIndeces = []
+let currentRouteIndex = 0
+let randomizedRoutesIndeces = []
+
 const initEgg = (identifier) => {
     return new Promise((res, rej) => findMe(identifier).then(item => res(new Egg(identifier, item))))
 }
@@ -35,10 +41,21 @@ const init = ({ eggOptions, gameMode }) => {
         });
     }
 
-    var promise1 = new Promise((res, rej) => initEgg(OBJECTS.EGG1).then(obj => res(egg1 = obj)))
-    var promise2 = new Promise((res, rej) => initEgg(OBJECTS.EGG2).then(obj => res(egg2 = obj)))
-    var promise3 = new Promise((res, rej) => initEgg(OBJECTS.EGG3).then(obj => res(egg3 = obj)))
-    var promise4 = new Promise((res, rej) => initEgg(OBJECTS.EGG4).then(obj => res(egg4 = obj)))
+    // fill randomizedEggs with indeces 0..eggs.length
+    let eggLength = eggs.length
+    for (let i = 0; i < randomizedItemsCount; i++) {
+        randomizedEggsIndeces.push(randomInt(1, eggLength) - 1)
+    }
+
+    // fill randomizedRoutes with indeces 0..4 for routes collection
+    for (let i = 0; i < randomizedItemsCount; i++) {
+        randomizedRoutesIndeces.push(randomInt(1, 4) - 1)
+    }
+
+    const promise1 = new Promise((res, rej) => initEgg(OBJECTS.EGG1).then(obj => res(egg1 = obj)))
+    const promise2 = new Promise((res, rej) => initEgg(OBJECTS.EGG2).then(obj => res(egg2 = obj)))
+    const promise3 = new Promise((res, rej) => initEgg(OBJECTS.EGG3).then(obj => res(egg3 = obj)))
+    const promise4 = new Promise((res, rej) => initEgg(OBJECTS.EGG4).then(obj => res(egg4 = obj)))
     return Promise.all([
         promise1
         , promise2
@@ -53,14 +70,28 @@ const init = ({ eggOptions, gameMode }) => {
 }
 
 // return -1 if dropped on the left, 1 if dropped on the right, 0 if no virus dropped
-const tick = (gameSpeed, eggCallback) => {
-    egg1.step(gameSpeed)
-    egg2.step(gameSpeed)
-    egg3.step(gameSpeed)
-    egg4.step(gameSpeed)
 
-    const { linePoints, sides } = randomItem(EGG_COORDINATES.GLOBAL_ROUTES)
-    const config = randomItem(eggs)
+let currentGameSpeed = 0
+let halfSpeed = 0 // speed / 2
+let quaterSpeed = 0 // speed / 4                               // max gameSpeed = 333
+let innerSpeed = 0 // halfSpeed < 200 ? 200 : halfSpeed        // speed = gameSpeed, so max innerSpeed = 200
+let dropSpeed = 0 // quaterSpeed < 100 ? 100 : quaterSpeed     // max dropSpeed = 100
+
+const getNextEgg = () => {
+    currentEggIndex++
+    if (currentEggIndex >= randomizedItemsCount) currentEggIndex = 0
+    return eggs[randomizedEggsIndeces[currentEggIndex]]
+}
+
+const getNextRoute = () => {
+    currentRouteIndex++
+    if (currentRouteIndex >= randomizedItemsCount) currentRouteIndex = 0
+    return EGG_COORDINATES.GLOBAL_ROUTES[randomizedRoutesIndeces[currentRouteIndex]]
+}
+
+const startEgg = (egg, eggCallback) => {
+    const { linePoints, sides } = getNextRoute()
+    const config = getNextEgg()
 
     const startConfig = {
         route: linePoints,
@@ -71,14 +102,32 @@ const tick = (gameSpeed, eggCallback) => {
         newMaterial: sides.x === SIDE.LEFT ? config.MATERIAL.LEFT : config.MATERIAL.RIGHT,
     }
 
+    egg.start(startConfig)
+}
+
+const tick = (gameSpeed, eggCallback) => {
+
+    if (gameSpeed !== currentGameSpeed) {
+        currentGameSpeed = gameSpeed
+        halfSpeed = currentGameSpeed / 2
+        quaterSpeed = currentGameSpeed / 4                    // max gameSpeed = 333
+        innerSpeed = halfSpeed < 200 ? 200 : halfSpeed        // speed = gameSpeed, so max innerSpeed = 200
+        dropSpeed = quaterSpeed < 100 ? 100 : quaterSpeed     // max dropSpeed = 100
+    }
+
+    egg1.step(innerSpeed, dropSpeed)
+    egg2.step(innerSpeed, dropSpeed)
+    egg3.step(innerSpeed, dropSpeed)
+    egg4.step(innerSpeed, dropSpeed)
+
     if (!egg1.isVisible()) {
-        egg1.start(startConfig)
+        startEgg(egg1, eggCallback)
     } else if (!egg2.isVisible()) {
-        egg2.start(startConfig)
+        startEgg(egg2, eggCallback)
     } else if (!egg3.isVisible()) {
-        egg3.start(startConfig)
+        startEgg(egg3, eggCallback)
     } else if (!egg4.isVisible()) {
-        egg4.start(startConfig)
+        startEgg(egg4, eggCallback)
     }
 }
 

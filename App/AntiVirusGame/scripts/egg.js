@@ -34,12 +34,7 @@ export const Egg = (id, obj) => {
         base.show({scaleX: config.SCALE_X, scaleY: config.SCALE_Y})
     }
 
-    const step = (speed) => {
-        const halfSpeed = speed / 2
-        const quaterSpeed = speed / 4                               // max gameSpeed = 333
-        const innerSpeed = halfSpeed < 200 ? 200 : halfSpeed        // speed = gameSpeed, so max innerSpeed = 200
-        const dropSpeed = quaterSpeed < 100 ? 100 : quaterSpeed     // max dropSpeed = 100
-
+    const step = (innerSpeed, dropSpeed) => {
         if (!base.isVisible()) return
 
         if (currentPosition >= 0 && currentPosition < 2) {
