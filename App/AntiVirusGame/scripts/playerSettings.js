@@ -8,10 +8,13 @@ import { PLAYER_RICK, PLAYER_MORTY, EGG_RICK, EGG_MORTY, EGG_PINK, EGG_SUN, EGG_
  * OPTIONS FOR DIFFERENT PLAYERS
  */
 
+const timeLimitMs = 55000
+
 export const faceOptions = {
     gameMode: {
         allowDrop: true,
-        collect: false
+        collect: false,
+        timeLimitMs
     },
     screenOptions: {
         playerConfig: PLAYER_FACE,
@@ -34,7 +37,8 @@ export const faceOptions = {
 export const tractorOptions = {
     gameMode: {
         allowDrop: true,
-        collect: false
+        collect: false,
+        timeLimitMs
     },
     screenOptions: {
         playerConfig: PLAYER_TRACTOR,
@@ -57,7 +61,8 @@ export const tractorOptions = {
 export const mustacheOptions = {
     gameMode: {
         allowDrop: true,
-        collect: false
+        collect: false,
+        timeLimitMs
     },
     screenOptions: {
         playerConfig: PLAYER_MUSTACHE,
@@ -80,7 +85,8 @@ export const mustacheOptions = {
 export const bumagaOptions = {
     gameMode: {
         allowDrop: true,
-        collect: false
+        collect: false,
+        timeLimitMs
     },
     screenOptions: {
         playerConfig: PLAYER_A4,
@@ -103,7 +109,8 @@ export const bumagaOptions = {
 export const rickOptions = {
     gameMode: {
         allowDrop: true,
-        collect: false
+        collect: false,
+        timeLimitMs
     },
     screenOptions: {
         playerConfig: PLAYER_RICK,
@@ -127,7 +134,8 @@ export const rickOptions = {
 export const mortyOptions = {
     gameMode: {
         allowDrop: true,
-        collect: false
+        collect: false,
+        timeLimitMs
     },
     screenOptions: {
         playerConfig: PLAYER_MORTY,

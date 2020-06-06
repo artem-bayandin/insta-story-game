@@ -10,10 +10,11 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
     
     let allowDrop = false
     let collect = false
+    let timeLimitMs = 9999000
     const updateSettings = ({gameMode}) => {
         allowDrop = gameMode.allowDrop
         collect = gameMode.collect
-        // log(`[game] settings updated`)
+        if (gameMode.timeLimitMs > 0) timeLimitMs = gameMode.timeLimitMs
     }
     updateSettings({gameMode})
 
@@ -188,7 +189,12 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         }
         timeInterval = setInterval(() => {
             timeCounter += timeIntervalDuration
-            textService.setTime(timeCounter)
+            log (`current: ${timeCounter} limit: ${timeLimitMs}`)
+            if (timeCounter > timeLimitMs) {
+                stop()
+            } else {
+                textService.setTime(timeCounter)
+            }
         }, timeIntervalDuration)
     }
 

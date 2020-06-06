@@ -34,7 +34,7 @@ const setRoadSpeed = (level) => {
     sendScalarToPatch(PATCHES.INPUTS.ROAD.DURATION, newSpeed)
 }
 
-const showMenu = () => {
+const showMenu = () => {    
     log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     textService.clearAll()
     setRoadSpeed(0)
@@ -60,11 +60,11 @@ const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInterac
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, ${energyUsed} energy used, time: ${Math.floor(time/1000)} seconds - -- ---`)
 }
 
-const modeChangedCallback = (playerSettings) => {
+const modeChangedCallback = (playerSettings, hardUpdate = false) => {
     const prevSettingsId = currentPlayerOptions.screenOptions.playerConfig.ID
     const nextSettingsId = playerSettings.screenOptions.playerConfig.ID
     // log(`MODE CHANGED: '${prevSettingsId}' => '${nextSettingsId}'`)
-    if (prevSettingsId === nextSettingsId) {
+    if (prevSettingsId === nextSettingsId && !hardUpdate) {
         return
     }
     game.updateSettings(playerSettings)
@@ -220,5 +220,6 @@ Promise.all([
     ])
 })
 .then(() => Promise.all([playerService.init(servicesOptions)]))
+.then(() => modeChangedCallback(currentPlayerOptions, true))
 .then(() => showMenu())
 .catch(err => log(`ERROR: ${err}`))
