@@ -18,13 +18,28 @@ let gMode = null
 
 let eggs = []
 
-let randomizedItemsCount = 100
 let currentEggIndex = 0
+const randomizedEggsCount = 97
 let randomizedEggsIndeces = []
+
 let currentRouteIndex = 0
+const randomizedRoutes = 113
 let randomizedRoutesIndeces = []
 
 const init = ({ eggOptions, gameMode }) => {
+    updateSettings({ eggOptions, gameMode })
+
+    egg1 = new Egg(OBJECTS.EGG1, objects.get(OBJECTS.EGG1))
+    egg2 = new Egg(OBJECTS.EGG2, objects.get(OBJECTS.EGG2))
+    egg3 = new Egg(OBJECTS.EGG3, objects.get(OBJECTS.EGG3))
+    egg4 = new Egg(OBJECTS.EGG4, objects.get(OBJECTS.EGG4))
+    
+    hideAll()
+
+    log(`[eggService] initialized`)
+}
+
+const updateSettings = ({ eggOptions, gameMode }) => {
     gMode = gameMode
     const inputEggs = eggOptions.probability
     if (inputEggs && inputEggs.length) {
@@ -38,24 +53,19 @@ const init = ({ eggOptions, gameMode }) => {
     }
 
     // fill randomizedEggs with indeces 0..eggs.length
+    randomizedEggsIndeces.length = 0
     let eggLength = eggs.length
-    for (let i = 0; i < randomizedItemsCount; i++) {
+    for (let i = 0; i < randomizedEggsCount; i++) {
         randomizedEggsIndeces.push(randomInt(1, eggLength) - 1)
     }
 
     // fill randomizedRoutes with indeces 0..4 for routes collection
-    for (let i = 0; i < randomizedItemsCount; i++) {
+    randomizedRoutesIndeces.length = 0
+    for (let i = 0; i < randomizedRoutes; i++) {
         randomizedRoutesIndeces.push(randomInt(1, 4) - 1)
     }
 
-    egg1 = new Egg(OBJECTS.EGG1, objects.get(OBJECTS.EGG1))
-    egg2 = new Egg(OBJECTS.EGG2, objects.get(OBJECTS.EGG2))
-    egg3 = new Egg(OBJECTS.EGG3, objects.get(OBJECTS.EGG3))
-    egg4 = new Egg(OBJECTS.EGG4, objects.get(OBJECTS.EGG4))
-    
-    hideAll()
-
-    log(`[eggService] initialized`)
+    // log(`[eggService] settings updated`)
 }
 
 let currentGameSpeed = 0
@@ -66,13 +76,13 @@ let dropSpeed = 0 // quaterSpeed < 100 ? 100 : quaterSpeed     // max dropSpeed 
 
 const getNextEgg = () => {
     currentEggIndex++
-    if (currentEggIndex >= randomizedItemsCount) currentEggIndex = 0
+    if (currentEggIndex >= randomizedEggsCount) currentEggIndex = 0
     return eggs[randomizedEggsIndeces[currentEggIndex]]
 }
 
 const getNextRoute = () => {
     currentRouteIndex++
-    if (currentRouteIndex >= randomizedItemsCount) currentRouteIndex = 0
+    if (currentRouteIndex >= randomizedRoutes) currentRouteIndex = 0
     return EGG_COORDINATES.GLOBAL_ROUTES[randomizedRoutesIndeces[currentRouteIndex]]
 }
 
@@ -128,7 +138,8 @@ const hideAll = () => {
 const eggService = {
     init,
     tick,
-    hideAll
+    hideAll,
+    updateSettings
 } 
 
 export default eggService

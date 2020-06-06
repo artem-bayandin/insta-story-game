@@ -14,8 +14,7 @@ let options = null
 let eggProbability = null
 
 const init = ({UI, screenOptions, eggOptions}) => {
-    options = screenOptions
-    eggProbability = eggOptions.probability
+    updateSettings({screenOptions, eggOptions})
 
     // TODO: I don't use it
     // const { playerCoordMaxLeft, playerCoordMaxRight, playerCoordMaxTop, playerCoordMaxBottom} = UI
@@ -35,6 +34,13 @@ const init = ({UI, screenOptions, eggOptions}) => {
         , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
         , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
     ]).then(() => log(`[uiService] initialized`))
+}
+
+const updateSettings = ({screenOptions, eggOptions}) => {
+    options = screenOptions
+    eggProbability = eggOptions.probability
+
+    // log(`[uiService] settings updated`)
 }
 
 const initTopRowIcons = () => {
@@ -104,7 +110,8 @@ const uiService = {
     subscribeToPlayerMovements,
     initTopRowIcons,
     initAvoidCollect,
-    moveToStats
+    moveToStats,
+    updateSettings
 }
 
 export default uiService

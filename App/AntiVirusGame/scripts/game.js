@@ -7,7 +7,15 @@ import { INTERACTION_RESULTS } from './commonConstants'
 
 const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, gameMode }) => {
     const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions    
-    const { allowDrop, collect } = gameMode
+    
+    let allowDrop = false
+    let collect = false
+    const updateSettings = ({gameMode}) => {
+        allowDrop = gameMode.allowDrop
+        collect = gameMode.collect
+        // log(`[game] settings updated`)
+    }
+    updateSettings({gameMode})
 
     // some fields for energy Up
     let initialIncreaseWhenDropped = energyOptions.increaseWhenDropped
@@ -17,6 +25,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
     let ticksCounter = 0
     let droppedCounter = 0
     let level = 0
+    const maxLevelToAddLiveWhenEggDropped = energyOptions.maxLevelToAddLiveWhenEggDropped
 
     let stageCapacity = initialStageCapacity
     let gameSpeedSettings = gameSpeeds.shift()
@@ -59,7 +68,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
     const increaseDroppedCounter = () => {
         droppedCounter++
         if (droppedCounter % increaseWhenDropped == 0) {
-            energyService.addEnergy(1)
+            if (level < maxLevelToAddLiveWhenEggDropped) energyService.addEnergy(1)
             increaseWhenDropped = increaseWhenDropped + initialIncreaseWhenDropped + (initialAdditionalStep = initialAdditionalStep * 2)
             informAboutInteraction(INTERACTION_RESULTS.EXTRA_LIFE)
         } else {
@@ -234,7 +243,8 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         pause,
         stop,
         togglePlay,
-        isOver
+        isOver,
+        updateSettings
     }
 }
 

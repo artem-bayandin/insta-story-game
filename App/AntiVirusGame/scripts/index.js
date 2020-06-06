@@ -1,17 +1,3 @@
-
-/*
- * TO REVIEW: 
- * eggs             ?
- * eggService       DONE
- * game
- * index
- * inheritance
- * player           done
- * playerService    done
- * 
- */
-
-
 import { log, setTimeout, setBooleanToPatch, sendScalarToPatch, subscribeToPatchBoolean } from './utils'
 
 import energyService from './energyService'
@@ -35,7 +21,7 @@ import { LEVEL, STOPWATCH, PATCHES, INTERACTION_RESULTS } from './commonConstant
 
 import { faceOptions, tractorOptions, mustacheOptions, bumagaOptions, rickOptions, mortyOptions } from './playerSettings'
 
-const currentPlayerOptions = rickOptions
+let currentPlayerOptions = rickOptions
 
 const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
 
@@ -75,7 +61,19 @@ const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInterac
 }
 
 const modeChangedCallback = (playerSettings) => {
-    log(`MODE CHANGED: '${playerSettings.screenOptions.playerConfig.ID}'`)
+    const prevSettingsId = currentPlayerOptions.screenOptions.playerConfig.ID
+    const nextSettingsId = playerSettings.screenOptions.playerConfig.ID
+    // log(`MODE CHANGED: '${prevSettingsId}' => '${nextSettingsId}'`)
+    if (prevSettingsId === nextSettingsId) {
+        return
+    }
+    game.updateSettings(playerSettings)
+    eggService.updateSettings(playerSettings)
+    playerService.updateSettings(playerSettings)
+    uiService.updateSettings(playerSettings)
+    uiService.initAvoidCollect()
+
+    currentPlayerOptions = playerSettings
 }
 
 const startPlaying = () => {
@@ -94,6 +92,7 @@ const stopPlaying = () => {
 subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
     if (game.isOver()) return
     if (options.newValue) {
+        uiPicker.hide()
         startPlaying()
     } else if (options.oldValue !== undefined) {
         stopPlaying()
@@ -105,29 +104,30 @@ const gameOptions = {
     exitCallback,
     levelUpCallback: setRoadSpeed,
     gameSpeedOptions: {
-        initialGameSpeed: 1300,
-        maxGameSpeed: 325,
+        initialGameSpeed: 1250,
+        maxGameSpeed: 220,
         gameSpeeds: [ {
             step: 150,
-            delimiter: 1000
+            delimiter: 950
         }, {
             step: 125,
-            delimiter: 625
+            delimiter: 575
         }, {
             step: 75,
-            delimiter: 400
+            delimiter: 350
         }, {
-            step: 25,
+            step: 20,
             delimiter: 0
         } ],
         // how frequently do we speed up the game
-        initialStageCapacity: 6
+        initialStageCapacity: 5
     },
     energyOptions: {
         // initial number of lives
-        initial: 7,
+        initial: 5,
         // if X items are dropped - add 1 live
-        increaseWhenDropped: 10
+        increaseWhenDropped: 10,
+        maxLevelToAddLiveWhenEggDropped: 10
     },
     UI: {
         playerCoordMaxLeft: -50,
@@ -186,7 +186,7 @@ const gameAndPlayerOptions = {
     ...currentPlayerOptions
 }
 
-const game = new Game(gameAndPlayerOptions)
+const game = new Game(gameOptions)
 
 const servicesOptions = {
     ...gameAndPlayerOptions,

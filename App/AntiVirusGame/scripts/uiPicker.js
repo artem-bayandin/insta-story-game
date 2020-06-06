@@ -8,14 +8,6 @@ const picker = NativeUI.picker
 const init = ({modeChangedCallback}) => {
     const items = [ 
         { 
-            image_texture: textures.get(TEXTURES.FACE_WITH_MASK),
-            playerSettings: faceOptions
-        }, 
-        { 
-            image_texture: textures.get(TEXTURES.TRACTOR),
-            playerSettings: tractorOptions
-        }, 
-        { 
             image_texture: textures.get(TEXTURES.RICK),
             playerSettings: rickOptions
         }, 
@@ -24,8 +16,16 @@ const init = ({modeChangedCallback}) => {
             playerSettings: mortyOptions
         }, 
         { 
+            image_texture: textures.get(TEXTURES.TRACTOR),
+            playerSettings: tractorOptions
+        }, 
+        { 
             image_texture: textures.get(TEXTURES.MUSTACHE),
             playerSettings: mustacheOptions
+        }, 
+        { 
+            image_texture: textures.get(TEXTURES.FACE_WITH_MASK),
+            playerSettings: faceOptions
         }, 
         { 
             image_texture: textures.get(TEXTURES.A4),
@@ -34,7 +34,7 @@ const init = ({modeChangedCallback}) => {
     ]
 
     const configuration = { 
-        selectedIndex: 2,
+        selectedIndex: 0,
         items
     }
 
@@ -49,7 +49,7 @@ const init = ({modeChangedCallback}) => {
     picker.visible = true
     
     picker.selectedIndex.monitor().subscribe(function(index) { 
-        log(`new index: ${index.newValue}`)
+        // log(`new index: ${index.newValue}`)
         callback(index.newValue)
     });
 
@@ -59,8 +59,13 @@ const init = ({modeChangedCallback}) => {
     log(`[uiPicker] initialized`)
 }
 
+const hide = () => {
+    picker.visible = false
+}
+
 const uiPicker = {
-    init
+    init,
+    hide
 }
 
 export default uiPicker

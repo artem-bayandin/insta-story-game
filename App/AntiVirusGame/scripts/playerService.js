@@ -16,10 +16,21 @@ let playerConfig = PLAYER_TRACTOR
 let gMode = null
 
 const init = ({screenOptions, gameMode}) => {
+    playerObject = objects.get(OBJECTS.PLAYER)
+    player = new Player(OBJECTS.PLAYER, playerObject)
+
+    // subscribe to move
+    uiService.subscribeToPlayerMovements({moveLeft, moveRight})
+    uiService.subscribeToPlayerMovements({moveTop, moveBottom})
+
+    updateSettings({screenOptions, gameMode})
+
+    log(`[playerService] initialized`)
+}
+
+const updateSettings = ({screenOptions, gameMode}) => {
     playerConfig = screenOptions.playerConfig || playerConfig
     gMode = gameMode
-
-    playerObject = objects.get(OBJECTS.PLAYER)
 
     // setup player scale and positioning
     playerObject.transform.scaleX = playerConfig.SCALE_X
@@ -28,17 +39,9 @@ const init = ({screenOptions, gameMode}) => {
     playerObject.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
     playerObject.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
 
-    player = new Player(OBJECTS.PLAYER, playerObject)
-
     player.setMaterial(materials.get(playerConfig.MATERIAL))
 
-    // subscribe to move
-    uiService.subscribeToPlayerMovements({moveLeft, moveRight})
-    if (!gMode.allowDrop) {
-        uiService.subscribeToPlayerMovements({moveTop, moveBottom})
-    }
-
-    log(`[playerService] initialized`)
+    // log(`[playerService] settings updated`)
 }
 
 const getSides = () => player.getSides()
@@ -47,9 +50,15 @@ const moveLeft = () => player.moveLeft()
 
 const moveRight = () => player.moveRight()
 
-const moveTop = () => player.moveTop()
+const moveTop = () => {
+    if (gMode.allowDrop) return
+    player.moveTop()
+}
 
-const moveBottom = () => player.moveBottom()
+const moveBottom = () => {
+    if (gMode.allowDrop) return
+    player.moveBottom()
+}
 
 
 const playerService = {
@@ -58,7 +67,8 @@ const playerService = {
     moveLeft,
     moveRight,
     moveTop,
-    moveBottom
+    moveBottom,
+    updateSettings
 }
 
 export default playerService
