@@ -1,8 +1,10 @@
 const Animation = require('Animation')
 const Diagnostics = require('Diagnostics')
 const Materials = require('Materials')
+const NativeUI = require('NativeUI'); 
 const Patches = require('Patches')
 const Scene = require('Scene')
+const Textures = require('Textures');
 const Time = require('Time')
 const TouchGestures = require('TouchGestures')
 
@@ -70,6 +72,8 @@ export const unregisterTap = (tapSubscription) => tapSubscription.unsubscribe()
 export const findMe = (identifier) => Scene.root.findFirst(identifier)
 
 export const findMaterial = (identifier) => Materials.findFirst(identifier)
+
+export const findTexture = (identifier) => Textures.findFirst(identifier)
 
 export const setMaterial = (element, material) => {
     if (material) {

@@ -26,6 +26,8 @@ import Game from './game'
 // new services and so on
 import materials from './materials'
 import objects from './objects'
+import textures from './textures'
+import uiPicker from './uiPicker'
 
 import { PLAYER_TRACTOR } from './playerConstants'
 import { EGG_VIRUS_BLUE, EGG_VIRUS_RED, EGG_MASK_GREEN } from './eggConstants'
@@ -70,6 +72,10 @@ const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInterac
     }, pauseBeforeInteractionResult)
     moveRoad(false)
     log(`--- -- - game finised - -- - total score: ${eggs} eggs, ${energyUsed} energy used, time: ${Math.floor(time/1000)} seconds - -- ---`)
+}
+
+const modeChangedCallback = (playerSettings) => {
+    log(`MODE CHANGED: '${playerSettings.screenOptions.playerConfig.ID}'`)
 }
 
 const startPlaying = () => {
@@ -188,15 +194,19 @@ const servicesOptions = {
     gamepadServiceOptions: {
         // play / pause the Game
         togglePlay: () => game.togglePlay()
-    }
+    },
+
+    modeChangedCallback
 }
 
 Promise.all([
     materials.init(),
     objects.init(),
+    textures.init(),
 ])
 .then(() => {
     return Promise.all([
+        uiPicker.init(servicesOptions),
         deviceService.init(),
         energyService.init(servicesOptions),
         eggService.init(servicesOptions),
