@@ -28,7 +28,8 @@ export const MATERIALS = {
     CUCU_LEFT: 'cucu-left',
     CUCU_RIGHT: 'cucu-right',
     PINK_LEFT: 'pink-left',
-    PINK_RIGHT: 'pink-right'
+    PINK_RIGHT: 'pink-right',
+    TRANSPARENT: 'transparent',
 }
 
 let array = {}

@@ -30,6 +30,13 @@ export const OBJECTS = {
     LINE_RIGHT_TOP: 'right-top',
     LINE_LEFT_BOTTOM: 'left-bottom',
     LINE_RIGHT_BOTTOM: 'right-bottom',
+
+    AVOID0: 'avoid0',
+    AVOID1: 'avoid1',
+    AVOID2: 'avoid2',
+    COLLECT0: 'collect0',
+    COLLECT1: 'collect1',
+    COLLECT2: 'collect2',
 }
 
 let array = {}

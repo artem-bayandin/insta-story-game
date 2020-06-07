@@ -1,8 +1,8 @@
-import { subscribeToPatchPulse, sendScalarToPatch, setupUiElement, log } from './utils'
+import { subscribeToPatchPulse, sendScalarToPatch, setupUiElement, log, setMaterial } from './utils'
 import { PATCHES, STATS_LINE_BG, LINES, STAT_TXT, OUT_OF_THE_SCREEN, AVOID_COLLECT_POSITION, FINAL_STATS_POSITION, TOPROW_ICON_COORDINATES } from './commonConstants'
 
 import objects, { OBJECTS } from './objects'
-import materials from './materials'
+import materials, { MATERIALS } from './materials'
 
 const setupElement = (id, config) => {
     const material = materials.get(config.MATERIAL)
@@ -12,6 +12,8 @@ const setupElement = (id, config) => {
 
 let options = null
 let eggProbability = null
+const maxKillerEggs = 3
+const maxHealerEggs = 3
 
 const init = ({UI, screenOptions, eggOptions}) => {
     updateSettings({screenOptions, eggOptions})
@@ -29,10 +31,14 @@ const init = ({UI, screenOptions, eggOptions}) => {
         , setupElement(OBJECTS.LINE_RIGHT_TOP, LINES.RIGHT_TOP)
         , setupElement(OBJECTS.LINE_LEFT_BOTTOM, LINES.LEFT_BOTTOM)
         , setupElement(OBJECTS.LINE_RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
-        , setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER)
-        , setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL)
-        , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
-        , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
+        // , setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER)
+        // , setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL)
+        // , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
+        // , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
+        , setupElement(OBJECTS.TXT_TIMER, {MATERIAL: MATERIALS.TRANSPARENT})
+        , setupElement(OBJECTS.TXT_LEVEL, {MATERIAL: MATERIALS.TRANSPARENT})
+        , setupElement(OBJECTS.TXT_EGGS, {MATERIAL: MATERIALS.TRANSPARENT})
+        , setupElement(OBJECTS.TXT_LIVES, {MATERIAL: MATERIALS.TRANSPARENT})
     ]).then(() => log(`[uiService] initialized`))
 }
 
@@ -62,32 +68,27 @@ const initAvoidCollect = () => {
         log('there should be at least 1 killer egg')
         return
     }
-    if (eggProbability.length > 4) {
-        if (!healerEggs.length) killerEggs.length = 4
-        else if (healerEggs.length == 1) killerEggs.length = 3
-        else if (healerEggs.length == 2) killerEggs.length = 2
-        else {
-            healerEggs.length = 2
-            killerEggs.length = 2
+    
+    for (let i = 0; i < killerEggs.length && i < maxKillerEggs; i++) {
+        let name = `avoid${i}`
+        setMaterial(objects.get(name), materials.get(killerEggs[i][0].STAT_ICON.MATERIAL))
+    }
+    if (killerEggs.length < maxKillerEggs) {
+        for (let i = killerEggs.length; i < maxKillerEggs; i++) {
+            let name = `avoid${i}`
+            setMaterial(objects.get(name), materials.get(MATERIALS.TRANSPARENT))
         }
     }
 
-    const iconArray = [ OBJECTS.ICON_STOPWATCH, OBJECTS.ICON_LEVEL, OBJECTS.ICON_EGG, OBJECTS.ICON_LIVES]
-
-    const avoid = AVOID_COLLECT_POSITION.AVOID
-    for (var i = 0; i < killerEggs.length; i++) {
-        const currentEgg = killerEggs[i][0]
-        let position = { X: avoid.START.X + avoid.STEP.X * i, Y: avoid.START.Y + avoid.STEP.Y }
-        let config = { ...currentEgg.STAT_ICON, ...position, ...currentEgg.AC_ICON }
-        setupElement(iconArray[i], config)
+    for (let i = 0; i < healerEggs.length && i < maxHealerEggs; i++) {
+        let name = `collect${i}`
+        setMaterial(objects.get(name), materials.get(healerEggs[i][0].STAT_ICON.MATERIAL))
     }
-
-    const collect = AVOID_COLLECT_POSITION.COLLECT
-    for (var i = 0; i < healerEggs.length; i++) {
-        const currentEgg = healerEggs[i][0]
-        let position = { X: collect.START.X + collect.STEP.X * i, Y: collect.START.Y + collect.STEP.Y }
-        let config = { ...currentEgg.STAT_ICON, ...position, ...currentEgg.AC_ICON }
-        setupElement(iconArray[i + killerEggs.length], config)
+    if (healerEggs.length < maxHealerEggs) {
+        for (let i = healerEggs.length; i < maxHealerEggs; i++) {
+            let name = `collect${i}`
+            setMaterial(objects.get(name), materials.get(MATERIALS.TRANSPARENT))
+        }
     }
 }
 
