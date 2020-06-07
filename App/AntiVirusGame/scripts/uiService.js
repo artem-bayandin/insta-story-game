@@ -26,19 +26,19 @@ const init = ({UI, screenOptions, eggOptions}) => {
     // if (playerCoordMaxBottom !== undefined) sendScalarToPatch(PATCHES.INPUTS.PLAYER_COORDS.MAX_BOTTOM, playerCoordMaxBottom)
 
     return Promise.all([
-          setupElement(OBJECTS.ICON_STATS_LINE_BG, STATS_LINE_BG)
-        , setupElement(OBJECTS.LINE_LEFT_TOP, LINES.LEFT_TOP)
-        , setupElement(OBJECTS.LINE_RIGHT_TOP, LINES.RIGHT_TOP)
-        , setupElement(OBJECTS.LINE_LEFT_BOTTOM, LINES.LEFT_BOTTOM)
-        , setupElement(OBJECTS.LINE_RIGHT_BOTTOM, LINES.RIGHT_BOTTOM)
-        // , setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER)
-        // , setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL)
-        // , setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS)
-        // , setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES)
-        , setupElement(OBJECTS.TXT_TIMER, {MATERIAL: MATERIALS.TRANSPARENT})
-        , setupElement(OBJECTS.TXT_LEVEL, {MATERIAL: MATERIALS.TRANSPARENT})
-        , setupElement(OBJECTS.TXT_EGGS, {MATERIAL: MATERIALS.TRANSPARENT})
-        , setupElement(OBJECTS.TXT_LIVES, {MATERIAL: MATERIALS.TRANSPARENT})
+        // setupElement(OBJECTS.ICON_STATS_LINE_BG, STATS_LINE_BG),
+        setupElement(OBJECTS.LINE_LEFT_TOP, LINES.LEFT_TOP),
+        setupElement(OBJECTS.LINE_RIGHT_TOP, LINES.RIGHT_TOP),
+        setupElement(OBJECTS.LINE_LEFT_BOTTOM, LINES.LEFT_BOTTOM),
+        setupElement(OBJECTS.LINE_RIGHT_BOTTOM, LINES.RIGHT_BOTTOM),
+        // setupElement(OBJECTS.TXT_TIMER, STAT_TXT.TIMER),
+        // setupElement(OBJECTS.TXT_LEVEL, STAT_TXT.LEVEL),
+        // setupElement(OBJECTS.TXT_EGGS, STAT_TXT.EGGS),
+        // setupElement(OBJECTS.TXT_LIVES, STAT_TXT.LIVES),
+        // setupElement(OBJECTS.TXT_TIMER, {MATERIAL: MATERIALS.TRANSPARENT}),
+        // setupElement(OBJECTS.TXT_LEVEL, {MATERIAL: MATERIALS.TRANSPARENT}),
+        // setupElement(OBJECTS.TXT_EGGS, {MATERIAL: MATERIALS.TRANSPARENT}),
+        // setupElement(OBJECTS.TXT_LIVES, {MATERIAL: MATERIALS.TRANSPARENT}),
     ]).then(() => log(`[uiService] initialized`))
 }
 
@@ -49,19 +49,27 @@ const updateSettings = ({screenOptions, eggOptions}) => {
     // log(`[uiService] settings updated`)
 }
 
+const convertToNewScale = (config) => {
+    return {
+        SCALE_X: config.SCALE_X / 1000,
+        SCALE_Y: config.SCALE_Y / 1000
+    }
+}
+
 const initTopRowIcons = () => {
     const { eggCounterIconConfig, liveCounterIconConfig, levelCounterIconConfig, stopwatchCounterIconConfig } = options
+
+    log(`NEW LIVE: ${OBJECTS.ICON_LIVES} :: ${JSON.stringify(convertToNewScale(liveCounterIconConfig))} :: ${!!materials.get(liveCounterIconConfig.MATERIAL)}`)
+
     return Promise.all([
-        setupElement(OBJECTS.ICON_STOPWATCH, {...stopwatchCounterIconConfig, ...TOPROW_ICON_COORDINATES.STOPWATCH})
-        , setupElement(OBJECTS.ICON_LEVEL, {...levelCounterIconConfig, ...TOPROW_ICON_COORDINATES.LEVEL})
-        , setupElement(OBJECTS.ICON_EGG, {...eggCounterIconConfig, ...TOPROW_ICON_COORDINATES.EGG})
-        , setupElement(OBJECTS.ICON_LIVES, {...liveCounterIconConfig, ...TOPROW_ICON_COORDINATES.LIVES})
+        setupUiElement(objects.get(OBJECTS.ICON_STOPWATCH), convertToNewScale(stopwatchCounterIconConfig), materials.get(stopwatchCounterIconConfig.MATERIAL)),
+        setupUiElement(objects.get(OBJECTS.ICON_LEVEL), convertToNewScale(levelCounterIconConfig), materials.get(levelCounterIconConfig.MATERIAL)),
+        setupUiElement(objects.get(OBJECTS.ICON_EGG), convertToNewScale(eggCounterIconConfig), materials.get(eggCounterIconConfig.MATERIAL)),
+        setupUiElement(objects.get(OBJECTS.ICON_LIVES), convertToNewScale(liveCounterIconConfig), materials.get(liveCounterIconConfig.MATERIAL)),
     ])
 }
 
 const initAvoidCollect = () => {
-    if (eggProbability.length == 3) setupElement(OBJECTS.ICON_LIVES, OUT_OF_THE_SCREEN.STAT_ICON)
-    else if (eggProbability.length == 2) setupElement(OBJECTS.ICON_EGG, OUT_OF_THE_SCREEN.STAT_ICON)
     let killerEggs = eggProbability.filter(item => item[0].WEIGHT < 0)
     let healerEggs = eggProbability.filter(item => item[0].WEIGHT > 0)
     if (!killerEggs.length) {
@@ -71,7 +79,7 @@ const initAvoidCollect = () => {
     
     for (let i = 0; i < killerEggs.length && i < maxKillerEggs; i++) {
         let name = `avoid${i}`
-        setMaterial(objects.get(name), materials.get(killerEggs[i][0].STAT_ICON.MATERIAL))
+        setupUiElement(objects.get(name), convertToNewScale(killerEggs[i][0].AC_ICON), materials.get(killerEggs[i][0].STAT_ICON.MATERIAL))
     }
     if (killerEggs.length < maxKillerEggs) {
         for (let i = killerEggs.length; i < maxKillerEggs; i++) {
@@ -82,7 +90,7 @@ const initAvoidCollect = () => {
 
     for (let i = 0; i < healerEggs.length && i < maxHealerEggs; i++) {
         let name = `collect${i}`
-        setMaterial(objects.get(name), materials.get(healerEggs[i][0].STAT_ICON.MATERIAL))
+        setupUiElement(objects.get(name), convertToNewScale(healerEggs[i][0].AC_ICON), materials.get(healerEggs[i][0].STAT_ICON.MATERIAL))
     }
     if (healerEggs.length < maxHealerEggs) {
         for (let i = healerEggs.length; i < maxHealerEggs; i++) {
@@ -99,19 +107,19 @@ const subscribeToPlayerMovements = ({moveLeft = null, moveRight = null, moveTop 
     if (moveBottom && typeof(moveBottom) === 'function') subscribeToPatchPulse(PATCHES.OUTPUTS.MOVE_PLAYER.BOTTOM, moveBottom)
 }
 
-const moveToStats = () => {
-    setupElement(OBJECTS.ICON_STOPWATCH, FINAL_STATS_POSITION.TIMER.ICON)
-    setupElement(OBJECTS.ICON_LEVEL, FINAL_STATS_POSITION.LEVEL.ICON)
-    setupElement(OBJECTS.ICON_EGG, FINAL_STATS_POSITION.EGGS.ICON)
-    setupElement(OBJECTS.ICON_LIVES, FINAL_STATS_POSITION.LIVES.ICON)
-}
+// const moveToStats = () => {
+//     setupElement(OBJECTS.ICON_STOPWATCH, FINAL_STATS_POSITION.TIMER.ICON)
+//     setupElement(OBJECTS.ICON_LEVEL, FINAL_STATS_POSITION.LEVEL.ICON)
+//     setupElement(OBJECTS.ICON_EGG, FINAL_STATS_POSITION.EGGS.ICON)
+//     setupElement(OBJECTS.ICON_LIVES, FINAL_STATS_POSITION.LIVES.ICON)
+// }
 
 const uiService = {
     init,
     subscribeToPlayerMovements,
     initTopRowIcons,
     initAvoidCollect,
-    moveToStats,
+    // moveToStats,
     updateSettings
 }
 

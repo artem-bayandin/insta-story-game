@@ -40,6 +40,7 @@ const showMenu = () => {
     setRoadSpeed(0)
     moveRoad(true)
     uiService.initAvoidCollect()
+
     // setTimeout(() => {
     //     log(`remove the next line in production`)
     //     startPlaying() // TODO: remove this in production
@@ -51,9 +52,7 @@ const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInterac
         const winnerResult = winner ? INTERACTION_RESULTS.WIN : INTERACTION_RESULTS.GAME_OVER
         setBooleanToPatch(PATCHES.INPUTS.GAME_OVER, true)
         eggService.hideAll()
-        uiService.moveToStats()
         textService.setText(level, eggs, energyUsed)
-        textService.moveToStats()
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
     moveRoad(false)
@@ -63,7 +62,6 @@ const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInterac
 const modeChangedCallback = (playerSettings, hardUpdate = false) => {
     const prevSettingsId = currentPlayerOptions.screenOptions.playerConfig.ID
     const nextSettingsId = playerSettings.screenOptions.playerConfig.ID
-    // log(`MODE CHANGED: '${prevSettingsId}' => '${nextSettingsId}'`)
     if (prevSettingsId === nextSettingsId && !hardUpdate) {
         return
     }
@@ -72,6 +70,7 @@ const modeChangedCallback = (playerSettings, hardUpdate = false) => {
     playerService.updateSettings(playerSettings)
     uiService.updateSettings(playerSettings)
     uiService.initAvoidCollect()
+    uiService.initTopRowIcons()
 
     currentPlayerOptions = playerSettings
 }
@@ -79,10 +78,8 @@ const modeChangedCallback = (playerSettings, hardUpdate = false) => {
 const startPlaying = () => {
     textService.setText(0, 0, energyService.capacityLeft())
     textService.setTime(0)
-    uiService.initTopRowIcons().then(() => {
-        game.play()
-        setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
-    })
+    game.play()
+    setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
 }
 
 const stopPlaying = () => {

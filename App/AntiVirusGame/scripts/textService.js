@@ -19,7 +19,6 @@ const init = () => {
     txtLives = new TxtScore(OBJECTS.TXT_LIVES, objects.get(OBJECTS.TXT_LIVES))
     txtTimer = new TxtScore(OBJECTS.TXT_TIMER, objects.get(OBJECTS.TXT_TIMER))
     txtInteraction = new TxtScore(OBJECTS.TXT_INTERACTION, objects.get(OBJECTS.TXT_INTERACTION))
-    txtInteraction.moveTo(INTERACTION_POSITION.INITIAL.X, INTERACTION_POSITION.INITIAL.Y, INTERACTION_POSITION.SPEED)
     log(`[textService] initialized`)
 }
 
@@ -36,12 +35,6 @@ const setTime = (ms) => {
 
 const setInteractionResult = (text, duration = 0) => {
     txtInteraction.setText(text)
-    // todo: what if avoid this somehow? switch to sending a signal to UI to start showing animation
-    // if (+duration > 0) {
-    //     setTimeout(() => {
-    //         txtInteraction.clearText()
-    //     }, duration)
-    // }
 }
 
 const clearAll = () => {
@@ -51,13 +44,13 @@ const clearAll = () => {
     txtLives.clearText()
 }
 
-const moveToStats = () => {
-    txtInteraction.moveTo(INTERACTION_POSITION.FINAL.X, INTERACTION_POSITION.FINAL.Y, INTERACTION_POSITION.SPEED)
-    setupUiElement(txtTimer.getObj(), FINAL_STATS_POSITION.TIMER.TEXT)
-    setupUiElement(txtLevel.getObj(), FINAL_STATS_POSITION.LEVEL.TEXT)
-    setupUiElement(txtEggs.getObj(), FINAL_STATS_POSITION.EGGS.TEXT)
-    setupUiElement(txtLives.getObj(), FINAL_STATS_POSITION.LIVES.TEXT)
-}
+// const moveToStats = () => {
+//     txtInteraction.moveTo(INTERACTION_POSITION.FINAL.X, INTERACTION_POSITION.FINAL.Y, INTERACTION_POSITION.SPEED)
+//     setupUiElement(txtTimer.getObj(), FINAL_STATS_POSITION.TIMER.TEXT)
+//     setupUiElement(txtLevel.getObj(), FINAL_STATS_POSITION.LEVEL.TEXT)
+//     setupUiElement(txtEggs.getObj(), FINAL_STATS_POSITION.EGGS.TEXT)
+//     setupUiElement(txtLives.getObj(), FINAL_STATS_POSITION.LIVES.TEXT)
+// }
 
 const textService = {
     init,
@@ -65,7 +58,7 @@ const textService = {
     setTime,
     setInteractionResult,
     clearAll,
-    moveToStats
+    // moveToStats
 }
 
 export default textService
