@@ -6,7 +6,7 @@ import playerService from './playerService'
 import textService from './textService'
 // import gamepadService from './gamepadService'
 import uiService from './uiService'
-import deviceService from './deviceService'
+// import deviceService from './deviceService'
 import Game from './game'
 
 // new services and so on
@@ -41,10 +41,10 @@ const showMenu = () => {
     moveRoad(true)
     uiService.initAvoidCollect()
 
-    setTimeout(() => {
-        log(`remove the next line in production`)
-        startPlaying() // TODO: remove this in production
-    }, 1000)
+    // setTimeout(() => {
+    //     log(`remove the next line in production`)
+    //     startPlaying() // TODO: remove this in production
+    // }, 1000)
 }
 
 const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
@@ -204,14 +204,14 @@ Promise.all([
 .then(() => {
     return Promise.all([
         uiPicker.init(servicesOptions),
-        deviceService.init(),
+        // deviceService.init(),
         energyService.init(servicesOptions),
         eggService.init(servicesOptions),
         textService.init(),
     ])
 })
 .then(() => {
-    log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)   // Xiaomi: 1080 : 2260 : 2.75
+    // log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)   // Xiaomi: 1080 : 2260 : 2.75
     return Promise.all([
         uiService.init(servicesOptions),
     ])
