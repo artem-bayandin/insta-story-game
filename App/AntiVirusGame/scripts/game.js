@@ -189,7 +189,7 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         }
         timeInterval = setInterval(() => {
             timeCounter += timeIntervalDuration
-            log (`current: ${timeCounter} limit: ${timeLimitMs}`)
+            // log (`current: ${timeCounter} limit: ${timeLimitMs}`)
             if (timeCounter > timeLimitMs) {
                 stop()
             } else {

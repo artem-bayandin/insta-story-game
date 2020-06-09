@@ -5,6 +5,7 @@ import { PLAYER_TRACTOR, PLAYER_POSITION_DEFAULTS } from './playerConstants'
 import uiService from './uiService'
 import materials from './materials'
 import objects, { OBJECTS } from './objects'
+import { SIDE } from './commonConstants'
 
 /*
  *  PLAYER SERVICE 
@@ -14,6 +15,7 @@ let player = null
 let playerObject = null
 let playerConfig = PLAYER_TRACTOR
 let gMode = null
+let side = SIDE.NEUTRAL
 
 const init = ({screenOptions, gameMode}) => {
     playerObject = objects.get(OBJECTS.PLAYER)
@@ -21,7 +23,7 @@ const init = ({screenOptions, gameMode}) => {
 
     // subscribe to move
     uiService.subscribeToPlayerMovements({moveLeft, moveRight})
-    uiService.subscribeToPlayerMovements({moveTop, moveBottom})
+    // uiService.subscribeToPlayerMovements({moveTop, moveBottom})
 
     updateSettings({screenOptions, gameMode})
 
@@ -36,38 +38,37 @@ const updateSettings = ({screenOptions, gameMode}) => {
     playerObject.transform.scaleX = playerConfig.SCALE_X
     playerObject.transform.scaleY = playerConfig.SCALE_Y
 
-    playerObject.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
-    playerObject.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
+    // playerObject.transform.x = PLAYER_POSITION_DEFAULTS.X_DEFAULT
+    // playerObject.transform.y = gMode.allowDrop ? PLAYER_POSITION_DEFAULTS.Y_ONLY_X : PLAYER_POSITION_DEFAULTS.Y_DEFAULT 
 
     player.setMaterial(materials.get(playerConfig.MATERIAL))
 
     // log(`[playerService] settings updated`)
 }
 
-const getSides = () => player.getSides()
+const getSides = () => [ side, SIDE.NEUTRAL ] // player.getSides()
 
-const moveLeft = () => player.moveLeft()
+const moveLeft = () => side = SIDE.LEFT // player.moveLeft()
 
-const moveRight = () => player.moveRight()
+const moveRight = () => side = SIDE.RIGHT // player.moveRight()
 
-const moveTop = () => {
-    if (gMode.allowDrop) return
-    player.moveTop()
-}
+// const moveTop = () => {
+//     if (gMode.allowDrop) return
+//     player.moveTop()
+// }
 
-const moveBottom = () => {
-    if (gMode.allowDrop) return
-    player.moveBottom()
-}
-
+// const moveBottom = () => {
+//     if (gMode.allowDrop) return
+//     player.moveBottom()
+// }
 
 const playerService = {
     init,
     getSides,
     moveLeft,
     moveRight,
-    moveTop,
-    moveBottom,
+    // moveTop,
+    // moveBottom,
     updateSettings
 }
 
