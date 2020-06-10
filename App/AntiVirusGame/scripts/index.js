@@ -102,7 +102,7 @@ const gameOptions = {
     levelUpCallback: setRoadSpeed,
     gameSpeedOptions: {
         initialGameSpeed: 1250,
-        maxGameSpeed: 220,
+        maxGameSpeed: 200,
         gameSpeeds: [ {
             step: 150,
             delimiter: 950
