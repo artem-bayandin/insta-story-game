@@ -6,7 +6,8 @@ import textService from './textService'
 import { INTERACTION_RESULTS } from './commonConstants'
 
 const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, gameMode }) => {
-    const { initialGameSpeed, maxGameSpeed, initialStageCapacity, gameSpeeds } = gameSpeedOptions    
+    const { initialGameSpeed, maxGameSpeed, initialStageCapacity } = gameSpeedOptions   
+    const gameSpeeds = [...gameSpeedOptions.gameSpeeds] 
     
     let allowDrop = false
     let collect = false
@@ -170,13 +171,14 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
 
     const exit = () => {
         gameOver = true
+        playing = false
         textService.setTime(timeCounter + timeIntervalDuration)
         clearTimerInterval()
         exitCallback({
             eggs: droppedCounter, 
             time: new Date().getTime() - timestamp, 
             winner: false, 
-            energyUsed: energyService.energyUsed(),
+            // energyUsed: energyService.energyUsed(),
             level
         }) // , pauseBeforeInteractionResult: maxInteractionPause})
     }
@@ -189,7 +191,6 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
         }
         timeInterval = setInterval(() => {
             timeCounter += timeIntervalDuration
-            // log (`current: ${timeCounter} limit: ${timeLimitMs}`)
             if (timeCounter > timeLimitMs) {
                 stop()
             } else {
@@ -244,13 +245,16 @@ const Game = ({ exitCallback, levelUpCallback, gameSpeedOptions, energyOptions, 
 
     const isOver = () => gameOver
 
+    const isRunning = () => playing
+
     return {
         play,
         pause,
         stop,
         togglePlay,
         isOver,
-        updateSettings
+        updateSettings,
+        isRunning
     }
 }
 

@@ -1,12 +1,10 @@
-import { log, setTimeout, setBooleanToPatch, sendScalarToPatch, subscribeToPatchBoolean } from './utils'
+import { log, setTimeout, setBooleanToPatch, sendScalarToPatch, subscribeToPatchBoolean, subscribeToPatchPulse } from './utils'
 
 import energyService from './energyService'
 import eggService from './eggService'
 import playerService from './playerService'
 import textService from './textService'
-// import gamepadService from './gamepadService'
 import uiService from './uiService'
-// import deviceService from './deviceService'
 import Game from './game'
 
 // new services and so on
@@ -23,8 +21,6 @@ import { faceOptions, tractorOptions, mustacheOptions, bumagaOptions, rickOption
 
 let currentPlayerOptions = rickOptions
 
-const moveRoad = (doMove) => setBooleanToPatch(PATCHES.INPUTS.ROAD.MOVE, !!doMove)
-
 const minRoadSpeed = 7
 const maxRoadSpeed = 1
 const roadSpeedStep = 0.4
@@ -35,64 +31,59 @@ const setRoadSpeed = (level) => {
 }
 
 const showMenu = () => {    
-    log(`- -- --- ---- ----- ------ ------- script started on ${new Date()} ------- ------ ----- ---- --- -- -`)
     textService.clearAll()
     setRoadSpeed(0)
-    moveRoad(true)
     uiService.initAvoidCollect()
-
-    // setTimeout(() => {
-    //     log(`remove the next line in production`)
-    //     startPlaying() // TODO: remove this in production
-    // }, 1000)
 }
 
-const exitCallback = ({eggs, time, energyUsed, winner, level, pauseBeforeInteractionResult = 500}) => {
+const exitCallback = ({eggs, time, /* energyUsed,*/ winner, level, pauseBeforeInteractionResult = 500}) => {
     setTimeout(() => {
         const winnerResult = winner ? INTERACTION_RESULTS.WIN : INTERACTION_RESULTS.GAME_OVER
-        setBooleanToPatch(PATCHES.INPUTS.GAME_OVER, true)
+        setBooleanToPatch(PATCHES.INPUTS.PLAYING, false)
         eggService.hideAll()
-        textService.setText(level, eggs, energyUsed)
+        textService.setText(level, eggs, 0)
         textService.setInteractionResult(winnerResult)
     }, pauseBeforeInteractionResult)
-    moveRoad(false)
-    log(`--- -- - game finised - -- - total score: ${eggs} eggs, ${energyUsed} energy used, time: ${Math.floor(time/1000)} seconds - -- ---`)
+    log(`--- -- - game finised - -- - total score: ${eggs} eggs, ${energyService.energyUsed()} energy used, time: ${Math.floor(time/1000)} seconds - -- ---`)
+
+    uiPicker.show()
 }
 
 const modeChangedCallback = (playerSettings, hardUpdate = false) => {
-    const prevSettingsId = currentPlayerOptions.screenOptions.playerConfig.ID
-    const nextSettingsId = playerSettings.screenOptions.playerConfig.ID
-    if (prevSettingsId === nextSettingsId && !hardUpdate) {
-        return
+    if (!game.isRunning()) {
+        const prevSettingsId = currentPlayerOptions.screenOptions.playerConfig.ID
+        const nextSettingsId = playerSettings.screenOptions.playerConfig.ID
+        if (prevSettingsId === nextSettingsId && !hardUpdate) {
+            return
+        }
+        game.updateSettings(playerSettings)
+        eggService.updateSettings(playerSettings)
+        playerService.updateSettings(playerSettings)
+        uiService.updateSettings(playerSettings)
+        uiService.initAvoidCollect()
+        uiService.initTopRowIcons()
+
+        currentPlayerOptions = playerSettings
     }
-    game.updateSettings(playerSettings)
-    eggService.updateSettings(playerSettings)
-    playerService.updateSettings(playerSettings)
-    uiService.updateSettings(playerSettings)
-    uiService.initAvoidCollect()
-    uiService.initTopRowIcons()
-
-    currentPlayerOptions = playerSettings
 }
 
-const startPlaying = () => {
-    textService.setText(0, 0, energyService.capacityLeft())
-    textService.setTime(0)
-    game.play()
-    setBooleanToPatch(PATCHES.INPUTS.GAME_STARTED, true)
-}
-
-const stopPlaying = () => {
-    game.stop()
-}
-
-subscribeToPatchBoolean(PATCHES.OUTPUTS.VIDEO_RECORDING, (options) => {
-    if (game.isOver()) return
-    if (options.newValue) {
+subscribeToPatchPulse(PATCHES.OUTPUTS.TAPPED, (options) => {
+    if (game.isOver() || !game.isRunning()) {
         uiPicker.hide()
-        startPlaying()
-    } else if (options.oldValue !== undefined) {
-        stopPlaying()
+        textService.setText(0, 0, energyService.capacityLeft())
+        textService.setTime(0)
+        textService.setInteractionResult(' ')
+        
+        const newOptions = {
+            ...gameOptions,
+            currentPlayerOptions
+        }
+        energyService.reset(newOptions)
+
+        game = new Game(newOptions)
+        game.play()
+
+        setBooleanToPatch(PATCHES.INPUTS.PLAYING, true)
     }
 })
 
@@ -102,7 +93,7 @@ const gameOptions = {
     levelUpCallback: setRoadSpeed,
     gameSpeedOptions: {
         initialGameSpeed: 1250,
-        maxGameSpeed: 200,
+        maxGameSpeed: 250,
         gameSpeeds: [ {
             step: 150,
             delimiter: 950
@@ -121,7 +112,7 @@ const gameOptions = {
     },
     energyOptions: {
         // initial number of lives
-        initial: 5,
+        initial: 3,
         // if X items are dropped - add 1 live
         increaseWhenDropped: 10,
         maxLevelToAddLiveWhenEggDropped: 10
@@ -183,14 +174,14 @@ const gameAndPlayerOptions = {
     ...currentPlayerOptions
 }
 
-const game = new Game(gameOptions)
+let game = new Game(gameOptions)
 
 const servicesOptions = {
     ...gameAndPlayerOptions,
     
     gamepadServiceOptions: {
         // play / pause the Game
-        togglePlay: () => game.togglePlay()
+        togglePlay: () => log(`'togglePlay' is disabled for now`) // game.togglePlay()
     },
 
     modeChangedCallback
@@ -211,7 +202,6 @@ Promise.all([
     ])
 })
 .then(() => {
-    // log(`DEVICE SETTINGS: ${JSON.stringify(deviceService.settings)}`)   // Xiaomi: 1080 : 2260 : 2.75
     return Promise.all([
         uiService.init(servicesOptions),
     ])

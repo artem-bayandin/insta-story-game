@@ -63,9 +63,14 @@ const hide = () => {
     picker.visible = false
 }
 
+const show = () => {
+    picker.visible = true
+}
+
 const uiPicker = {
     init,
-    hide
+    hide,
+    show
 }
 
 export default uiPicker

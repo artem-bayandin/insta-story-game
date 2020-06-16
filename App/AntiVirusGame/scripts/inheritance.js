@@ -1,4 +1,4 @@
-import { linearSamplerFromTo, animateScale, animateMove, timeDriver, MOVE_TYPES, log } from './utils'
+import { linearSamplerFromTo, animateScale, animateMove, timeDriver, MOVE_TYPES, log, setScale, setPosition } from './utils'
 
 /*
  *  GENERAL CREATORS
@@ -62,30 +62,18 @@ export const createWithShowHide = (obj, speed = 0, scaleX = 0, scaleY = 0) => {
     let _scaleY = scaleY
 
     const show = ({speed = 0, scaleX = 0, scaleY = 0} = {speed: 0, scaleX: 0, scaleY: 0}) => {
-        const [ s, x, y ] = [ speed || _speed, scaleX || _scaleX, scaleY || _scaleY ]
-        if (isVisible() || !(s > 0 && x > 0 && y > 0)) return
-        animateScale(obj
-            , timeDriver(s)
-            , linearSamplerFromTo(0, x)
-            , linearSamplerFromTo(0, y)
-        )
+        setScale(obj, scaleX || _scaleX, scaleY || _scaleY)
         setVisibility(true)
     }
 
     const hide = ({speed = 1} = {speed: 1}) => {
-        const s = speed || _speed
-        if (!isVisible()) return
-        animateScale(obj
-            , timeDriver(s)
-            , linearSamplerFromTo(obj.transform.scaleX.pinLastValue(), 0)
-            , linearSamplerFromTo(obj.transform.scaleY.pinLastValue(), 0)
-        )
+        setScale(obj, 0, 0)
         setVisibility(false)
     }
 
-    const setVisibility = (value) => _isVisible = value
+    const setVisibility = (value) => obj.visible = value // _isVisible = value
 
-    const isVisible = () => _isVisible
+    const isVisible = () => obj.visible // _isVisible
 
     return {
         show,
@@ -96,12 +84,19 @@ export const createWithShowHide = (obj, speed = 0, scaleX = 0, scaleY = 0) => {
 }
 
 export const createWithMove = (obj, type = MOVE_TYPES.LINEAR, maxDelay = 0) => {
-    const moveTo = (x, y, speed, onCompleted = null) => {
-        let driver = timeDriver(speed)
-        if (onCompleted && typeof(onCompleted) === 'function') {
-            driver.onCompleted().subscribe(onCompleted)
+    const moveTo = (x, y, speed = 0, onCompleted = null) => {
+        if (speed) {
+            let driver = timeDriver(speed)
+            if (onCompleted && typeof(onCompleted) === 'function') {
+                driver.onCompleted().subscribe(onCompleted)
+            }
+            animateMove(obj, driver, { x, y }, type)
+        } else {
+            setPosition(obj, x, y)
+            if (onCompleted && typeof(onCompleted) === 'function') {
+                onCompleted()
+            }
         }
-        animateMove(obj, driver, { x, y }, type)
     }
 
     return {

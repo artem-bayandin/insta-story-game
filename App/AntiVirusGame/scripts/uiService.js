@@ -59,8 +59,6 @@ const convertToNewScale = (config) => {
 const initTopRowIcons = () => {
     const { eggCounterIconConfig, liveCounterIconConfig, levelCounterIconConfig, stopwatchCounterIconConfig } = options
 
-    log(`NEW LIVE: ${OBJECTS.ICON_LIVES} :: ${JSON.stringify(convertToNewScale(liveCounterIconConfig))} :: ${!!materials.get(liveCounterIconConfig.MATERIAL)}`)
-
     return Promise.all([
         setupUiElement(objects.get(OBJECTS.ICON_STOPWATCH), convertToNewScale(stopwatchCounterIconConfig), materials.get(stopwatchCounterIconConfig.MATERIAL)),
         setupUiElement(objects.get(OBJECTS.ICON_LEVEL), convertToNewScale(levelCounterIconConfig), materials.get(levelCounterIconConfig.MATERIAL)),

@@ -33,15 +33,16 @@ const setTime = (ms) => {
     txtTimer.setText(sec.toString())
 }
 
-const setInteractionResult = (text, duration = 0) => {
+const setInteractionResult = (text) => {
     txtInteraction.setText(text)
 }
 
-const clearAll = () => {
+const clearAll = (livesLeft = '') => {
     txtTimer.clearText()
     txtLevel.clearText()
     txtEggs.clearText()
-    txtLives.clearText()
+    txtLives.setText(livesLeft)
+    txtInteraction.clearText()
 }
 
 // const moveToStats = () => {

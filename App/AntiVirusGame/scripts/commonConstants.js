@@ -11,34 +11,17 @@ export const SIDE = {
 
 export const PATCHES = {
     INPUTS: {
-        PLAYER_COORDS: {
-            MAX_LEFT: 'playerCoordMaxLeft',
-            MAX_RIGHT: 'playerCoordMaxRight',
-            MAX_TOP: 'playerCoordMaxTop',
-            MAX_BOTTOM: 'playerCoordMaxBottom'
-        },
         ROAD: {
-            MOVE: 'moveTheRoad',
             DURATION: 'roadDuration'
         },
-        GAME_STARTED: 'gameStarted',
-        GAME_OVER: 'gameOver'
+        PLAYING: 'playing',
     },
     OUTPUTS: {
         MOVE_PLAYER: {
             LEFT: 'movePlayerLeft',
             RIGHT: 'movePlayerRight',
-            TOP: 'movePlayerTop',
-            BOTTOM: 'movePlayerBottom'
         },
-        DEVICE: {
-            SCREEN_SIZE: {
-                X: 'deviceScreenSizeX',
-                Y: 'deviceScreenSizeY'
-            },
-            SCREEN_SCALE: 'deviceScreenScale'
-        },
-        VIDEO_RECORDING: 'videoRecording'
+        TAPPED: 'tapped',
     }
 }
 

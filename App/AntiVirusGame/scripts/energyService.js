@@ -8,10 +8,18 @@ let initialEnergy = 0
 let capacity = 0
 let capacityAdded = 0
 
-const init = ({ energyOptions }) => {
+const internalInit = (energyOptions) => {
     initialEnergy = energyOptions.initial
     capacity = initialEnergy
+}
+
+const init = ({ energyOptions }) => {
+    internalInit(energyOptions)
     log(`[energyService] initialized`)
+}
+
+const reset = ({ energyOptions }) => {
+    internalInit(energyOptions)
 }
 
 const addEnergy = (amount) => {
@@ -33,7 +41,8 @@ const energyService = {
     addEnergy,
     capacityLeft,
     isAlive,
-    energyUsed
+    energyUsed,
+    reset
 }
 
 export default energyService

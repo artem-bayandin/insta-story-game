@@ -2,7 +2,7 @@ import { log, setTimeout, MOVE_TYPES } from './utils'
 import { createWithShowHide, createWithMove, createBase } from './inheritance'
 import { EGG_COORDINATES, EGG_VIRUS_RED } from './eggConstants'
 import { SIDE } from './commonConstants'
-import materials from './materials'
+import materials, { MATERIALS } from './materials'
 
 const fastAnimationSpeed = 10
 
@@ -23,14 +23,14 @@ export const Egg = (id, obj) => {
         gMode = gameMode
 
         config = objectConfig
-        base.setMaterial(materials.get(newMaterial))
 
         currentRoute = route
         currentSides = sides
 
         currentPosition = 0
-        base.moveTo(currentRoute[0].x, currentRoute[0].y, fastAnimationSpeed)
-
+        
+        base.moveTo(currentRoute[0].x, currentRoute[0].y)
+        base.setMaterial(materials.get(newMaterial))
         base.show({scaleX: config.SCALE_X, scaleY: config.SCALE_Y})
     }
 
@@ -48,10 +48,12 @@ export const Egg = (id, obj) => {
             currentPosition++
 
             let hideAndResetPosition = () => {
+                base.hide()
+                base.setMaterial(materials.get(MATERIALS.TRANSPARENT))
+
                 // moved here to avoid setTimeout when dropping the egg
                 callback({sides: [ currentSides.x, SIDE.NEUTRAL ], weight: config.WEIGHT})
 
-                base.hide()
                 currentPosition = -1
             }
 
